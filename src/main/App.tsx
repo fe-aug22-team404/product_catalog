@@ -1,5 +1,6 @@
 import React from 'react';
 import { Header } from '../components/Header/Header';
+import { ItemCard } from '../components/ItemCard';
 import { Path } from '../components/Path';
 
 export const App = () => {
@@ -7,6 +8,7 @@ export const App = () => {
     <div className="app">
       <Header />
       <Path />
+      <ItemCard />
     </div>
   );
 }
