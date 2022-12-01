@@ -14,7 +14,6 @@ export const Path: FC = () => {
     setPaths(currentPath);
   }, [location])
 
-
   return (
     <div className="path">
       <img
