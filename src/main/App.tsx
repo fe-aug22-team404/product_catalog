@@ -1,4 +1,5 @@
 import React from 'react';
+import { Footer } from '../components/footer';
 
 function App() {
   return (
@@ -7,6 +8,7 @@ function App() {
         <div className="grid-mobile-1-2 grid-tablet-5-7">Test</div>
         <div className="grid-mobile-2-4 grid-tablet-10-11">HELLO MATES</div>
       </header>
+      <Footer />
     </div>
   );
 }
