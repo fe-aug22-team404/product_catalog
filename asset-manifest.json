@@ -1,7 +1,8 @@
 {
   "files": {
-    "main.css": "/product_catalog/static/css/main.5f7fbc77.css",
-    "main.js": "/product_catalog/static/js/main.c6d2dbc3.js",
+    "main.css": "/product_catalog/static/css/main.426ca81e.css",
+    "main.js": "/product_catalog/static/js/main.deed082e.js",
+    "static/media/Banner3.png": "/product_catalog/static/media/Banner3.5eb70bb0f0ed193c9d59.png",
     "static/media/Mont-ThinItalic.eot": "/product_catalog/static/media/Mont-ThinItalic.5510e8d36aaaf841911a.eot",
     "static/media/Mont-ExtraLightItalic.eot": "/product_catalog/static/media/Mont-ExtraLightItalic.0329ea9a75589c1375c9.eot",
     "static/media/Mont-ThinItalic.ttf": "/product_catalog/static/media/Mont-ThinItalic.8e57fa31ffd3866e42ae.ttf",
@@ -32,13 +33,18 @@
     "static/media/Mont-SemiBold.ttf": "/product_catalog/static/media/Mont-SemiBold.0b5e68ebb36ca4006e21.ttf",
     "static/media/Mont-Bold.eot": "/product_catalog/static/media/Mont-Bold.c94d1eeb287937a9cfe6.eot",
     "static/media/Mont-Bold.ttf": "/product_catalog/static/media/Mont-Bold.3675b597d3ffb2b75168.ttf",
+    "static/media/Banner1.png": "/product_catalog/static/media/Banner1.57c1512128531573240d.png",
     "static/media/Mont-Black.eot": "/product_catalog/static/media/Mont-Black.3cf46c850128260ffc9b.eot",
     "static/media/Mont-Black.ttf": "/product_catalog/static/media/Mont-Black.cc507fd95ec9afcb2c16.ttf",
+    "static/media/Accessories.png": "/product_catalog/static/media/Accessories.ceac5a16c668432a34a0.png",
+    "static/media/Tablets.png": "/product_catalog/static/media/Tablets.a1aff0fe1c1693fcea55.png",
+    "static/media/Banner2.png": "/product_catalog/static/media/Banner2.12b32364f0658fb7dd76.png",
     "static/media/Mont-BlackItalic.woff": "/product_catalog/static/media/Mont-BlackItalic.68d2de3e0089b2c38148.woff",
     "static/media/Mont-HeavyItalic.woff": "/product_catalog/static/media/Mont-HeavyItalic.a5818d59bff99a37c002.woff",
     "static/media/Mont-ExtraLightItalic.woff": "/product_catalog/static/media/Mont-ExtraLightItalic.d5bffeb03a046c62bd2a.woff",
     "static/media/Mont-RegularItalic.woff": "/product_catalog/static/media/Mont-RegularItalic.a4bfbf98d161a16553dd.woff",
     "static/media/Mont-SemiBoldItalic.woff": "/product_catalog/static/media/Mont-SemiBoldItalic.20f89c554415641395a8.woff",
+    "static/media/Phones.png": "/product_catalog/static/media/Phones.9e913039f5c6a4866001.png",
     "static/media/Mont-LightItalic.woff": "/product_catalog/static/media/Mont-LightItalic.6f1c4c6488add56ea2a6.woff",
     "static/media/Mont-BoldItalic.woff": "/product_catalog/static/media/Mont-BoldItalic.ef9125eaba8a5197411c.woff",
     "static/media/Mont-ThinItalic.woff": "/product_catalog/static/media/Mont-ThinItalic.bfbbf502870f0d0cf056.woff",
@@ -66,12 +72,16 @@
     "static/media/Mont-ExtraLight.woff2": "/product_catalog/static/media/Mont-ExtraLight.a6dd2b46738cbd085a5a.woff2",
     "static/media/Mont-Thin.woff2": "/product_catalog/static/media/Mont-Thin.fd50e23452a4f62e1e58.woff2",
     "static/media/Mont-Black.woff2": "/product_catalog/static/media/Mont-Black.2e299ff4d72dac880c22.woff2",
+    "static/media/cart.svg": "/product_catalog/static/media/cart.fbb7bb4b7513df420fa1dcc67ff28eb0.svg",
+    "static/media/like.svg": "/product_catalog/static/media/like.e231b75a6636ff7fff254ac5e38c6b43.svg",
+    "static/media/arrow-right.svg": "/product_catalog/static/media/arrow-right.a8daa3d6c2d4743e96b3d8b18d2ac57f.svg",
+    "static/media/arrow-left.svg": "/product_catalog/static/media/arrow-left.594aaed50078a31117a2eb61ba1cee75.svg",
     "index.html": "/product_catalog/index.html",
-    "main.5f7fbc77.css.map": "/product_catalog/static/css/main.5f7fbc77.css.map",
-    "main.c6d2dbc3.js.map": "/product_catalog/static/js/main.c6d2dbc3.js.map"
+    "main.426ca81e.css.map": "/product_catalog/static/css/main.426ca81e.css.map",
+    "main.deed082e.js.map": "/product_catalog/static/js/main.deed082e.js.map"
   },
   "entrypoints": [
-    "static/css/main.5f7fbc77.css",
-    "static/js/main.c6d2dbc3.js"
+    "static/css/main.426ca81e.css",
+    "static/js/main.deed082e.js"
   ]
 }
