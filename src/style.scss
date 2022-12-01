@@ -1,9 +1,26 @@
 @import './styles/fonts/stylesheet.scss';
+@import './styles/vars/vars.scss';
+
+* {
+  box-sizing: border-box;
+}
 
 body {
   font-family: 'Mont';
   margin: 0;
+  background-color: $bc-color;
+}
+
+ul,
+li,
+h2,
+h3,
+h4,
+img,
+div {
+  padding: 0;
+  margin: 0;
 }
 
 @import './styles/grids-templates/grid-templates.scss';
-@import './components/footer/footer.scss'
+@import './components/Path/path.scss';
