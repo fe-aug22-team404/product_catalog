@@ -1,6 +1,6 @@
 import React from 'react';
 
-function App() {
+export const App = () => {
   return (
     <div>
       <header className="grid grid-mobile grid-tablet grid-desktop">
@@ -10,5 +10,3 @@ function App() {
     </div>
   );
 }
-
-export default App;
