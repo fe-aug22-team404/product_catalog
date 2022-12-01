@@ -2,6 +2,11 @@
     box-sizing: border-box;
 }
 
+button {
+    padding: 0;
+    border: 0;
+}
+
 .footer {
     
     background-color: #0F1121;
@@ -108,6 +113,11 @@
             text-align: right;
             color: #75767F;
             margin-right: 16px;
+            cursor: pointer;
+        }
+
+        &-article:hover {
+            color:#F1F2F9 ;
         }
 
         &-link {
@@ -119,7 +129,6 @@
             width: 32px;
             background-color:#323542;
             text-decoration: none;
-            transform: rotate(-90deg);
         }
 
         &-link:hover {
