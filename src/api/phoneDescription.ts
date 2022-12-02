@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { Phone } from '../types/Phone';
 import { PhoneDescr } from '../utils/types/PhoneDescription';
-import { Phone } from '../types/Phone';
 
 const BASE_URL = 'https://productcatalogapi-production.up.railway.app/phones/'
 

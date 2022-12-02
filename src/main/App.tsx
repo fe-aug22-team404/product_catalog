@@ -3,6 +3,7 @@ import { Header } from '../components/Header/Header';
 import { HomePage } from '../components/HomePage';
 import { Footer } from '../components/Footer';
 import { Path } from '../components/Path';
+import { Favourites } from '../components/Favourites';
 // import { getPhones } from '../api/phoneDescription';
 
 export const App = () => {
@@ -19,7 +20,8 @@ export const App = () => {
   return (
     <div className="app">
       <Header />
-      <HomePage />
+      <Favourites />
+      {/*<HomePage />*/}
       <Footer />
     </div>
   );

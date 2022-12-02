@@ -15,6 +15,7 @@ type Props = {
 
 export const ProductCard: FC<Props> = memo(({ phone }) => {
   const {
+    itemId,
     phoneId,
     name,
     fullPrice,
@@ -33,35 +34,35 @@ export const ProductCard: FC<Props> = memo(({ phone }) => {
   const handlePhonesInCart = () => {
     if (phonesInCart.includes(phoneId)) {
       setPhonesInCart(prevPhonesInCart => {
-        const filteredPhonesInCart = prevPhonesInCart.filter(itemId => (
-          itemId !== phoneId
+        const filteredPhonesInCart = prevPhonesInCart.filter(id => (
+          id !== phoneId
         ));
 
         return filteredPhonesInCart;
       });
     } else {
       setPhonesInCart((prevPhonesInCart) => {
-        return [...prevPhonesInCart, phoneId];
+        return [...prevPhonesInCart, itemId];
       });
     }
   }
   const handleFavouritePhones = () => {
     if (favouritePhones.includes(phoneId)) {
       setFavouritePhones(prevFavouritePhones => {
-        const filteredFavouritePhones = prevFavouritePhones.filter(itemId => (
-          itemId !== phoneId
+        const filteredFavouritePhones = prevFavouritePhones.filter(id => (
+          id !== phoneId
         ));
 
         return filteredFavouritePhones;
       });
     } else {
       setFavouritePhones((prevFavouritePhones) => {
-        return [...prevFavouritePhones, phoneId];
+        return [...prevFavouritePhones, itemId];
       });
     }
   };
 
-  const isPhonesInCartIncludeId = phonesInCart.includes(phoneId);
+  const isPhonesInCartIncludeId = localStorage.getItem('phonesInCart')?.includes(phoneId);
   const isFavouritePhonesIncludeId = favouritePhones.includes(phoneId);
 
   useEffect(() => {
