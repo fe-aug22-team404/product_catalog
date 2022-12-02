@@ -20,8 +20,7 @@ export const App = () => {
   return (
     <div className="app">
       <Header />
-      <Favourites />
-      {/*<HomePage />*/}
+      <HomePage />
       <Footer />
     </div>
   );
