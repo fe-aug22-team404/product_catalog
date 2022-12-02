@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useState, useEffect } from 'react';
 import classNames from 'classnames';
 
 import './Pagination.scss';
@@ -7,7 +7,7 @@ type Props = {
   total: number,
   perPage: number,
   currentPage: number,
-  setCurrentPage: React.Dispatch<React.SetStateAction<number>>,
+  handlePageChange: (page: number) => void,
 };
 
 function getNumbers(from: number, to: number): number[] {
@@ -24,17 +24,17 @@ export const Pagination: React.FC<Props> = ({
   total,
   perPage,
   currentPage,
-  setCurrentPage,
-}) => {  
+  handlePageChange,
+}) => {
   const lastPage = useMemo(() => {
     return Math.ceil(total / perPage);
   }, [total, perPage]);
 
   const getDefaultPoints = useCallback(() => {
     if (currentPage < 1) {
-      setCurrentPage(1);
+      handlePageChange(1);
     } else if (currentPage > lastPage) {
-      setCurrentPage(lastPage);
+      handlePageChange(lastPage);
     }
 
     if (currentPage + 4 > lastPage && lastPage > 4) {
@@ -46,12 +46,16 @@ export const Pagination: React.FC<Props> = ({
     }
 
     return [currentPage, currentPage + 3];
-  }, [currentPage, lastPage, setCurrentPage]);
+  }, [currentPage, lastPage]);
 
-  const [defaultStart, defaultEnd] = getDefaultPoints();
+  const [start, setStart] = useState(1);
+  const [end, setEnd] = useState(4);
 
-  const [start, setStart] = useState(defaultStart);
-  const [end, setEnd] = useState(defaultEnd);
+  useEffect(() => {
+    const result = getDefaultPoints();
+    setStart(result[0]);
+    setEnd(result[1]);
+  }, []);
 
   const pages = useMemo(() => {
     return getNumbers(1, lastPage)
@@ -66,35 +70,35 @@ export const Pagination: React.FC<Props> = ({
       return;
     }
 
-    setCurrentPage(curr => curr - 1);
+    handlePageChange(currentPage - 1);
 
     if (currentPage === start) {
       setEnd(end => end - 1);
       setStart(start => start - 1);
     }
-  }, [currentPage, setCurrentPage, start]);
+  }, [currentPage, start]);
 
   const setClickedPage = useCallback((clickedPage: number) => {
-    setCurrentPage(clickedPage);
-  }, [setCurrentPage]);
+    handlePageChange(clickedPage);
+  }, []);
 
   const goToNext = useCallback(() => {
     if (currentPage === lastPage) {
       return;
     }
 
-    setCurrentPage(curr => curr + 1);
+    handlePageChange(currentPage + 1);
 
     if (currentPage === end) {
       setEnd(end => end + 1);
       setStart(start => start + 1);
     }
 
-  }, [currentPage, setCurrentPage, lastPage, end]);
+  }, [currentPage, lastPage, end]);
 
   return (
     <ul className='pagination'>
-      <li 
+      <li
         className={classNames(
           'pagination__arrow',
           'pagination__arrow--left',
@@ -104,8 +108,8 @@ export const Pagination: React.FC<Props> = ({
         )}
         onClick={goToPrevious}
       ></li>
-      {visiblePages.map((page) => (
-        <li 
+      {visiblePages.map(page => (
+        <li
           className={classNames(
             'pagination__page-link',
             {
@@ -119,7 +123,7 @@ export const Pagination: React.FC<Props> = ({
         </li>
       ))}
 
-      <li 
+      <li
         className={classNames(
           'pagination__arrow',
           'pagination__arrow--right',

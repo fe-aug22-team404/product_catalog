@@ -1,0 +1,128 @@
+@import "../../styles/vars/vars.scss";
+@import "../../styles/mixins/mixins";
+
+.footer {
+  border-top: 1px solid $elements;
+
+  &__wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 34px 16px 32px;
+
+    max-width:1200px;
+    width: 100%;
+    margin:0 auto;
+
+    @include tablet {
+      flex-direction: row;
+      align-items: center;
+      padding: 34px 32px 32px;
+    }
+  }
+
+  &__logo {
+    margin-bottom: 32px;
+    position: relative;
+    height: 30px;
+
+    @include tablet {
+      margin: 0;
+    }
+  }
+
+  &__nav {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    @include mobile {
+      margin-bottom: 32px;
+    }
+
+    @include tablet {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      margin: 0;
+    }
+
+    &-link {
+      position: relative;
+      list-style-type: none;
+      text-transform: uppercase;
+
+      font-weight: 700;
+      font-size: 12px;
+      line-height: 11px;
+      letter-spacing: 0.04em;
+      color: $white;
+      text-decoration: none;
+      transition: color 0.5s;
+
+      margin-bottom: 16px;
+
+      @include tablet {
+        margin-right: 13px;
+        margin-bottom: 0;
+      }
+
+      @include desktop {
+        margin-right: 106px;
+      }
+    }
+
+    &-link:last-child {
+      margin-bottom: 0;
+
+      @include desktop {
+        margin-right: 0;
+      }
+    }
+
+    &-link:hover {
+      color: $secondary;
+    }
+  }
+
+  &__back {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+
+    &:hover .footer__back-link{
+      background-color: $icons;
+    }
+
+    &:hover .footer__back-article{
+      color: $white;
+    }
+
+    &-article {
+      font-family: 'Mont';
+      font-style: normal;
+      font-weight: 700;
+      font-size: 12px;
+      line-height: 15px;
+      text-align: right;
+      color: $secondary;
+      margin-right: 16px;
+      cursor: pointer;
+    }
+
+    &-link {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: $white;
+      height: 32px;
+      width: 32px;
+      background-color: $surface-2;
+      border-color: transparent;
+      text-decoration: none;
+      cursor: pointer;
+    }
+  }
+}
