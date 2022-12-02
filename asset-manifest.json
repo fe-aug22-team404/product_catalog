@@ -1,8 +1,9 @@
 {
   "files": {
-    "main.css": "/product_catalog/static/css/main.426ca81e.css",
-    "main.js": "/product_catalog/static/js/main.deed082e.js",
+    "main.css": "/product_catalog/static/css/main.be5b21bc.css",
+    "main.js": "/product_catalog/static/js/main.c0130b66.js",
     "static/media/Banner3.png": "/product_catalog/static/media/Banner3.5eb70bb0f0ed193c9d59.png",
+    "static/media/Logo-footer.svg": "/product_catalog/static/media/Logo-footer.bf07abe342b4d6acf7528bdc0fcea3a4.svg",
     "static/media/Mont-ThinItalic.eot": "/product_catalog/static/media/Mont-ThinItalic.5510e8d36aaaf841911a.eot",
     "static/media/Mont-ExtraLightItalic.eot": "/product_catalog/static/media/Mont-ExtraLightItalic.0329ea9a75589c1375c9.eot",
     "static/media/Mont-ThinItalic.ttf": "/product_catalog/static/media/Mont-ThinItalic.8e57fa31ffd3866e42ae.ttf",
@@ -74,14 +75,15 @@
     "static/media/Mont-Black.woff2": "/product_catalog/static/media/Mont-Black.2e299ff4d72dac880c22.woff2",
     "static/media/cart.svg": "/product_catalog/static/media/cart.fbb7bb4b7513df420fa1dcc67ff28eb0.svg",
     "static/media/like.svg": "/product_catalog/static/media/like.e231b75a6636ff7fff254ac5e38c6b43.svg",
+    "static/media/Vector.svg": "/product_catalog/static/media/Vector.e4fff257d28bda2ded41c2f11c49c83f.svg",
     "static/media/arrow-right.svg": "/product_catalog/static/media/arrow-right.a8daa3d6c2d4743e96b3d8b18d2ac57f.svg",
     "static/media/arrow-left.svg": "/product_catalog/static/media/arrow-left.594aaed50078a31117a2eb61ba1cee75.svg",
     "index.html": "/product_catalog/index.html",
-    "main.426ca81e.css.map": "/product_catalog/static/css/main.426ca81e.css.map",
-    "main.deed082e.js.map": "/product_catalog/static/js/main.deed082e.js.map"
+    "main.be5b21bc.css.map": "/product_catalog/static/css/main.be5b21bc.css.map",
+    "main.c0130b66.js.map": "/product_catalog/static/js/main.c0130b66.js.map"
   },
   "entrypoints": [
-    "static/css/main.426ca81e.css",
-    "static/js/main.deed082e.js"
+    "static/css/main.be5b21bc.css",
+    "static/js/main.c0130b66.js"
   ]
 }
