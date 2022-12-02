@@ -1,4 +1,8 @@
+@import "../../styles/vars/vars.scss";
+
 .filter {
+  position: relative;
+
   font-family: 'Mont';
   font-size: 14px;
   line-height: 21px;
@@ -9,7 +13,7 @@
     font-weight: 700;
     font-size: 12px;
     line-height: 15px;
-    color: #75767F;
+    color: $secondary;
 
     margin-bottom: 4px;
   } 
@@ -25,23 +29,23 @@
 
     font-weight: 700;
 
-    background: #323542;
-    color: #F1F2F9;
+    background: $surface-2;
+    color: $white;
 
     text-align: left;
 
     padding: 10px 12px;
 
-    border: 1px solid #323542;
+    border: 1px solid $surface-2;
 
     transition: background-color .3s, border .3s;
 
     &:hover {
-      border: 1px solid #4A4D58;
+      border: 1px solid $icons;
     }
 
     &:focus {
-      border: 1px solid #905BFF;
+      border: 1px solid $accent;
     }
 
     &::before {
@@ -79,6 +83,12 @@
     transition: border .3s;
 
     &-list {
+      position: absolute;
+
+      z-index: 1000;
+
+      width: 100%;
+
       display: flex;
       flex-direction: column;
       align-items: left;
@@ -88,7 +98,9 @@
       margin: 0;
       padding: 8px 0;
   
-      border: 1px solid #3B3E4A;
+      border: 1px solid $surface-2;
+
+      background-color: $bc-color;
       box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.05);
     }
 
@@ -99,12 +111,12 @@
 
       font-weight: 600;
 
-      color: #75767F;
+      color: $secondary;
 
       transition: background-color .3s;
 
       &:hover {
-        background: #323542;
+        background: $surface-2;
       }
     }
   }
