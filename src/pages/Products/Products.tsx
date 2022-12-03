@@ -67,7 +67,7 @@ export const Products: React.FC = () => {
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollBy({ top: -100000, behavior: 'smooth' });
   }
 
   useEffect(() => {
