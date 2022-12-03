@@ -2,56 +2,72 @@ import { useMemo, FC, useEffect, useState, Fragment } from 'react';
 import classNames from 'classnames';
 import { getPhoneDescription } from '../../api/phoneDescription';
 import { PhoneDescr } from '../../utils/types/PhoneDescription';
-import { useNavigate } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
+import { Path } from '../Path';
 
 export const ItemCard: FC = () => {
+  const { openedPhoneId = '' } = useParams();
   const [phoneData, setPhoneData] = useState<PhoneDescr | null>(null);
   const [currentImage, setCurrentImage] = useState(0);
-  const [phoneId, setPhoneId] = useState('apple-iphone-11-64gb-green');
-  const [phonesInCart, setPhonesInCart] = useState<string[]>([]);
-  const [favouritePhones, setFavouritePhones] = useState<string[]>([]);
+  const [phoneId, setPhoneId] = useState(openedPhoneId);
 
   const navigate = useNavigate();
 
-  const handlePhonesInCart = () => {
-    if (phonesInCart.includes(phoneId)) {
-      setPhonesInCart(prevPhonesInCart => {
-        const filteredPhonesInCart = prevPhonesInCart.filter(itemId => (
-          itemId !== phoneId
-        ));
+  const phoneCartsStorage = () => {
+    const phoneCartFromStorage = localStorage.getItem('phoneCarts');
 
-        return filteredPhonesInCart;
-      });
+    return phoneCartFromStorage
+      ? phoneCartFromStorage.split(',')
+      : [];
+  };
+  const favouritePhonesStorage = () => {
+    const favouritePhonesFromStorage =  localStorage.getItem('favouritePhones');
+
+    return favouritePhonesFromStorage
+      ? favouritePhonesFromStorage.split(',')
+      : [];
+  };
+
+  const [phoneCarts, setPhoneCarts] = useState(phoneCartsStorage());
+  const [favouritePhones, setFavouritePhones] = useState(favouritePhonesStorage());
+
+  const isPhoneCartsIncludeId = phoneCarts.includes(phoneId);
+  const isFavouritePhonesIncludeId = favouritePhones.includes(phoneId);
+
+  const handlePhoneCarts = () => {
+    if (isPhoneCartsIncludeId) {
+      const filteredPhoneCarts = phoneCartsStorage().filter(id => id !== phoneId);
+
+      localStorage.setItem('phoneCarts', filteredPhoneCarts.join(','));
+      setPhoneCarts(phoneCartsStorage());
     } else {
-      setPhonesInCart((prevPhonesInCart) => {
-        return [...prevPhonesInCart, phoneId];
-      });
+      const completePhoneCarts = [...phoneCartsStorage(), phoneId];
+
+      localStorage.setItem('phoneCarts', completePhoneCarts.join(','));
+      setPhoneCarts(phoneCartsStorage());
     }
   }
   const handleFavouritePhones = () => {
-    if (favouritePhones.includes(phoneId)) {
-      setFavouritePhones(prevFavouritePhones => {
-        const filteredFavouritePhones = prevFavouritePhones.filter(itemId => (
-          itemId !== phoneId
-        ));
+    if (isFavouritePhonesIncludeId) {
+      const filteredFavouritePhones = favouritePhonesStorage().filter(id => id !== phoneId);
 
-        return filteredFavouritePhones;
-      });
+      localStorage.setItem('favouritePhones', filteredFavouritePhones.join(','));
+      setFavouritePhones(favouritePhonesStorage());
     } else {
-      setFavouritePhones((prevFavouritePhones) => {
-        return [...prevFavouritePhones, phoneId];
-      });
+      const completeFavouritePhones = [...favouritePhonesStorage(), phoneId];
+
+      localStorage.setItem('favouritePhones', completeFavouritePhones.join(','));
+      setFavouritePhones(favouritePhonesStorage());
     }
   };
 
-  const isPhonesInCartIncludeId = useMemo(() => phonesInCart.includes(phoneId), [phonesInCart]);
-  const isFavouritePhonesIncludeId = favouritePhones.includes(phoneId);
+  const isPhonesInCartIncludeId = useMemo(() => phoneCarts.includes(phoneId), [phoneCarts]);
 
   useEffect(() => {
-    const phonesInCartToStr = phonesInCart.join(',');
+    const phonesInCartToStr = phoneCarts.join(',');
 
     localStorage.setItem('phonesInCart', phonesInCartToStr);
-  }, [phonesInCart]);
+  }, [phoneCarts]);
 
   useEffect(() => {
     const favouritePhonesToStr = favouritePhones.join(',');
@@ -112,6 +128,7 @@ export const ItemCard: FC = () => {
 
   return (
     <>
+      <Path />
       {phoneData &&
         <div className='phone-card grid grid-mobile grid-tablet grid-desktop'>
           <h1 className='phone-card__title grid-mobile-1-5 grid-tablet-1-13 grid-desktop-1-25'>
@@ -222,11 +239,11 @@ export const ItemCard: FC = () => {
                 className={classNames('short-info__add-button', {
                   'short-info__add-button--is-selected': isPhonesInCartIncludeId
                 })}
-                onClick={handlePhonesInCart}
+                onClick={handlePhoneCarts}
               >
                 {!isPhonesInCartIncludeId
                   ? 'Add to cart'
-                  : 'Remove from cart'}
+                  : 'Added'}
               </button>
 
               <button
