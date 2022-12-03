@@ -1,9 +1,15 @@
 {
   "files": {
-    "main.css": "/product_catalog/static/css/main.be5b21bc.css",
-    "main.js": "/product_catalog/static/js/main.c0130b66.js",
+    "main.css": "/product_catalog/static/css/main.1f3b43f1.css",
+    "main.js": "/product_catalog/static/js/main.09f1e56b.js",
+    "static/media/00.png": "/product_catalog/static/media/00.779473600e9aff690982.png",
     "static/media/Banner3.png": "/product_catalog/static/media/Banner3.5eb70bb0f0ed193c9d59.png",
+    "static/media/01.png": "/product_catalog/static/media/01.1ebdf5c2ace91b4792b0.png",
+    "static/media/03.png": "/product_catalog/static/media/03.ad2c3a656b92100b9653.png",
+    "static/media/02.png": "/product_catalog/static/media/02.de35e409b0fd9112a440.png",
     "static/media/Logo-footer.svg": "/product_catalog/static/media/Logo-footer.bf07abe342b4d6acf7528bdc0fcea3a4.svg",
+    "static/media/ok.svg": "/product_catalog/static/media/ok.e9480efcd85e3a389730.svg",
+    "static/media/04.png": "/product_catalog/static/media/04.f8f63b0630a1a4a099d8.png",
     "static/media/Mont-ThinItalic.eot": "/product_catalog/static/media/Mont-ThinItalic.5510e8d36aaaf841911a.eot",
     "static/media/Mont-ExtraLightItalic.eot": "/product_catalog/static/media/Mont-ExtraLightItalic.0329ea9a75589c1375c9.eot",
     "static/media/Mont-ThinItalic.ttf": "/product_catalog/static/media/Mont-ThinItalic.8e57fa31ffd3866e42ae.ttf",
@@ -73,17 +79,28 @@
     "static/media/Mont-ExtraLight.woff2": "/product_catalog/static/media/Mont-ExtraLight.a6dd2b46738cbd085a5a.woff2",
     "static/media/Mont-Thin.woff2": "/product_catalog/static/media/Mont-Thin.fd50e23452a4f62e1e58.woff2",
     "static/media/Mont-Black.woff2": "/product_catalog/static/media/Mont-Black.2e299ff4d72dac880c22.woff2",
+    "static/media/NiceGadgets.svg": "/product_catalog/static/media/NiceGadgets.f6a07db58a806aadc065.svg",
     "static/media/cart.svg": "/product_catalog/static/media/cart.fbb7bb4b7513df420fa1dcc67ff28eb0.svg",
+    "static/media/favorites.svg": "/product_catalog/static/media/favorites.bda5fbc9746bfe2e1329.svg",
     "static/media/like.svg": "/product_catalog/static/media/like.e231b75a6636ff7fff254ac5e38c6b43.svg",
+    "static/media/gray-cross.svg": "/product_catalog/static/media/gray-cross.b1e27dc03ac6ea0cb04b.svg",
+    "static/media/Plus-no-active.svg": "/product_catalog/static/media/Plus-no-active.6c58cb1e06599fc68e97.svg",
+    "static/media/plus-active.svg": "/product_catalog/static/media/plus-active.81a66598070233d52c98.svg",
+    "static/media/right-pagination-arrow.svg": "/product_catalog/static/media/right-pagination-arrow.c7f5d994dc7f4ce02f46.svg",
     "static/media/Vector.svg": "/product_catalog/static/media/Vector.e4fff257d28bda2ded41c2f11c49c83f.svg",
     "static/media/arrow-right.svg": "/product_catalog/static/media/arrow-right.a8daa3d6c2d4743e96b3d8b18d2ac57f.svg",
+    "static/media/left-pagination-arrow-purple.svg": "/product_catalog/static/media/left-pagination-arrow-purple.b473870aa2ea3226ac0c.svg",
+    "static/media/left-pagination-arrow.svg": "/product_catalog/static/media/left-pagination-arrow.2cfdb8e7490ef908e01b.svg",
+    "static/media/path_stroke.svg": "/product_catalog/static/media/path_stroke.985360c2305523348313305df4f87e3d.svg",
     "static/media/arrow-left.svg": "/product_catalog/static/media/arrow-left.594aaed50078a31117a2eb61ba1cee75.svg",
     "index.html": "/product_catalog/index.html",
-    "main.be5b21bc.css.map": "/product_catalog/static/css/main.be5b21bc.css.map",
-    "main.c0130b66.js.map": "/product_catalog/static/js/main.c0130b66.js.map"
+    "static/media/minus-active.svg": "/product_catalog/static/media/minus-active.c4b00284896b9ad160af.svg",
+    "static/media/minus-no-active.svg": "/product_catalog/static/media/minus-no-active.8d9e13f23c910da50b32.svg",
+    "main.1f3b43f1.css.map": "/product_catalog/static/css/main.1f3b43f1.css.map",
+    "main.09f1e56b.js.map": "/product_catalog/static/js/main.09f1e56b.js.map"
   },
   "entrypoints": [
-    "static/css/main.be5b21bc.css",
-    "static/js/main.c0130b66.js"
+    "static/css/main.1f3b43f1.css",
+    "static/js/main.09f1e56b.js"
   ]
 }
