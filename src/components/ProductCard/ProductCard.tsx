@@ -1,9 +1,8 @@
 import {
   FC,
   useEffect,
-  useState,
-  memo,
   useMemo,
+  useState,
 } from 'react';
 import cn from 'classnames';
 import { Phone } from '../../types/Phone';
@@ -12,12 +11,13 @@ import './ProductCard.scss';
 import { Link } from 'react-router-dom';
 
 type Props = {
+  path: string;
   phone: Phone;
+  updateUserData: () => void,
 };
 
-export const ProductCard: FC<Props> = memo(({ phone }) => {
+export const ProductCard: FC<Props> = ({ phone, updateUserData, path }) => {
   const {
-    itemId,
     phoneId,
     name,
     fullPrice,
@@ -27,37 +27,46 @@ export const ProductCard: FC<Props> = memo(({ phone }) => {
     ram,
     image,
   } = phone;
-  const imagePath = require(`../../images/${image.replace('.jpg', '.png')}`);
+  const linkPath = useMemo(() => {
+    return path === 'home'
+      ? `/phones/${phoneId}`
+      : `${phoneId}`
+  }, [path])
+  const imagePath = require(`../../images/${image}`);
+  const [phoneCarts, setPhoneCarts] = useState<string[]>([]);
+  const [favouritePhones, setFavouritePhones] = useState<string[]>([]);
 
   const phoneCartsStorage = () => {
     const phoneCartFromStorage = localStorage.getItem('phoneCarts');
-
-    return phoneCartFromStorage
+    const dataInState = phoneCartFromStorage
       ? phoneCartFromStorage.split(',')
       : [];
-  };
-  const favouritePhonesStorage = () => {
-    const favouritePhonesFromStorage =  localStorage.getItem('favouritePhones');
 
-    return favouritePhonesFromStorage
+    setPhoneCarts(dataInState);
+    return dataInState;
+  };
+
+  const favouritePhonesStorage = () => {
+    const favouritePhonesFromStorage = localStorage.getItem('favouritePhones');
+    const dataInState = favouritePhonesFromStorage
       ? favouritePhonesFromStorage.split(',')
       : [];
+
+    setFavouritePhones(dataInState);
+    return dataInState;
   };
 
-  const [phoneCarts, setPhoneCarts] = useState(phoneCartsStorage());
-  const [favouritePhones, setFavouritePhones] = useState(favouritePhonesStorage());
-
-  const isPhoneCartsIncludeId = phoneCarts.includes(itemId);
-  const isFavouritePhonesIncludeId = favouritePhones.includes(itemId);
+  const isPhoneCartsIncludeId = phoneCarts.includes(phoneId);
+  const isFavouritePhonesIncludeId = favouritePhones.includes(phoneId);
 
   const handlePhoneCarts = () => {
     if (isPhoneCartsIncludeId) {
-      const filteredPhoneCarts = phoneCartsStorage().filter(id => id !== itemId);
+      const filteredPhoneCarts = phoneCartsStorage().filter(itemId => itemId !== phoneId);
 
       localStorage.setItem('phoneCarts', filteredPhoneCarts.join(','));
       setPhoneCarts(phoneCartsStorage());
     } else {
-      const completePhoneCarts = [...phoneCartsStorage(), itemId];
+      const completePhoneCarts = [...phoneCartsStorage(), phoneId];
 
       localStorage.setItem('phoneCarts', completePhoneCarts.join(','));
       setPhoneCarts(phoneCartsStorage());
@@ -65,22 +74,29 @@ export const ProductCard: FC<Props> = memo(({ phone }) => {
   }
   const handleFavouritePhones = () => {
     if (isFavouritePhonesIncludeId) {
-      const filteredFavouritePhones = favouritePhonesStorage().filter(id => id !== itemId);
+      const filteredFavouritePhones = favouritePhonesStorage().filter(itemId => itemId !== phoneId);
 
       localStorage.setItem('favouritePhones', filteredFavouritePhones.join(','));
       setFavouritePhones(favouritePhonesStorage());
     } else {
-      const completeFavouritePhones = [...favouritePhonesStorage(), itemId];
+      const completeFavouritePhones = [...favouritePhonesStorage(), phoneId];
 
       localStorage.setItem('favouritePhones', completeFavouritePhones.join(','));
       setFavouritePhones(favouritePhonesStorage());
     }
+
+    updateUserData();
   };
+
+  useEffect(() => {
+    phoneCartsStorage();
+    favouritePhonesStorage();
+  }, [])
 
   return (
     <div className="card">
       <div className="card__image-container">
-        <Link to={`${phoneId}`}>
+        <Link to={linkPath}>
           <img
             className="card__image"
             src={imagePath}
@@ -89,8 +105,9 @@ export const ProductCard: FC<Props> = memo(({ phone }) => {
         </Link>
       </div>
 
-      <Link to={`${phoneId}`} className="card__title">
-        {phoneId}
+
+      <Link to={linkPath} className="card__title">
+        {name}
       </Link>
 
       <div className="card__price-container">
@@ -156,4 +173,4 @@ export const ProductCard: FC<Props> = memo(({ phone }) => {
       </div>
     </div>
   );
-});
+};

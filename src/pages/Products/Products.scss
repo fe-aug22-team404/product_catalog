@@ -1,24 +1,30 @@
 @import '../../styles/vars/vars.scss';
 @import '../../styles/mixins/mixins';
 
-#root {
-  display: block;
+.phones {
+  display: flex;
+  justify-content: center;
 }
 
 .phones-page {
-  margin: 0 16px 24px;
+  flex: 1;
+  margin: 0 auto 24px;
+  width: 100%;
 
   @include tablet {
     margin: 0 24px 24px;
   }
 
   @include desktop {
-    margin: 0 32px 24px;
+    margin: 0 0 24px;
   }
 }
 
 .products {
-
+  max-width: 1200px;
+  margin: 0 auto;
+  justify-content: center;
+  align-items: center;
   &__title {
     font-weight: 800;
     font-size: 48px;
@@ -26,14 +32,12 @@
     letter-spacing: -0.01em;
     color: $white;
     margin-bottom: 8px;
-    grid-row: 1 / 2;
   }
 
   &__filters {
     display: flex;
     gap: 8px;
     margin-bottom: 24px;
-    grid-row: 3 / 4;
   }
 
   &__filter {
@@ -69,6 +73,7 @@
     display: flex;
     align-items: center;
     flex-direction: column;
+    grid-row: 4 / 5;
   }
 
   &__container {
@@ -76,12 +81,11 @@
     flex-wrap: wrap;
     width: 288px;
     gap: 40px 16px;
-    grid-row: 4 / 5;
     margin-bottom: 24px;
     justify-content: start;
 
     @include tablet {
-      width: 575px;
+      width: 640px;
     }
 
     @media (min-width: 978px) {
@@ -89,11 +93,11 @@
     }
 
     @include desktop {
-      width: 1136px;
+      width: 1200px;
     }
   }
 
   &__pagination-container {
-    margin-bottom: 64px;
+    margin: 0 auto 64px;
   }
 }
