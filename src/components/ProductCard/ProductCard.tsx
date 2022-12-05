@@ -105,6 +105,7 @@ export const ProductCard: FC<Props> = ({ phone, updateUserData, path }) => {
         </Link>
       </div>
 
+
       <Link to={linkPath} className="card__title">
         {name}
       </Link>
