@@ -4,6 +4,7 @@ import { getPhoneDescription } from '../../api/phoneDescription';
 import { PhoneDescr } from '../../utils/types/PhoneDescription';
 import { useNavigate, useParams } from 'react-router';
 import { Path } from '../Path';
+import { Carusel } from '../Carusel';
 
 export const ItemCard: FC = () => {
   const { openedPhoneId = '' } = useParams();
@@ -39,11 +40,13 @@ export const ItemCard: FC = () => {
       const filteredPhoneCarts = phoneCartsStorage().filter(id => id !== phoneId);
 
       localStorage.setItem('phoneCarts', filteredPhoneCarts.join(','));
+      window.dispatchEvent(new Event("storage"));
       setPhoneCarts(phoneCartsStorage());
     } else {
       const completePhoneCarts = [...phoneCartsStorage(), phoneId];
 
       localStorage.setItem('phoneCarts', completePhoneCarts.join(','));
+      window.dispatchEvent(new Event("storage"));
       setPhoneCarts(phoneCartsStorage());
     }
   }
@@ -52,11 +55,13 @@ export const ItemCard: FC = () => {
       const filteredFavouritePhones = favouritePhonesStorage().filter(id => id !== phoneId);
 
       localStorage.setItem('favouritePhones', filteredFavouritePhones.join(','));
+      window.dispatchEvent(new Event("storage"));
       setFavouritePhones(favouritePhonesStorage());
     } else {
       const completeFavouritePhones = [...favouritePhonesStorage(), phoneId];
 
       localStorage.setItem('favouritePhones', completeFavouritePhones.join(','));
+      window.dispatchEvent(new Event("storage"));
       setFavouritePhones(favouritePhonesStorage());
     }
   };
@@ -67,12 +72,14 @@ export const ItemCard: FC = () => {
     const phonesInCartToStr = phoneCarts.join(',');
 
     localStorage.setItem('phoneCarts', phonesInCartToStr);
+    window.dispatchEvent(new Event("storage"));
   }, [phoneCarts]);
 
   useEffect(() => {
     const favouritePhonesToStr = favouritePhones.join(',');
 
     localStorage.setItem('favouritePhones', favouritePhonesToStr);
+    window.dispatchEvent(new Event("storage"));
   }, [favouritePhones]);
 
   const loadPhoneDescription = async () => {
@@ -124,13 +131,15 @@ export const ItemCard: FC = () => {
   useEffect(() => {
     loadPhoneDescription();
     navigate(`/phones/${phoneId}`);
-  }, [phoneId]);
+  }, []);
 
   return (
-    <>
-      <Path />
+    <div className='item-card'>
       {phoneData &&
-        <div className='phone-card grid grid-mobile grid-tablet grid-desktop'>
+        <div className='item-card__phone-card phone-card grid grid-mobile grid-tablet grid-desktop'>
+          <div className='grid-mobile-1-5 grid-tablet-1-13 grid-desktop-1-25'>
+            <Path />
+          </div>
           <h1 className='phone-card__title grid-mobile-1-5 grid-tablet-1-13 grid-desktop-1-25'>
             {phoneData.name}
           </h1>
@@ -359,6 +368,12 @@ export const ItemCard: FC = () => {
             </div>
           </div>
       </div>}
-    </>
+
+      {phoneData && <Carusel
+        orderType="price"
+        title="You may also like"
+        path='phones'
+      />}
+    </div>
   )
 }

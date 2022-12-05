@@ -16,12 +16,15 @@ export const getPhoneDescription = async (id :string) => {
 
 export const getAllPhones = async() => {
   return await axios.get<Phone[]>(BASE_URL)
-    .then((response) => response.data);
+      .then((response) => response.data);
 };
 
 export const getFavouritesPhones = async(favourites: string) => {
-  console.log(BASE_URL+`?favourites=${favourites}`);
-
   return await axios.get<Phone[]>(BASE_URL+`?favourites=${favourites}`)
+    .then((response) => response.data);
+};
+
+export const getArrangedPhones = async(orderType: string) => {
+  return await axios.get<Phone[]>(BASE_URL+`?orderType=${orderType}`)
     .then((response) => response.data);
 };

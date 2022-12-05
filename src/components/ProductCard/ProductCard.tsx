@@ -1,9 +1,8 @@
 import {
   FC,
   useEffect,
-  useState,
-  memo,
   useMemo,
+  useState,
 } from 'react';
 import cn from 'classnames';
 import { Phone } from '../../types/Phone';
@@ -12,11 +11,11 @@ import './ProductCard.scss';
 import { Link } from 'react-router-dom';
 
 type Props = {
+  path: string;
   phone: Phone;
-  updateUserData: () => void,
 };
 
-export const ProductCard: FC<Props> = ({ phone, updateUserData }) => {
+export const ProductCard: FC<Props> = ({ phone, path }) => {
   const {
     phoneId,
     name,
@@ -27,6 +26,13 @@ export const ProductCard: FC<Props> = ({ phone, updateUserData }) => {
     ram,
     image,
   } = phone;
+
+  const linkPath = useMemo(() => {
+    return path === 'home'
+      ? `/phones/${phoneId}`
+      : `${phoneId}`
+  }, [path])
+
   const imagePath = require(`../../images/${image}`);
   const [phoneCarts, setPhoneCarts] = useState<string[]>([]);
   const [favouritePhones, setFavouritePhones] = useState<string[]>([]);
@@ -53,18 +59,19 @@ export const ProductCard: FC<Props> = ({ phone, updateUserData }) => {
 
   const isPhoneCartsIncludeId = phoneCarts.includes(phoneId);
   const isFavouritePhonesIncludeId = favouritePhones.includes(phoneId);
-  console.log(favouritePhones[0])
 
   const handlePhoneCarts = () => {
     if (isPhoneCartsIncludeId) {
       const filteredPhoneCarts = phoneCartsStorage().filter(itemId => itemId !== phoneId);
 
       localStorage.setItem('phoneCarts', filteredPhoneCarts.join(','));
+      window.dispatchEvent(new Event("storage"));
       setPhoneCarts(phoneCartsStorage());
     } else {
       const completePhoneCarts = [...phoneCartsStorage(), phoneId];
 
       localStorage.setItem('phoneCarts', completePhoneCarts.join(','));
+      window.dispatchEvent(new Event("storage"));
       setPhoneCarts(phoneCartsStorage());
     }
   }
@@ -73,15 +80,15 @@ export const ProductCard: FC<Props> = ({ phone, updateUserData }) => {
       const filteredFavouritePhones = favouritePhonesStorage().filter(itemId => itemId !== phoneId);
 
       localStorage.setItem('favouritePhones', filteredFavouritePhones.join(','));
+      window.dispatchEvent(new Event("storage"));
       setFavouritePhones(favouritePhonesStorage());
     } else {
       const completeFavouritePhones = [...favouritePhonesStorage(), phoneId];
 
       localStorage.setItem('favouritePhones', completeFavouritePhones.join(','));
+      window.dispatchEvent(new Event("storage"));
       setFavouritePhones(favouritePhonesStorage());
     }
-
-    updateUserData();
   };
 
   useEffect(() => {
@@ -92,7 +99,7 @@ export const ProductCard: FC<Props> = ({ phone, updateUserData }) => {
   return (
     <div className="card">
       <div className="card__image-container">
-        <Link to={`${phoneId}`}>
+        <Link to={linkPath}>
           <img
             className="card__image"
             src={imagePath}
@@ -101,7 +108,7 @@ export const ProductCard: FC<Props> = ({ phone, updateUserData }) => {
         </Link>
       </div>
 
-      <Link to={`${phoneId}`} className="card__title">
+      <Link to={linkPath} className="card__title">
         {name}
       </Link>
 
