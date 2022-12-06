@@ -91,7 +91,6 @@ export const Cart: React.FC<Props> = () => {
 
     try {  
       const phonesIdsFromLocal = getIdsFromLocal('phoneCarts');
-
       const phonesData = await getFavouritesPhones(phonesIdsFromLocal);
 
       setPhones(phonesData);
@@ -107,7 +106,6 @@ export const Cart: React.FC<Props> = () => {
       ...curr,
       productId,
     ]);
-
     const newIdsArray = getIdsFromLocal('phoneCarts')
       .split(',')
       .filter(id => id !== productId);
@@ -186,8 +184,7 @@ export const Cart: React.FC<Props> = () => {
               const imagePath = require('../../images/' + image);
 
               const count = counts
-                .find(findedCount => findedCount.phoneId === phoneId);
-              
+                .find(findedCount => findedCount.phoneId === phoneId);              
               const isToDelete = selectedToDelete.includes(phoneId);
 
               return count && (
@@ -246,7 +243,6 @@ export const Cart: React.FC<Props> = () => {
                       onClick={() => addCount(phoneId)}
                     />
                   </div>
-
                   <div className="product-cart__price">
                     ${price}
                   </div> 
@@ -263,9 +259,7 @@ export const Cart: React.FC<Props> = () => {
             {`Total for ${totalItems} items`}
           </div>
 
-          <div className='bill__line'/>
-
-          
+          <div className='bill__line'/>          
             <div className='bill__buttons-box'>
               <PrimaryButton
                 title='Checkout'
