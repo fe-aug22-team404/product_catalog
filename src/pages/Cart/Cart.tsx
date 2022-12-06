@@ -1,13 +1,13 @@
 import classNames from 'classnames';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState, useContext } from 'react';
 import { BackButton } from '../../components/Back-Button';
 import { Phone } from '../../types/Phone';
 
 import './Cart.scss';
 import { PrimaryButton } from '../../components/PrimaryButton';
-import { getIdsFromLocal } from '../../utils/customFunctions/getIdsFromLocal';
 import { getFavouritesPhones } from '../../api/phoneDescription';
-import { Loader } from '../../Loader';
+import { Loader } from '../../components/Loader';
+import { AppContext } from '../../components/AppProvider';
 
 type Props = {};
 
@@ -18,26 +18,23 @@ type Count = {
 }
 
 export const Cart: React.FC<Props> = () => {
-  const phonesIdsFromLocal = getIdsFromLocal('phoneCarts');
-
+  const { shoppingCart, changeShoppingCart } = useContext(AppContext);
   const [phones, setPhones] = useState<Phone[]>([]);
-
   const [counts, setCounts] = useState<Count[]>([]);
-
   const [isLoading, setIsLoading] = useState(false);
 
   const initiateCounts = useCallback(() => {
     const getCountsArray = phones.reduce((arr: Count[], phone) => {
       const { phoneId, price } = phone;
-  
+
       const count: Count = {
         phoneId,
         price: price,
         count: 1,
       };
-  
+
       arr.push(count);
-  
+
       return arr;
     }, []);
 
@@ -84,11 +81,11 @@ export const Cart: React.FC<Props> = () => {
 
   const totalItems = counts.reduce((sum, count) => sum + count.count, 0);
 
-  const loadPhones = useCallback(async() => {
+  const loadPhones = async() => {
     setIsLoading(true);
 
     try {
-      const phonesData = await getFavouritesPhones(phonesIdsFromLocal);
+      const phonesData = await getFavouritesPhones(shoppingCart.join(','));
 
       setPhones(phonesData);
       setIsLoading(false);
@@ -96,20 +93,24 @@ export const Cart: React.FC<Props> = () => {
       setIsLoading(false);
       throw err;
     }
-  }, [phonesIdsFromLocal]);
+  };
 
   const handlerDeleteFromCart = (productId: string) => {
-    const newIdsArray = getIdsFromLocal('phoneCarts')
-      .split(',')
-      .filter(id => id !== productId);
+    const newShoppingCart = shoppingCart.filter(product => product !== productId);
 
-    localStorage.setItem('phoneCarts', newIdsArray.join(','));
-    loadPhones();
+    localStorage.setItem('shoppingCart', newShoppingCart.join(','));
+    changeShoppingCart(newShoppingCart);
   };
 
   useEffect(() => {
     loadPhones();
-  }, [loadPhones]);
+  }, []);
+
+  useEffect(() => {
+    const newPhones = phones.filter(({ phoneId }) => shoppingCart.includes(phoneId));
+
+    setPhones(newPhones);
+  }, [shoppingCart])
 
   useEffect(() => {
     initiateCounts();
@@ -180,14 +181,14 @@ export const Cart: React.FC<Props> = () => {
                         {
                           'counter__plus--disable': count.count === 5,
                         },
-                      )} 
+                      )}
                       onClick={() => addCount(phoneId)}
                     />
                   </div>
 
                   <div className="product-cart__price">
                     ${price}
-                  </div> 
+                  </div>
                 </div>
               );
           })}

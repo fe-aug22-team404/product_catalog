@@ -1,23 +1,22 @@
-import {FC, useCallback, useEffect, useState} from 'react';
+import {FC, useCallback, useEffect, useState, useContext} from 'react';
 import { Path } from '../Path';
-import { getFavouritesPhones, getPhones } from '../../api/phoneDescription';
+import { getFavouritesPhones } from '../../api/phoneDescription';
 import { Phone } from '../../types/Phone';
 import { ProductCard } from '../ProductCard';
 import { Loader } from '../Loader';
-import useLocalStorage from '../../utils/customHooks/useLocalStorage';
+import { AppContext } from '../AppProvider';
 
 export const Favourites: FC = () => {
-  const [favouritesPhonesCount, setFavouritePhonesCount] = useState(0);
-  const [phonesFromLocalStorage, setPhonesFromLocaleStorage] = useState('');
   const [isLoaded, setIsLoaded] = useState(false);
   const [phones, setPhones] = useState<Phone[]>([]);
-  const phonesStorage = useLocalStorage('favouritePhones');
+  const { favourites } = useContext(AppContext);
+  const favouritesItems = favourites.length;
 
-  const getFavourite = async () => {
+  const getFavourites = async () => {
     setIsLoaded(true);
 
     try {
-      const phonesFromApi = await getFavouritesPhones(phonesFromLocalStorage);
+      const phonesFromApi = await getFavouritesPhones(favourites.join(','));
 
       setIsLoaded(false);
       setPhones(phonesFromApi);
@@ -26,39 +25,17 @@ export const Favourites: FC = () => {
       throw new Error(err);
     }
   };
-  const getInitialData = () => {
-    const initialData = localStorage.getItem('favouritePhones');
-    const favouritesPhonesId = initialData
-      ? initialData.split(',')
-      : [];
-    const favouritesPhonesLength = favouritesPhonesId.length;
-
-    if (initialData) {
-      setPhonesFromLocaleStorage(initialData)
-      setFavouritePhonesCount(favouritesPhonesLength)
-    }
-  }
-
-  const updateUserData = useCallback(() => {
-    const favouritesPhonesId = phonesStorage
-      ? phonesStorage.split(',')
-      : [];
-    const favouritesPhonesLength = favouritesPhonesId.length;
-
-    if (phonesStorage) {
-      setPhonesFromLocaleStorage(phonesStorage)
-      setFavouritePhonesCount(favouritesPhonesLength)
-    }
-  }, [phonesStorage]);
-
-  useEffect( () => {
-    getInitialData();
-  }, [])
 
   useEffect(() => {
-    updateUserData();
-    getFavourite();
-  }, [phonesStorage, phonesFromLocalStorage]);
+    getFavourites();
+  }, []);
+
+  useEffect(() => {
+    const newPhones = phones.filter(({ phoneId }) => favourites.includes(phoneId));
+
+    setPhones(newPhones);
+  }, [favourites])
+
 
   return (
       <div className="favourites">
@@ -68,11 +45,11 @@ export const Favourites: FC = () => {
             Favourites
           </h1>
 
-          {isLoaded
-            ? <Loader />
-            : (<>
+          {isLoaded && <Loader /> }
+
+          {(!isLoaded && favourites.length) && (<>
                 <div className="favourites__product-count grid-mobile-1-3 grid-tablet-1-3 grid-desktop-1-3">
-                  {`${favouritesPhonesCount} items`}
+                  {`${favouritesItems} items`}
                 </div>
 
                 <div className="
@@ -93,6 +70,11 @@ export const Favourites: FC = () => {
                   </div>
                 </div>
               </>)}
+            {(!isLoaded && !favourites.length) && (
+                <div className='favourites__empty-box grid-desktop-1-25'>
+                  No products in the favourites
+                </div>
+              )}
         </div>
       </div>
   );
