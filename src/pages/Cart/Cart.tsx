@@ -7,7 +7,7 @@ import './Cart.scss';
 import { PrimaryButton } from '../../components/PrimaryButton';
 import { getIdsFromLocal } from '../../utils/customFunctions/getIdsFromLocal';
 import { getFavouritesPhones } from '../../api/phoneDescription';
-import { Loader } from '../../Loader';
+import { Loader } from '../../components/Loader';
 
 type Props = {};
 
