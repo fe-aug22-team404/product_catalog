@@ -19,8 +19,8 @@ export const getAllPhones = async() => {
       .then((response) => response.data);
 };
 
-export const getFavouritesPhones = async(favourites: string) => {
-  return await axios.get<Phone[]>(BASE_URL+`?favourites=${favourites}`)
+export const getSelectedPhones = async(query: string) => {
+  return await axios.get<Phone[]>(BASE_URL+`?query=${query}`)
     .then((response) => response.data);
 };
 
