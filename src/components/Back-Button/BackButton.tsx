@@ -1,13 +1,16 @@
 import { FC } from 'react';
-import { Link } from 'react-router-dom';
-
+import { useNavigate } from "react-router-dom";
 import './BackButton.scss';
 
-type Props = {};
+export const BackButton: FC = () => {
+  const navigate = useNavigate();
 
-export const BackButton: FC<Props> = () => {
+  const handleClick = () => {
+    navigate(-1);
+  }
+
   return (
-    <Link to='/' className='back-button'>
+    <button className='back-button' onClick={handleClick}>
       <div className='back-button__image'/>
       <span className='back-button__title'>Back</span>
     </Link>

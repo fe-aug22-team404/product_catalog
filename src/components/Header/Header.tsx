@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import {
   Link,
   NavLink,
@@ -7,63 +7,13 @@ import './Header.scss';
 import Logo from '../../images/Logo.png';
 import Cart from '../../images/cart.svg';
 import Like from '../../images/like.svg';
-import useLocalStorage from '../../utils/customHooks/useLocalStorage';
+import { AppContext } from '../AppProvider';
 
 export const Header :React.FC = () => {
-  const [favouritesPhonesCount, setFavouritePhonesCount] = useState(0);
-  const [cartPhonesCount, setCartPhonesCount] = useState(0);
-  const favouritePhones = useLocalStorage('favouritePhones');
-  const phonesInCart = useLocalStorage('phoneCarts');
+  const { favourites, shoppingCart } = useContext(AppContext)
 
-  const getInitialData = () => {
-    const favouriteData = localStorage.getItem('favouritePhones');
-    const favouritesPhonesId = favouriteData
-      ? favouriteData.split(',')
-      : [];
-    const favouritesPhonesLength = favouritesPhonesId.length;
-
-    const cartData = localStorage.getItem('phoneCarts');
-    const cartPhonesId = cartData
-      ? cartData.split(',')
-      : [];
-    const cartPhonesLength = cartPhonesId.length;
-
-    if (favouriteData) {
-      setFavouritePhonesCount(favouritesPhonesLength);
-    }
-
-    if (cartData) {
-      setFavouritePhonesCount(cartPhonesLength);
-    }
-  }
-
-  const updateUserData = useCallback(() => {
-    const favouritesPhonesId = favouritePhones
-      ? favouritePhones.split(',')
-      : [];
-    const favouritesPhonesLength = favouritesPhonesId.length;
-
-    const cartPhonesId = phonesInCart
-      ? phonesInCart.split(',')
-      : [];
-    const cartPhonesLength = cartPhonesId.length;
-
-    if (favouritePhones) {
-      setFavouritePhonesCount(favouritesPhonesLength);
-    }
-
-    if (cartPhonesLength) {
-      setCartPhonesCount(cartPhonesLength)
-    }
-  }, [favouritePhones, phonesInCart]);
-
-  useEffect( () => {
-    getInitialData();
-  }, [])
-
-  useEffect(() => {
-    updateUserData();
-  }, [favouritePhones, phonesInCart]);
+  const favouritesItems = favourites.length;
+  const shoppingCartItems = shoppingCart.length;
 
   return (
     <header className="header">
@@ -124,9 +74,9 @@ export const Header :React.FC = () => {
               className="header__link-img"
               alt="btn-like"
             />
-            {favouritesPhonesCount > 0 && (
+            {favouritesItems > 0 && (
               <div className="header__link-img-count">
-                {favouritesPhonesCount}
+                {favouritesItems}
               </div>
             )}
           </div>
@@ -139,9 +89,9 @@ export const Header :React.FC = () => {
               className="header__link-img"
               alt="link-img"
             />
-            {cartPhonesCount > 0 && (
+            {shoppingCartItems > 0 && (
               <div className="header__link-img-count">
-                {cartPhonesCount}
+                {shoppingCartItems}
               </div>
             )}
           </div>

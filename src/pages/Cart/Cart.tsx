@@ -1,13 +1,13 @@
 import classNames from 'classnames';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState, useContext } from 'react';
 import { BackButton } from '../../components/Back-Button';
 import { Phone } from '../../types/Phone';
 
 import './Cart.scss';
 import { PrimaryButton } from '../../components/PrimaryButton';
-import { getIdsFromLocal } from '../../utils/customFunctions/getIdsFromLocal';
 import { getFavouritesPhones } from '../../api/phoneDescription';
 import { Loader } from '../../components/Loader';
+import { AppContext } from '../../components/AppProvider';
 
 type Props = {};
 
@@ -18,10 +18,9 @@ type Count = {
 }
 
 export const Cart: React.FC<Props> = () => {
+  const { shoppingCart, changeShoppingCart } = useContext(AppContext);
   const [phones, setPhones] = useState<Phone[]>([]);
-
   const [counts, setCounts] = useState<Count[]>([]);
-
   const [isLoading, setIsLoading] = useState(false);
   const [loadingPhones, setLoadingPhones] = useState<string[]>([]);
   const [selectedToDelete, setSelectedToDelete] = useState<string[]>([]);
@@ -29,15 +28,15 @@ export const Cart: React.FC<Props> = () => {
   const initiateCounts = useCallback(() => {
     const getCountsArray = phones.reduce((arr: Count[], phone) => {
       const { phoneId, price } = phone;
-  
+
       const count: Count = {
         phoneId,
         price: price,
         count: 1,
       };
-  
+
       arr.push(count);
-  
+
       return arr;
     }, []);
 
@@ -89,9 +88,8 @@ export const Cart: React.FC<Props> = () => {
       setIsLoading(true);
     }
 
-    try {  
-      const phonesIdsFromLocal = getIdsFromLocal('phoneCarts');
-      const phonesData = await getFavouritesPhones(phonesIdsFromLocal);
+    try {
+      const phonesData = await getFavouritesPhones(shoppingCart.join(','));
 
       setPhones(phonesData);
       setIsLoading(false);
@@ -100,37 +98,12 @@ export const Cart: React.FC<Props> = () => {
       throw err;
     }
   }, []);
+  
+  const handlerDeleteMany = () => {
+    const newShoppingCart = shoppingCart.filter(product => !selectedToDelete.includes(product));
 
-  const handlerDeleteFromCart = async(productId: string) => {
-    setLoadingPhones(curr => [
-      ...curr,
-      productId,
-    ]);
-    const newIdsArray = getIdsFromLocal('phoneCarts')
-      .split(',')
-      .filter(id => id !== productId);
-
-    localStorage.setItem('phoneCarts', newIdsArray.join(','));
-    await loadPhones();
-    setLoadingPhones(curr => curr.filter(id => id !== productId));
-  };
-
-  const handlerDeleteMany = async() => {
-    setLoadingPhones(curr => [
-      ...curr,
-      ...selectedToDelete,
-    ]);
-
-    const newIdsArray = getIdsFromLocal('phoneCarts')
-      .split(',')
-      .filter(id => !selectedToDelete.includes(id));
-
-    localStorage.setItem('phoneCarts', newIdsArray.join(','));
-    await loadPhones();
-
-    setLoadingPhones(curr => curr
-      .filter(id => !selectedToDelete.includes(id)));
-    setSelectedToDelete([]);
+    localStorage.setItem('shoppingCart', newShoppingCart.join(','));
+    changeShoppingCart(newShoppingCart);
   };
 
   const handlerAddToDeleteList = (
@@ -151,9 +124,22 @@ export const Cart: React.FC<Props> = () => {
     }
   };
 
+  const handlerDeleteFromCart = (productId: string) => {
+    const newShoppingCart = shoppingCart.filter(product => product !== productId);
+
+    localStorage.setItem('shoppingCart', newShoppingCart.join(','));
+    changeShoppingCart(newShoppingCart);
+  };
+
   useEffect(() => {
     loadPhones(true);
-  }, [loadPhones]);
+  }, []);
+
+  useEffect(() => {
+    const newPhones = phones.filter(({ phoneId }) => shoppingCart.includes(phoneId));
+
+    setPhones(newPhones);
+  }, [shoppingCart]);
 
   useEffect(() => {
     initiateCounts();
@@ -239,13 +225,13 @@ export const Cart: React.FC<Props> = () => {
                         {
                           'counter__plus--disable': count.count === 5,
                         },
-                      )} 
+                      )}
                       onClick={() => addCount(phoneId)}
                     />
                   </div>
                   <div className="product-cart__price">
                     ${price}
-                  </div> 
+                  </div>
                 </div>
               );
           })}
