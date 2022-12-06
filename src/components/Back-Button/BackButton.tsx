@@ -2,9 +2,7 @@ import { FC } from 'react';
 import { useNavigate } from "react-router-dom";
 import './BackButton.scss';
 
-type Props = {};
-
-export const BackButton: FC<Props> = () => {
+export const BackButton: FC = () => {
   const navigate = useNavigate();
 
   const handleClick = () => {
