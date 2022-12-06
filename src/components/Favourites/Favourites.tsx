@@ -1,6 +1,6 @@
 import {FC, useCallback, useEffect, useState, useContext} from 'react';
 import { Path } from '../Path';
-import { getFavouritesPhones } from '../../api/phoneDescription';
+import { getSelectedPhones } from '../../api/phoneDescription';
 import { Phone } from '../../types/Phone';
 import { ProductCard } from '../ProductCard';
 import { Loader } from '../Loader';
@@ -16,7 +16,7 @@ export const Favourites: FC = () => {
     setIsLoaded(true);
 
     try {
-      const phonesFromApi = await getFavouritesPhones(favourites.join(','));
+      const phonesFromApi = await getSelectedPhones(favourites.join(','));
 
       setIsLoaded(false);
       setPhones(phonesFromApi);

@@ -5,7 +5,7 @@ import { Phone } from '../../types/Phone';
 
 import './Cart.scss';
 import { PrimaryButton } from '../../components/PrimaryButton';
-import { getFavouritesPhones } from '../../api/phoneDescription';
+import { getSelectedPhones } from '../../api/phoneDescription';
 import { Loader } from '../../components/Loader';
 import { AppContext } from '../../components/AppProvider';
 
@@ -22,7 +22,6 @@ export const Cart: React.FC<Props> = () => {
   const [phones, setPhones] = useState<Phone[]>([]);
   const [counts, setCounts] = useState<Count[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [loadingPhones, setLoadingPhones] = useState<string[]>([]);
   const [selectedToDelete, setSelectedToDelete] = useState<string[]>([]);
 
   const initiateCounts = useCallback(() => {
@@ -89,7 +88,7 @@ export const Cart: React.FC<Props> = () => {
     }
 
     try {
-      const phonesData = await getFavouritesPhones(shoppingCart.join(','));
+      const phonesData = await getSelectedPhones(shoppingCart.join(','));
 
       setPhones(phonesData);
       setIsLoading(false);
@@ -178,24 +177,18 @@ export const Cart: React.FC<Props> = () => {
                   'cart__product-cart',
                   'product-cart',
                 )} key={phoneId}>
-                  {loadingPhones.includes(phoneId)
-                    ? (
-                      <Loader />
-                    )
-                    : (
-                      <div
-                        className={classNames(
-                          'product-cart__delete',
-                          {
-                            'product-cart__delete--selected': isToDelete,
-                          },
-                        )}
-                        onClick={() => handlerDeleteFromCart(phoneId)}
-                        onContextMenu={(event) => {
-                          handlerAddToDeleteList(event, phoneId, isToDelete);                     
-                        }}
-                      />
+                  <div
+                    className={classNames(
+                      'product-cart__delete',
+                      {
+                        'product-cart__delete--selected': isToDelete,
+                      },
                     )}
+                    onClick={() => handlerDeleteFromCart(phoneId)}
+                    onContextMenu={(event) => {
+                      handlerAddToDeleteList(event, phoneId, isToDelete);                     
+                    }}
+                  />
 
                   <div className='product-cart__image-box'>
                     <img

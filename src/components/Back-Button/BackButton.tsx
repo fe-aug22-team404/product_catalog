@@ -13,6 +13,6 @@ export const BackButton: FC = () => {
     <button className='back-button' onClick={handleClick}>
       <div className='back-button__image'/>
       <span className='back-button__title'>Back</span>
-    </Link>
+    </button>
   )
 };
