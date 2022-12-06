@@ -18,13 +18,13 @@ type Count = {
 }
 
 export const Cart: React.FC<Props> = () => {
-  const phonesIdsFromLocal = getIdsFromLocal('phoneCarts');
-
   const [phones, setPhones] = useState<Phone[]>([]);
 
   const [counts, setCounts] = useState<Count[]>([]);
 
   const [isLoading, setIsLoading] = useState(false);
+  const [loadingPhones, setLoadingPhones] = useState<string[]>([]);
+  const [selectedToDelete, setSelectedToDelete] = useState<string[]>([]);
 
   const initiateCounts = useCallback(() => {
     const getCountsArray = phones.reduce((arr: Count[], phone) => {
@@ -84,10 +84,14 @@ export const Cart: React.FC<Props> = () => {
 
   const totalItems = counts.reduce((sum, count) => sum + count.count, 0);
 
-  const loadPhones = useCallback(async() => {
-    setIsLoading(true);
+  const loadPhones = useCallback(async(isLoad: boolean = false) => {
+    if (isLoad) {
+      setIsLoading(true);
+    }
 
-    try {
+    try {  
+      const phonesIdsFromLocal = getIdsFromLocal('phoneCarts');
+
       const phonesData = await getFavouritesPhones(phonesIdsFromLocal);
 
       setPhones(phonesData);
@@ -96,19 +100,61 @@ export const Cart: React.FC<Props> = () => {
       setIsLoading(false);
       throw err;
     }
-  }, [phonesIdsFromLocal]);
+  }, []);
 
-  const handlerDeleteFromCart = (productId: string) => {
+  const handlerDeleteFromCart = async(productId: string) => {
+    setLoadingPhones(curr => [
+      ...curr,
+      productId,
+    ]);
+
     const newIdsArray = getIdsFromLocal('phoneCarts')
       .split(',')
       .filter(id => id !== productId);
 
     localStorage.setItem('phoneCarts', newIdsArray.join(','));
-    loadPhones();
+    await loadPhones();
+    setLoadingPhones(curr => curr.filter(id => id !== productId));
+  };
+
+  const handlerDeleteMany = async() => {
+    setLoadingPhones(curr => [
+      ...curr,
+      ...selectedToDelete,
+    ]);
+
+    const newIdsArray = getIdsFromLocal('phoneCarts')
+      .split(',')
+      .filter(id => !selectedToDelete.includes(id));
+
+    localStorage.setItem('phoneCarts', newIdsArray.join(','));
+    await loadPhones();
+
+    setLoadingPhones(curr => curr
+      .filter(id => !selectedToDelete.includes(id)));
+    setSelectedToDelete([]);
+  };
+
+  const handlerAddToDeleteList = (
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>,
+    phoneId: string,
+    isToDelete: boolean,
+  ) => {
+    event.preventDefault();
+
+    if (isToDelete) {
+      setSelectedToDelete(curr => curr
+        .filter(id => id !== phoneId));
+    } else {
+      setSelectedToDelete(curr => [
+        ...curr,
+        phoneId
+      ]);                    
+    }
   };
 
   useEffect(() => {
-    loadPhones();
+    loadPhones(true);
   }, [loadPhones]);
 
   useEffect(() => {
@@ -141,16 +187,32 @@ export const Cart: React.FC<Props> = () => {
 
               const count = counts
                 .find(findedCount => findedCount.phoneId === phoneId);
+              
+              const isToDelete = selectedToDelete.includes(phoneId);
 
               return count && (
                 <div className={classNames(
                   'cart__product-cart',
                   'product-cart',
                 )} key={phoneId}>
-                  <div
-                    className='product-cart__delete'
-                    onClick={() => handlerDeleteFromCart(phoneId)}
-                  />
+                  {loadingPhones.includes(phoneId)
+                    ? (
+                      <Loader />
+                    )
+                    : (
+                      <div
+                        className={classNames(
+                          'product-cart__delete',
+                          {
+                            'product-cart__delete--selected': isToDelete,
+                          },
+                        )}
+                        onClick={() => handlerDeleteFromCart(phoneId)}
+                        onContextMenu={(event) => {
+                          handlerAddToDeleteList(event, phoneId, isToDelete);                     
+                        }}
+                      />
+                    )}
 
                   <div className='product-cart__image-box'>
                     <img
@@ -203,12 +265,24 @@ export const Cart: React.FC<Props> = () => {
 
           <div className='bill__line'/>
 
-          <PrimaryButton
-            title='Checkout'
-            handler={() => {}}
-          />
-        </div>
-          </>
+          
+            <div className='bill__buttons-box'>
+              <PrimaryButton
+                title='Checkout'
+                handler={() => {}}
+              />
+
+              {selectedToDelete.length > 0 && (
+                <div
+                  className='bill__clear-button'
+                  onClick={handlerDeleteMany}
+                >
+                  Clear
+                </div>
+              )}
+            </div>
+          </div>
+        </>
         )}
 
         {(phones.length === 0 && !isLoading) && (
