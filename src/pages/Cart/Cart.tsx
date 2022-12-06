@@ -22,6 +22,8 @@ export const Cart: React.FC<Props> = () => {
   const [phones, setPhones] = useState<Phone[]>([]);
   const [counts, setCounts] = useState<Count[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [loadingPhones, setLoadingPhones] = useState<string[]>([]);
+  const [selectedToDelete, setSelectedToDelete] = useState<string[]>([]);
 
   const initiateCounts = useCallback(() => {
     const getCountsArray = phones.reduce((arr: Count[], phone) => {
@@ -81,8 +83,10 @@ export const Cart: React.FC<Props> = () => {
 
   const totalItems = counts.reduce((sum, count) => sum + count.count, 0);
 
-  const loadPhones = async() => {
-    setIsLoading(true);
+  const loadPhones = useCallback(async(isLoad: boolean = false) => {
+    if (isLoad) {
+      setIsLoading(true);
+    }
 
     try {
       const phonesData = await getFavouritesPhones(shoppingCart.join(','));
@@ -92,6 +96,31 @@ export const Cart: React.FC<Props> = () => {
     } catch (err) {
       setIsLoading(false);
       throw err;
+    }
+  }, []);
+  
+  const handlerDeleteMany = () => {
+    const newShoppingCart = shoppingCart.filter(product => !selectedToDelete.includes(product));
+
+    localStorage.setItem('shoppingCart', newShoppingCart.join(','));
+    changeShoppingCart(newShoppingCart);
+  };
+
+  const handlerAddToDeleteList = (
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>,
+    phoneId: string,
+    isToDelete: boolean,
+  ) => {
+    event.preventDefault();
+
+    if (isToDelete) {
+      setSelectedToDelete(curr => curr
+        .filter(id => id !== phoneId));
+    } else {
+      setSelectedToDelete(curr => [
+        ...curr,
+        phoneId
+      ]);                    
     }
   };
 
@@ -103,14 +132,14 @@ export const Cart: React.FC<Props> = () => {
   };
 
   useEffect(() => {
-    loadPhones();
+    loadPhones(true);
   }, []);
 
   useEffect(() => {
     const newPhones = phones.filter(({ phoneId }) => shoppingCart.includes(phoneId));
 
     setPhones(newPhones);
-  }, [shoppingCart])
+  }, [shoppingCart]);
 
   useEffect(() => {
     initiateCounts();
@@ -141,17 +170,32 @@ export const Cart: React.FC<Props> = () => {
               const imagePath = require('../../images/' + image);
 
               const count = counts
-                .find(findedCount => findedCount.phoneId === phoneId);
+                .find(findedCount => findedCount.phoneId === phoneId);              
+              const isToDelete = selectedToDelete.includes(phoneId);
 
               return count && (
                 <div className={classNames(
                   'cart__product-cart',
                   'product-cart',
                 )} key={phoneId}>
-                  <div
-                    className='product-cart__delete'
-                    onClick={() => handlerDeleteFromCart(phoneId)}
-                  />
+                  {loadingPhones.includes(phoneId)
+                    ? (
+                      <Loader />
+                    )
+                    : (
+                      <div
+                        className={classNames(
+                          'product-cart__delete',
+                          {
+                            'product-cart__delete--selected': isToDelete,
+                          },
+                        )}
+                        onClick={() => handlerDeleteFromCart(phoneId)}
+                        onContextMenu={(event) => {
+                          handlerAddToDeleteList(event, phoneId, isToDelete);                     
+                        }}
+                      />
+                    )}
 
                   <div className='product-cart__image-box'>
                     <img
@@ -185,7 +229,6 @@ export const Cart: React.FC<Props> = () => {
                       onClick={() => addCount(phoneId)}
                     />
                   </div>
-
                   <div className="product-cart__price">
                     ${price}
                   </div>
@@ -202,14 +245,24 @@ export const Cart: React.FC<Props> = () => {
             {`Total for ${totalItems} items`}
           </div>
 
-          <div className='bill__line'/>
+          <div className='bill__line'/>          
+            <div className='bill__buttons-box'>
+              <PrimaryButton
+                title='Checkout'
+                handler={() => {}}
+              />
 
-          <PrimaryButton
-            title='Checkout'
-            handler={() => {}}
-          />
-        </div>
-          </>
+              {selectedToDelete.length > 0 && (
+                <div
+                  className='bill__clear-button'
+                  onClick={handlerDeleteMany}
+                >
+                  Clear
+                </div>
+              )}
+            </div>
+          </div>
+        </>
         )}
 
         {(phones.length === 0 && !isLoading) && (
