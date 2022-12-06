@@ -7,13 +7,13 @@
 
 .grid-mobile {
 	@include mobile {
-		grid-template-columns: repeat(4, 1fr);
+		grid-template-columns: repeat(4, minmax(60px, 1fr));
 	};
 }
 
 .grid-tablet {
 	@include tablet {
-		grid-template-columns: repeat(12, 1fr);
+		grid-template-columns: repeat(12, minmax(32px, 1fr));
 	};
 }
 
