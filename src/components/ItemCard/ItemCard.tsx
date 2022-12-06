@@ -1,87 +1,52 @@
-import { useMemo, FC, useEffect, useState, Fragment } from 'react';
+import { useMemo, FC, useEffect, useState, Fragment, useContext } from 'react';
 import classNames from 'classnames';
 import { getPhoneDescription } from '../../api/phoneDescription';
 import { PhoneDescr } from '../../utils/types/PhoneDescription';
 import { useLocation, useNavigate, useParams } from 'react-router';
 import { Path } from '../Path';
 import { Carusel } from '../Carusel';
+import { AppContext } from '../AppProvider';
 
 export const ItemCard: FC = () => {
   const { openedPhoneId = '' } = useParams();
   const [phoneData, setPhoneData] = useState<PhoneDescr | null>(null);
   const [currentImage, setCurrentImage] = useState(0);
   const [phoneId, setPhoneId] = useState(openedPhoneId);
-  const [currentLocation, setCurrentLocation] = useState(openedPhoneId)
+  const [path, setPath] = useState('')
+  const { favourites, shoppingCart, changeFavourites, changeShoppingCart } = useContext(AppContext);
   const location = useLocation();
   const navigate = useNavigate();
 
-  const phoneCartsStorage = () => {
-    const phoneCartFromStorage = localStorage.getItem('phoneCarts');
+  const isShoppingCartIncludeId = shoppingCart.includes(phoneId);
+  const isFavouritesIncludeId = favourites.includes(phoneId);
 
-    return phoneCartFromStorage
-      ? phoneCartFromStorage.split(',')
-      : [];
-  };
-  const favouritePhonesStorage = () => {
-    const favouritePhonesFromStorage =  localStorage.getItem('favouritePhones');
+  const handleShoppingCarts = () => {
+    if (isShoppingCartIncludeId) {
+      const filteredShoppingCart = shoppingCart.filter(id => id !== phoneId);
 
-    return favouritePhonesFromStorage
-      ? favouritePhonesFromStorage.split(',')
-      : [];
-  };
-
-  const [phoneCarts, setPhoneCarts] = useState(phoneCartsStorage());
-  const [favouritePhones, setFavouritePhones] = useState(favouritePhonesStorage());
-
-  const isPhoneCartsIncludeId = phoneCarts.includes(phoneId);
-  const isFavouritePhonesIncludeId = favouritePhones.includes(phoneId);
-
-  const handlePhoneCarts = () => {
-    if (isPhoneCartsIncludeId) {
-      const filteredPhoneCarts = phoneCartsStorage().filter(id => id !== phoneId);
-
-      localStorage.setItem('phoneCarts', filteredPhoneCarts.join(','));
-      window.dispatchEvent(new Event("storage"));
-      setPhoneCarts(phoneCartsStorage());
+      localStorage.setItem('shoppingCart', filteredShoppingCart.join(','));
+      changeShoppingCart(filteredShoppingCart);
     } else {
-      const completePhoneCarts = [...phoneCartsStorage(), phoneId];
+      const addedShoppingCart = [...shoppingCart, phoneId];
 
-      localStorage.setItem('phoneCarts', completePhoneCarts.join(','));
-      window.dispatchEvent(new Event("storage"));
-      setPhoneCarts(phoneCartsStorage());
+      localStorage.setItem('shoppingCart', addedShoppingCart.join(','));
+      changeShoppingCart(addedShoppingCart);
     }
   }
-  const handleFavouritePhones = () => {
-    if (isFavouritePhonesIncludeId) {
-      const filteredFavouritePhones = favouritePhonesStorage().filter(id => id !== phoneId);
 
-      localStorage.setItem('favouritePhones', filteredFavouritePhones.join(','));
-      window.dispatchEvent(new Event("storage"));
-      setFavouritePhones(favouritePhonesStorage());
+  const handleFavourites = () => {
+    if (isFavouritesIncludeId) {
+      const filteredFavourites = favourites.filter(id => id !== phoneId);
+
+      localStorage.setItem('favourites', filteredFavourites.join(','));
+      changeFavourites(filteredFavourites);
     } else {
-      const completeFavouritePhones = [...favouritePhonesStorage(), phoneId];
+      const completeFavourites = [...favourites, phoneId];
 
-      localStorage.setItem('favouritePhones', completeFavouritePhones.join(','));
-      window.dispatchEvent(new Event("storage"));
-      setFavouritePhones(favouritePhonesStorage());
+      localStorage.setItem('favourites', completeFavourites.join(','));
+      changeFavourites(completeFavourites);
     }
   };
-
-  const isPhonesInCartIncludeId = useMemo(() => phoneCarts.includes(phoneId), [phoneCarts]);
-
-  useEffect(() => {
-    const phonesInCartToStr = phoneCarts.join(',');
-
-    localStorage.setItem('phoneCarts', phonesInCartToStr);
-    window.dispatchEvent(new Event("storage"));
-  }, [phoneCarts]);
-
-  useEffect(() => {
-    const favouritePhonesToStr = favouritePhones.join(',');
-
-    localStorage.setItem('favouritePhones', favouritePhonesToStr);
-    window.dispatchEvent(new Event("storage"));
-  }, [favouritePhones]);
 
   const loadPhoneDescription = async () => {
     try {
@@ -128,23 +93,23 @@ export const ItemCard: FC = () => {
     ));
   }
 
-  const compareLocation = () => {
-    const currentPath = location.pathname.slice(1).split('/');
-    const id = currentPath[currentPath.length - 1];
+  useEffect(() => {
+    const currentPath = location.pathname;
 
-    console.log(id, phoneId)
-    if (phoneId !== id) {
-      setPhoneId(id);
+    if (currentPath !== path) {
+      const newId = location.pathname.slice(1).split('/')[1];
+
+      setPhoneId(newId)
     }
-  }
-
-  // useEffect(() => {
-  //   compareLocation();
-  // }, [location]);
+  }, [location]);
 
   useEffect(() => {
     loadPhoneDescription();
     navigate(`/phones/${phoneId}`);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    const currentPath = location.pathname;
+    setPath(currentPath);
   }, [phoneId]);
 
   return (
@@ -260,20 +225,20 @@ export const ItemCard: FC = () => {
             <div className="short-info__buttons-container">
               <button
                 className={classNames('short-info__add-button', {
-                  'short-info__add-button--is-selected': isPhonesInCartIncludeId
+                  'short-info__add-button--is-selected': isShoppingCartIncludeId
                 })}
-                onClick={handlePhoneCarts}
+                onClick={handleShoppingCarts}
               >
-                {!isPhonesInCartIncludeId
+                {!isShoppingCartIncludeId
                   ? 'Add to cart'
                   : 'Added'}
               </button>
 
               <button
                 className={classNames('short-info__like-button', {
-                  'short-info__like-button--is-selected': isFavouritePhonesIncludeId
+                  'short-info__like-button--is-selected': isFavouritesIncludeId
                 })}
-                onClick={handleFavouritePhones}
+                onClick={handleFavourites}
               />
             </div>
 

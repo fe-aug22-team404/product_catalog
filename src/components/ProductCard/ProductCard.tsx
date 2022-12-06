@@ -3,12 +3,14 @@ import {
   useEffect,
   useMemo,
   useState,
+  useContext
 } from 'react';
 import cn from 'classnames';
 import { Phone } from '../../types/Phone';
 
 import './ProductCard.scss';
 import { Link, useNavigate } from 'react-router-dom';
+import { AppContext } from '../AppProvider';
 
 type Props = {
   path: string;
@@ -26,75 +28,44 @@ export const ProductCard: FC<Props> = ({ phone, path }) => {
     ram,
     image,
   } = phone;
-
+  const { favourites, shoppingCart, changeFavourites, changeShoppingCart } = useContext(AppContext);
+  const imagePath = require(`../../images/${image}`);
   const linkPath = useMemo(() => {
     return path !== 'phones'
       ? `/phones/${phoneId}`
       : `${phoneId}`
   }, [path])
 
-  const imagePath = require(`../../images/${image}`);
-  const [phoneCarts, setPhoneCarts] = useState<string[]>([]);
-  const [favouritePhones, setFavouritePhones] = useState<string[]>([]);
+  const isShoppingCartIncludeId = shoppingCart.includes(phoneId);
+  const isFavouritesIncludeId = favourites.includes(phoneId);
 
-  const phoneCartsStorage = () => {
-    const phoneCartFromStorage = localStorage.getItem('phoneCarts');
-    const dataInState = phoneCartFromStorage
-      ? phoneCartFromStorage.split(',')
-      : [];
+  const handleShoppingCarts = () => {
+    if (isShoppingCartIncludeId) {
+      const filteredShoppingCart = shoppingCart.filter(id => id !== phoneId);
 
-    setPhoneCarts(dataInState);
-    return dataInState;
-  };
-
-  const favouritePhonesStorage = () => {
-    const favouritePhonesFromStorage = localStorage.getItem('favouritePhones');
-    const dataInState = favouritePhonesFromStorage
-      ? favouritePhonesFromStorage.split(',')
-      : [];
-
-    setFavouritePhones(dataInState);
-    return dataInState;
-  };
-
-  const isPhoneCartsIncludeId = phoneCarts.includes(phoneId);
-  const isFavouritePhonesIncludeId = favouritePhones.includes(phoneId);
-
-  const handlePhoneCarts = () => {
-    if (isPhoneCartsIncludeId) {
-      const filteredPhoneCarts = phoneCartsStorage().filter(itemId => itemId !== phoneId);
-
-      localStorage.setItem('phoneCarts', filteredPhoneCarts.join(','));
-      window.dispatchEvent(new Event("storage"));
-      setPhoneCarts(phoneCartsStorage());
+      localStorage.setItem('shoppingCart', filteredShoppingCart.join(','));
+      changeShoppingCart(filteredShoppingCart);
     } else {
-      const completePhoneCarts = [...phoneCartsStorage(), phoneId];
+      const addedShoppingCart = [...shoppingCart, phoneId];
 
-      localStorage.setItem('phoneCarts', completePhoneCarts.join(','));
-      window.dispatchEvent(new Event("storage"));
-      setPhoneCarts(phoneCartsStorage());
+      localStorage.setItem('shoppingCart', addedShoppingCart.join(','));
+      changeShoppingCart(addedShoppingCart);
     }
   }
-  const handleFavouritePhones = () => {
-    if (isFavouritePhonesIncludeId) {
-      const filteredFavouritePhones = favouritePhonesStorage().filter(itemId => itemId !== phoneId);
 
-      localStorage.setItem('favouritePhones', filteredFavouritePhones.join(','));
-      window.dispatchEvent(new Event("storage"));
-      setFavouritePhones(favouritePhonesStorage());
+  const handleFavourites = () => {
+    if (isFavouritesIncludeId) {
+      const filteredFavourites = favourites.filter(id => id !== phoneId);
+
+      localStorage.setItem('favourites', filteredFavourites.join(','));
+      changeFavourites(filteredFavourites);
     } else {
-      const completeFavouritePhones = [...favouritePhonesStorage(), phoneId];
+      const completeFavourites = [...favourites, phoneId];
 
-      localStorage.setItem('favouritePhones', completeFavouritePhones.join(','));
-      window.dispatchEvent(new Event("storage"));
-      setFavouritePhones(favouritePhonesStorage());
+      localStorage.setItem('favourites', completeFavourites.join(','));
+      changeFavourites(completeFavourites);
     }
   };
-
-  useEffect(() => {
-    phoneCartsStorage();
-    favouritePhonesStorage();
-  }, [])
 
   return (
     <div className="card">
@@ -157,20 +128,20 @@ export const ProductCard: FC<Props> = ({ phone, path }) => {
       <div className="card__buttons-container">
         <button
           className={cn('card__add-button', {
-            'card__add-button--is-selected': isPhoneCartsIncludeId
+            'card__add-button--is-selected': isShoppingCartIncludeId
           })}
-          onClick={handlePhoneCarts}
+          onClick={handleShoppingCarts}
         >
-          {!isPhoneCartsIncludeId
+          {!isShoppingCartIncludeId
             ? 'Add to card'
             : 'Added'}
         </button>
 
         <button
           className={cn('card__like-button', {
-            'card__like-button--is-selected': isFavouritePhonesIncludeId
+            'card__like-button--is-selected': isFavouritesIncludeId
           })}
-          onClick={handleFavouritePhones}
+          onClick={handleFavourites}
         />
       </div>
     </div>

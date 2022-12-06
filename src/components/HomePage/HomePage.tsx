@@ -21,7 +21,7 @@ export const HomePage: React.FC = () => {
       <h1 className="homepage__title grid-mobile-1-5 grid-tablet-1-13 grid-desktop-1-17">
         Welcome to Nice Gadgets store!
       </h1>
- 
+
       <ProductsSlider />
 
       <Carusel
