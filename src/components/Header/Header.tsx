@@ -174,7 +174,7 @@ export const Header :React.FC = () => {
 
           <section className="menu__bottom">
             <NavLink
-              to="/favorites"
+              to="/favourites"
               className="menu__link"
               onClick={() => {
                 removeMenu();
