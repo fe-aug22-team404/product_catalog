@@ -10,6 +10,7 @@ import Like from '../../images/like.svg';
 import Burger from '../../images/Burger.svg';
 import Cross from '../../images/Cross.svg';
 import { AppContext } from '../AppProvider/AppProvider';
+import classNames from 'classnames';
 
 export const Header :React.FC = () => {
   const { favourites, shoppingCart } = useContext(AppContext)
@@ -24,10 +25,19 @@ export const Header :React.FC = () => {
 
   return (
     <>
-      <header className="header">
-        <section className="header__left-mobile">
+      <header className={classNames(
+        'header',
+        {
+          'header--open': isOpen
+        },
+      )}>
+        <section className={"header__left-mobile"}>
           <Link to="/">
-            <img className="header__logo" src={Logo} alt="logo" />
+            <img
+              className="header__logo"
+              src={Logo} alt="logo"
+              onClick={removeMenu}
+            />
           </Link>
           <div
             onClick={() => {
@@ -94,10 +104,9 @@ export const Header :React.FC = () => {
             </div>
           </NavLink>
         </section>
-      </header>
-      {isOpen && (
+        {isOpen && (
         <aside className="menu" id="menu">
-          <section className="menu__top">
+          {/* <section className="menu__top">
             <Link
               to="/"
               onClick={() => {
@@ -118,11 +127,11 @@ export const Header :React.FC = () => {
                 </div>
               </div>
             </Link>
-          </section>
+          </section> */}
 
           <nav className="menu__nav">
             <ul className="menu__nav-list">
-              <li className="menu__nav-item">
+              <li className="menu__nav-item menu__nav-item--1">
                 <NavLink
                   to="/"
                   className="menu__nav-link"
@@ -134,7 +143,7 @@ export const Header :React.FC = () => {
                 </NavLink>
               </li>
 
-              <li className="menu__nav-item">
+              <li className="menu__nav-item menu__nav-item--2">
                 <NavLink
                   to="/phones"
                   className="menu__nav-link"
@@ -146,7 +155,7 @@ export const Header :React.FC = () => {
                 </NavLink>
               </li>
 
-              <li className="menu__nav-item">
+              <li className="menu__nav-item  menu__nav-item--3">
                 <NavLink
                   to="/tablets"
                   className="menu__nav-link"
@@ -158,7 +167,7 @@ export const Header :React.FC = () => {
                 </NavLink>
               </li>
 
-              <li className="menu__nav-item">
+              <li className="menu__nav-item  menu__nav-item--4">
                 <NavLink
                   to="/accessory"
                   className="menu__nav-link"
@@ -207,6 +216,8 @@ export const Header :React.FC = () => {
           </section>
         </aside>
       )}
+      </header>
+      
     </>
   );
 }

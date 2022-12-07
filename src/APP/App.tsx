@@ -9,9 +9,9 @@ export const App: FC = () => {
     <AppProvider>
       <Header />
 
-      <Outlet />
+      {/* <Outlet />
       
-      <Footer />
+      <Footer /> */}
     </AppProvider>
     );
 }

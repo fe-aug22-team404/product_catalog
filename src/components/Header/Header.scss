@@ -9,6 +9,10 @@
   box-shadow: 0 1px 0 $surface-2;
   margin-bottom: 40px;
 
+  &--open {
+    flex-direction: column;
+  }
+
   &__left {
 
     @include mobile {
@@ -22,11 +26,13 @@
 
     &-mobile {
       display: flex;
+
       justify-content: space-between;
       align-items: center;
       margin-left: 16px;
       // box-shadow: 0 1px 0 $surface-2;
       width: 100%;
+
       @include tablet {
         display: none;
       }
@@ -190,11 +196,13 @@
 
 .menu {
   background: #0F1121;
-  height: 100vh;
+  // height: 100vh;
+  flex: 1;
   box-shadow: 0 1px 0 $surface-2;
   
-
-  position: fixed;
+  display: flex;
+  flex-direction: column;
+  // position: fixed;
   left: 0;
   right: 0;
   z-index: 1;
@@ -230,12 +238,27 @@
     list-style: none;
     justify-content: center;
     align-items: center;
+
   }
 
   &__nav-item {
     position: relative;
     height: max-content;
     line-height: 64px;
+    opacity: 0;
+
+    // animation: burger_item_in 1s ease 0s 1;
+    animation-name: burger_item_in;
+    animation-duration: 0.5s;
+    animation-timing-function: ease;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+
+    @for $start from 1 through 4 {
+      &--#{$start} {
+        animation-delay: $start * 0.2s;
+      }
+    }
   }
 
   &__nav-link {
@@ -349,5 +372,44 @@
     width: 100%;
     box-shadow: 0 0 1px $surface-2;
     border: 1px solid #3B3E4A;
+  }
+}
+
+@keyframes burger_menu_in {
+  0% {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+
+  75% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}
+
+// @for $start from 1 through 5 {
+//   @keyframes burger__item--in-#{$start} {
+//     0% {
+//       transform: translateX(-100%);
+//     }
+
+//     100% {
+//       transform: translateX(0);
+//     }
+//   }
+// }
+
+@keyframes burger_item_in {
+  0% {
+    transform: translateY(-25%);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateY(0);
+    opacity: 1;
   }
 }
