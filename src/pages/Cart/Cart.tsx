@@ -8,6 +8,8 @@ import { PrimaryButton } from '../../components/PrimaryButton';
 import { getSelectedPhones } from '../../api/phoneDescription';
 import { Loader } from '../../components/Loader';
 import { AppContext } from '../../components/AppProvider';
+import { Link, useNavigate } from 'react-router-dom';
+import { Checkout } from '../../types/Checkout';
 
 type Props = {};
 
@@ -19,10 +21,14 @@ type Count = {
 
 export const Cart: React.FC<Props> = () => {
   const { shoppingCart, changeShoppingCart } = useContext(AppContext);
+  const navigate = useNavigate();
+
   const [phones, setPhones] = useState<Phone[]>([]);
   const [counts, setCounts] = useState<Count[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [selectedToDelete, setSelectedToDelete] = useState<string[]>([]);
+
+  const [checkout, setCheckout] = useState<Checkout>(Checkout.noCheck);
 
   const initiateCounts = useCallback(() => {
     const getCountsArray = phones.reduce((arr: Count[], phone) => {
@@ -130,6 +136,22 @@ export const Cart: React.FC<Props> = () => {
     changeShoppingCart(newShoppingCart);
   };
 
+  const handlerPrimaryButton = () => {
+    setCheckout(Checkout.loadCheck);
+
+    setTimeout(() => {
+      setCheckout(Checkout.endCheck);
+    }, 3000);
+  };
+
+  const handlerConfirmCheck = () => {
+    localStorage.setItem('shoppingCart', '');
+    changeShoppingCart([]);
+
+    setCheckout(Checkout.noCheck);
+    navigate('/home');
+  };
+
   useEffect(() => {
     loadPhones(true);
   }, []);
@@ -160,17 +182,19 @@ export const Cart: React.FC<Props> = () => {
         grid-desktop"
       >
         {isLoading && <Loader />}
-        {(phones.length > 0 && !isLoading) && (
+        {(phones.length > 0 && !isLoading && checkout !== Checkout.endCheck) && (
           <>
           <div className='grid-desktop-1-17'>
             {phones.map(phone => {
-              const { image, name, price, phoneId} = phone; // here needs to destuction image path too!!!
+              const { image, name, price, phoneId, category } = phone; // here needs to destuction image path too!!!
 
               const imagePath = require('../../images/' + image);
 
               const count = counts
                 .find(findedCount => findedCount.phoneId === phoneId);              
               const isToDelete = selectedToDelete.includes(phoneId);
+
+              const linkPath = `/${category}/${phoneId}`;
 
               return count && (
                 <div className={classNames(
@@ -190,17 +214,23 @@ export const Cart: React.FC<Props> = () => {
                     }}
                   />
 
-                  <div className='product-cart__image-box'>
+                  <Link
+                    to={linkPath}
+                    className='product-cart__image-box'
+                  >
                     <img
                       src={ imagePath }
                       className='product-cart__image'
                       alt="Phone"
                     />
-                  </div>
+                  </Link>
 
-                  <div className='product-cart__title'>
+                  <Link
+                    to={linkPath}
+                    className='product-cart__title'
+                  >
                     {name}
-                  </div>
+                  </Link>
 
                   <div className='product__counter counter'>
                     <div className={classNames(
@@ -230,10 +260,16 @@ export const Cart: React.FC<Props> = () => {
           })}
         </div>
 
-        <div className='cart__bill grid-desktop-17-25 bill'>
+        <div className={classNames(
+          'cart__bill grid-desktop-17-25 bill',
+          {
+            'bill--operation': checkout === Checkout.loadCheck,
+          }
+        )}>
           <div className="bill__total-price">
             ${totalPrice}
           </div>
+
           <div className='bill__items'>
             {`Total for ${totalItems} items`}
           </div>
@@ -242,21 +278,21 @@ export const Cart: React.FC<Props> = () => {
             <div className='bill__buttons-box'>
               <PrimaryButton
                 title='Checkout'
-                handler={() => {}}
+                handler={handlerPrimaryButton}
               />
 
-              {selectedToDelete.length > 0 && (
-                <div
-                  className='bill__clear-button'
-                  onClick={handlerDeleteMany}
-                >
-                  Clear
-                </div>
-              )}
-            </div>
+            {selectedToDelete.length > 0 && (
+              <div
+                className='bill__clear-button'
+                onClick={handlerDeleteMany}
+              >
+                Clear
+              </div>
+            )}
           </div>
-        </>
-        )}
+        </div>
+      </>
+      )}
 
         {(phones.length === 0 && !isLoading) && (
           (
@@ -266,6 +302,30 @@ export const Cart: React.FC<Props> = () => {
           )
         )}
       </div>
+
+      {checkout === Checkout.endCheck && (
+        <div className='grid grid-desktop'>
+          <div className="cart__bill bill grid-desktop-8-17">
+            <div className="bill__total-price">
+              The order is successful
+            </div>
+
+            <div className='bill__items'>
+              {`Order №` + Array(4)
+                .fill(null)
+                .map(_ => String(Math.random()).slice(-4) + '-')
+                .join('')
+                .slice(0, -1)
+              }
+            </div>
+
+            <PrimaryButton
+              title='Go home'
+              handler={handlerConfirmCheck}
+            />
+          </div>
+        </div>
+      )}
     </section>
     </div>
   )
