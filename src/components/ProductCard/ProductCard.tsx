@@ -1,23 +1,23 @@
 import {
   FC,
-  useEffect,
   useMemo,
-  useState,
-  useContext
+  useContext,
+  memo
 } from 'react';
 import cn from 'classnames';
 import { Phone } from '../../types/Phone';
 
 import './ProductCard.scss';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { AppContext } from '../AppProvider';
+import { PrimaryButton } from '../PrimaryButton';
 
 type Props = {
   path: string;
   phone: Phone;
 };
 
-export const ProductCard: FC<Props> = ({ phone, path }) => {
+export const ProductCard: FC<Props> = memo(({ phone, path }) => {
   const {
     phoneId,
     name,
@@ -146,4 +146,4 @@ export const ProductCard: FC<Props> = ({ phone, path }) => {
       </div>
     </div>
   );
-};
+});
