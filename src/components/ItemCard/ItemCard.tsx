@@ -5,7 +5,7 @@ import { PhoneDescr } from '../../utils/types/PhoneDescription';
 import { useLocation, useNavigate, useParams } from 'react-router';
 import { Path } from '../Path';
 import { Carusel } from '../Carusel';
-import { AppContext } from '../AppProvider';
+import { AppContext } from '../AppProvider/AppProvider';
 
 export const ItemCard: FC = () => {
   const { openedPhoneId = '' } = useParams();
@@ -349,7 +349,7 @@ export const ItemCard: FC = () => {
       </div>}
 
       {phoneData && <Carusel
-        orderType="price"
+        orderType="random"
         title="You may also like"
         path='itemCard'
       />}
