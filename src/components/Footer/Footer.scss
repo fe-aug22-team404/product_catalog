@@ -48,19 +48,44 @@
     }
 
     &-link {
+      display: block;
+
       position: relative;
       list-style-type: none;
       text-transform: uppercase;
+
+      height: 100%;
 
       font-weight: 700;
       font-size: 12px;
       line-height: 11px;
       letter-spacing: 0.04em;
-      color: $white;
+      color: $secondary;
       text-decoration: none;
       transition: color 0.5s;
 
       margin-bottom: 16px;
+
+      &:hover {
+        color: $white;
+      }
+
+      &::before {
+        position: absolute;
+        content: "";
+        height: 4px;
+        width: 100%;
+        background-color: $white;
+        left: 0;
+        bottom: 52px;
+        opacity: 0;
+
+        transition: opacity 0.3s;
+      }
+
+      &:hover::before {
+        opacity: 100;
+      }
 
       @include tablet {
         margin-right: 13px;
@@ -78,10 +103,6 @@
       @include desktop {
         margin-right: 0;
       }
-    }
-
-    &-link:hover {
-      color: $secondary;
     }
   }
 

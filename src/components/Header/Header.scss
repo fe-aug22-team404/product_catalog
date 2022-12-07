@@ -52,6 +52,23 @@
       color: $white;
     }
 
+    &:focus {
+      color: $white;
+
+      &::after {
+        position: absolute;
+        content: "";
+        height: 4px;
+        width: 100%;
+        background-color: $white;
+        left: 0;
+        bottom: 0;
+        opacity: 100;
+
+        transition: opacity 0.3s;
+      }
+    }
+
     &::after {
       position: absolute;
       content: "";

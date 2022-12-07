@@ -27,13 +27,20 @@
     border: 1px solid $elements;
     transition: background-color 0.3s;
 
+    cursor: pointer;
+
     &:hover {
       border-color: $icons;
       background-color: $icons;
     }
 
-    &__btn--off {
-      border-color: $elements;
+    &--off {
+      &:hover {
+        background-color: $surface-2;
+        border: 1px solid $elements;
+
+        cursor: default;
+      }
     }
   }
 

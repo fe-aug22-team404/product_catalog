@@ -21,6 +21,8 @@
     &:hover {
       border-color: $icons;
       background-color: $icons;
+
+      cursor: pointer;
     }
   }
 

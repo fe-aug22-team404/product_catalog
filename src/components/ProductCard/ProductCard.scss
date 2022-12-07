@@ -4,6 +4,17 @@
 .card {
   flex-grow: 0;
   flex-shrink: 0;
+
+  transition: outline 0.3s ease-out,
+    box-shadow 0.3s ease-out,
+    transform 0.3s ease-out;
+
+  &:hover {
+    outline: 1px solid #a378ff;
+    box-shadow: rgba(144,91,255,1) 0px 1px 22px -8px inset;
+    transform: scale(1.01);
+  }
+
   @include mobile {
     width: 288px;
     max-height: 440px;
@@ -140,6 +151,10 @@
     align-items: center;
 
     gap: 8px;
+
+    :hover {
+      cursor: pointer;
+    }
   }
 
   &__like-button {

@@ -118,7 +118,10 @@ export const Carusel: React.FC<Props> = ({ orderType, title, path }) => {
 
         {!isLoaded && <div className="Carusel__btns">
           <button
-            className="Carusel__btn"
+            className={classNames('Carusel__btn', {
+                'Carusel__btn--off': isStart
+              }
+            )}
             type="button"
             onClick={moveLeft}
             disabled={isStart}
@@ -132,7 +135,10 @@ export const Carusel: React.FC<Props> = ({ orderType, title, path }) => {
             />
           </button>
           <button
-            className="Carusel__btn"
+            className={classNames('Carusel__btn', {
+                'Carusel__btn--off': isEnd
+              }
+            )}
             type="button"
             onClick={moveRight}
             disabled={isEnd}
