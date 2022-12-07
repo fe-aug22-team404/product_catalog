@@ -6,11 +6,20 @@
   display: flex;
   justify-content: space-between;
   background: $bc-color ;
-  box-shadow: 0 1px 0 $surface-2;
   margin-bottom: 40px;
 
   &--open {
     flex-direction: column;
+  }
+
+  &__container {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+
+    border-bottom: 1px solid #323542;
   }
 
   &__left {
@@ -30,7 +39,6 @@
       justify-content: space-between;
       align-items: center;
       margin-left: 16px;
-      // box-shadow: 0 1px 0 $surface-2;
       width: 100%;
 
       @include tablet {
@@ -41,13 +49,21 @@
 
   &__logo {
 
+    &-box {
+      display: flex;
+      align-items: center;
+      height: 100%;
+      padding: 13px 16px;
+    }
+
     width: 64px;
-    height: 20px;
+    background-repeat: no-repeat;
+    background-size: contain;
+
 
     @include tablet {
       width: 80px;
       height: 26px;
-      background-repeat: no-repeat;
     }
     
   }
@@ -145,7 +161,7 @@
       opacity: 100;
     }
 
-    &-cross {
+    &-burger {
         display: flex;
         position: relative;
         justify-content: center;
@@ -154,6 +170,10 @@
         width: 48px;
         height: 48px;
         cursor: pointer;
+
+        @include tablet {
+          display: none;
+        }
       }
   }
 
@@ -196,9 +216,8 @@
 
 .menu {
   background: #0F1121;
-  // height: 100vh;
   flex: 1;
-  box-shadow: 0 1px 0 $surface-2;
+  // box-shadow: 0 1px 0 $surface-2;
   
   display: flex;
   flex-direction: column;
@@ -221,7 +240,7 @@
     justify-content: space-between;
     align-items: center;
     padding-left: 16px;
-    box-shadow: 0 1px 0 $surface-2;
+    // box-shadow: 0 1px 0 $surface-2;
 
   }
 
@@ -337,7 +356,6 @@
   }
 
   &__link-img {
-
     transition: transform 0.3s;
   }
 
@@ -411,5 +429,11 @@
   100% {
     transform: translateY(0);
     opacity: 1;
+  }
+}
+
+@keyframes burget_bottom-item {
+  0% {
+    
   }
 }

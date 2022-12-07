@@ -16,6 +16,21 @@ export const Header :React.FC = () => {
   const { favourites, shoppingCart } = useContext(AppContext)
   const [isOpen, setIsOpen] = useState(false);
 
+  const [burgetMenuImagePath, setImagePath] = useState(Burger);
+
+  const imagePath = async() => {
+    if (!isOpen) {
+      setTimeout(() => {
+        setImagePath(Cross);
+      }, 300);
+      return;
+    }
+
+    setTimeout(() => {
+      setImagePath(Burger);
+    }, 300);
+  }
+
   const removeMenu = () => {
     setIsOpen((curr: boolean) => false);
   };
@@ -31,22 +46,30 @@ export const Header :React.FC = () => {
           'header--open': isOpen
         },
       )}>
-        <section className={"header__left-mobile"}>
-          <Link to="/">
-            <img
-              className="header__logo"
-              src={Logo} alt="logo"
-              onClick={removeMenu}
-            />
-          </Link>
+        <section className={"header__container"}>
+            <Link
+              to="/"
+              className='header__logo-box'
+            >
+              <img
+                className="header__logo"
+                src={Logo} alt="logo"
+                onClick={removeMenu}
+              />
+            </Link>
           <div
             onClick={() => {
               setIsOpen((curr: boolean) => !curr);
+              imagePath();
             }}
-            className="header__link-cross"
+            className="header__link-burger"
           >
             <div className="header__link-wrap">
-              <img className="header__link-img" src={Burger} alt="burger" />
+              <img
+                className="header__link-img"
+                src={burgetMenuImagePath}
+                alt="burger"
+              />
             </div>
           </div>
         </section>
@@ -106,29 +129,6 @@ export const Header :React.FC = () => {
         </section>
         {isOpen && (
         <aside className="menu" id="menu">
-          {/* <section className="menu__top">
-            <Link
-              to="/"
-              onClick={() => {
-                removeMenu();
-              }}
-            >
-              <img className="menu__logo" src={Logo} alt="logo" />
-            </Link>
-            <Link to="/">
-              <div
-                className="menu__link-cross"
-                onClick={() => {
-                  removeMenu();
-                }}
-              >
-                <div className="menu__link-wrap">
-                  <img className="menu__link-img" src={Cross} alt="burger" />
-                </div>
-              </div>
-            </Link>
-          </section> */}
-
           <nav className="menu__nav">
             <ul className="menu__nav-list">
               <li className="menu__nav-item menu__nav-item--1">
