@@ -4,7 +4,7 @@ import { getSelectedPhones } from '../../api/phoneDescription';
 import { Phone } from '../../types/Phone';
 import { ProductCard } from '../ProductCard';
 import { Loader } from '../Loader';
-import { AppContext } from '../AppProvider';
+import { AppContext } from '../AppProvider/AppProvider';
 
 export const Favourites: FC = () => {
   const [isLoaded, setIsLoaded] = useState(false);

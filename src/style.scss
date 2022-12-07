@@ -31,6 +31,11 @@ div {
   padding: 0;
   margin: 0;
 }
+
+a {
+  text-decoration: none;
+}
+
 @import './components/PageNotFound/PageNotFount.scss';
 @import './styles/grids-templates/grid-templates.scss';
 @import './components/Path/path.scss';
