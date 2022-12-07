@@ -7,7 +7,7 @@ import './Header.scss';
 import Logo from '../../images/Logo.png';
 import Cart from '../../images/cart.svg';
 import Like from '../../images/like.svg';
-import { AppContext } from '../AppProvider';
+import { AppContext } from '../AppProvider/AppProvider';
 
 export const Header :React.FC = () => {
   const { favourites, shoppingCart } = useContext(AppContext)
