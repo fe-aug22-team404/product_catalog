@@ -3,6 +3,7 @@ import PhoneDescr from '../types/PhoneDescription';
 import { Phone } from '../types/Phone';
 
 const BASE_URL = 'https://team-404-mate.netlify.app/.netlify/functions/server/phones'
+const BASE_URL_TABLETS = 'https://team-404-mate.netlify.app/.netlify/functions/server/tablets'
 
 export const getPhones = async () => {
   return await axios.get<Phone[]>(BASE_URL)
@@ -26,5 +27,15 @@ export const getSelectedPhones = async(query: string) => {
 
 export const getArrangedPhones = async(orderType: string) => {
   return await axios.get<Phone[]>(BASE_URL+`?orderType=${orderType}`)
+    .then((response) => response.data);
+};
+
+export const getPhonesQuantity = async(quantity: string) => {
+  return await axios.get<number>(BASE_URL+`?quantity=${quantity}`)
+    .then((response) => response.data);
+};
+
+export const getTabletQuantity = async(quantity: string) => {
+  return await axios.get<number>(BASE_URL_TABLETS+`?quantity=${quantity}`)
     .then((response) => response.data);
 };

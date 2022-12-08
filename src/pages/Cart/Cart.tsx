@@ -5,7 +5,7 @@ import { Phone } from '../../types/Phone';
 
 import './Cart.scss';
 import { PrimaryButton } from '../../components/PrimaryButton';
-import { getSelectedPhones } from '../../api/phoneDescription';
+import { getSelectedPhones } from '../../api/api';
 import { Loader } from '../../components/Loader';
 import { AppContext } from '../../components/AppProvider';
 import { Link, useNavigate } from 'react-router-dom';
@@ -136,7 +136,7 @@ export const Cart: React.FC<Props> = () => {
     changeShoppingCart(newShoppingCart);
   };
 
-  console.log('dlinna -', !phones.length, 'zagruzka - ' , !isLoading)
+  console.log('dlinna -', phones.length, 'zagruzka - ' , isLoading)
 
   const handlerPrimaryButton = () => {
     setCheckout(Checkout.loadCheck);

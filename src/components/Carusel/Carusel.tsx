@@ -6,7 +6,7 @@ import './Carusel.scss';
 import leftArrow from '../../images/arrow-left.svg';
 import rightArrow from '../../images/arrow-right.svg';
 import useWindowDimensions from '../../utils/customHooks/useWindowDimensions';
-import { getArrangedPhones } from '../../api/phoneDescription';
+import { getArrangedPhones } from '../../api/api';
 import { Loader } from '../Loader';
 
 type Props = {

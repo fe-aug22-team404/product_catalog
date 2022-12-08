@@ -1,6 +1,6 @@
 import {FC, useCallback, useEffect, useState, useContext} from 'react';
 import { Path } from '../Path';
-import { getSelectedPhones } from '../../api/phoneDescription';
+import { getSelectedPhones } from '../../api/api';
 import { Phone } from '../../types/Phone';
 import { ProductCard } from '../ProductCard';
 import { Loader } from '../Loader';
@@ -54,7 +54,7 @@ export const Favourites: FC = () => {
 
           {isLoaded && <Loader /> }
 
-          {(!isLoaded && favourites.length) && (<>
+          {(!isLoaded && favourites.length !== 0) && (<>
                 <div className="favourites__product-count grid-mobile-1-3 grid-tablet-1-3 grid-desktop-1-3">
                   {`${favouritesItems} items`}
                 </div>
@@ -77,8 +77,8 @@ export const Favourites: FC = () => {
                   </div>
                 </div>
               </>)}
-            {(!isLoaded && !favourites.length) && (
-                <div className='favourites__empty-box grid-desktop-1-25'>
+            {(!isLoaded && favourites.length === 0) && (
+                <div className='favourites__empty-box grid-mobile-1-5 grid-tablet-1-13 grid-desktop-1-25'>
                   No products in the favourites
                 </div>
               )}

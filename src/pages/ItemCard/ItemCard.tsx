@@ -1,22 +1,24 @@
-import { useMemo, FC, useEffect, useState, useContext, useCallback } from 'react';
+import { FC, useEffect, useState, useContext, useCallback } from 'react';
 import classNames from 'classnames';
-import { getPhoneDescription } from '../../api/phoneDescription';
+import { getPhoneDescription } from '../../api/api';
 import PhoneDescr from '../../types/PhoneDescription';
 import { useLocation, useNavigate, useParams } from 'react-router';
-import { Path } from '../Path';
-import { Carusel } from '../Carusel';
-import { AppContext } from '../AppProvider/AppProvider';
-import { AvailableColors } from './AvailableColors';
-import { AvailableCapacity } from './AvailableCapacity';
-import { ItemPrices } from './ItemPrices';
-import { ImageBar } from './ImageBar';
-import { MainImage } from './MainImage';
-import { ItemProperties } from './ItemProperties';
 import { PhoneProperties } from '../../types/PhoneProperties';
 import './ItemCard.scss';
+import { Path } from '../../components/Path';
+import { Loader } from '../../components/Loader';
+import { ItemNotFound } from '../../components/ItemNotFound';
 import { ItemAbout } from './ItemAbout';
-import { ItemNotFound } from '../ItemNotFound';
-import { Loader } from '../Loader';
+import { ItemProperties } from './ItemProperties';
+import { MainImage } from './MainImage';
+import { ImageBar } from './ImageBar';
+import { ItemPrices } from './ItemPrices';
+import { AvailableCapacity } from './AvailableCapacity';
+import { AvailableColors } from './AvailableColors';
+import { Carusel } from '../../components/Carusel';
+import { AppContext } from '../../components/AppProvider';
+
+
 
 export const ItemCard: FC = () => {
   const { openedPhoneId = '' } = useParams();
