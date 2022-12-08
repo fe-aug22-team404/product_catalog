@@ -6,7 +6,7 @@ import {
   memo,
   useCallback,
 } from 'react';
-import { getSelectedPhones } from '../../api/phoneDescription';
+import { getSelectedPhones } from '../../api/api';
 import { ProductList } from './ProductList';
 import { Loader } from '../../components/Loader';
 import { Path } from '../../components/Path';

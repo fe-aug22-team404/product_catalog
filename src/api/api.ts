@@ -1,13 +1,10 @@
 import axios from 'axios';
 import PhoneDescr from '../types/PhoneDescription';
 import { Phone } from '../types/Phone';
+import { Tablet } from '../types/Tablet';
 
-const BASE_URL = 'https://team-404-mate.netlify.app/.netlify/functions/server/phones'
-
-export const getPhones = async () => {
-  return await axios.get<Phone[]>(BASE_URL)
-    .then((response) => response.data);
-}
+const BASE_URL = 'https://team-404-mate.netlify.app/.netlify/functions/server/phones';
+const BASE_URL_TABLETS = 'https://team-404-mate.netlify.app/.netlify/functions/server/tablets';
 
 export const getPhoneDescription = async (id :string) => {
   return await axios.get<PhoneDescr>(BASE_URL+'/'+id)
@@ -26,5 +23,10 @@ export const getSelectedPhones = async(query: string) => {
 
 export const getArrangedPhones = async(orderType: string) => {
   return await axios.get<Phone[]>(BASE_URL+`?orderType=${orderType}`)
+    .then((response) => response.data);
+};
+
+export const getAllTablets = async() => {
+  return await axios.get<Tablet[]>(BASE_URL_TABLETS)
     .then((response) => response.data);
 };

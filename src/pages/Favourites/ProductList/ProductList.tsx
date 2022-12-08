@@ -22,7 +22,7 @@ export const ProductList: FC<Props> = ({ phones }) => {
             key={phone.id}
           >
             <ProductCard
-              phone={phone}
+              good={phone}
               path='favourites'
             />
           </li>

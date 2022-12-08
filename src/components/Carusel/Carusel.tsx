@@ -6,7 +6,7 @@ import './Carusel.scss';
 import leftArrow from '../../images/arrow-left.svg';
 import rightArrow from '../../images/arrow-right.svg';
 import useWindowDimensions from '../../utils/customHooks/useWindowDimensions';
-import { getArrangedPhones } from '../../api/phoneDescription';
+import { getArrangedPhones } from '../../api/api';
 import { Loader } from '../Loader';
 
 type Props = {
@@ -168,7 +168,7 @@ export const Carusel: React.FC<Props> = ({ orderType, title, path }) => {
                 <ProductCard
                   key={phone.name}
                   path={path}
-                  phone={phone}
+                  good={phone}
                 />
               ))}
             </ul>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { getAllPhones } from '../../api/phoneDescription';
+import { getAllPhones } from '../../api/api';
 import { Filter } from '../../components/Filter';
 import { Pagination } from '../../components/Pagination';
 import { Path } from '../../components/Path';
@@ -139,7 +139,7 @@ export const Products: React.FC = () => {
                             key={phone.id}
                           >
                           <ProductCard
-                            phone={phone}
+                            good={phone}
                             path='phones'
                           />
                         </div>
