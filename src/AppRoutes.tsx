@@ -8,7 +8,7 @@ import { HomePage } from './components/HomePage';
 import { Products } from './pages/Products/Products';
 import { ItemCard } from './components/ItemCard';
 import { Cart } from './pages/Cart';
-import { Favourites } from './components/Favourites';
+import { Favourites } from './pages/Favourites';
 import { Tablets } from './pages/Tablets';
 import { Accessories } from './pages/Accessories';
 

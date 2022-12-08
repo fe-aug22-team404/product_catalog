@@ -1,5 +1,5 @@
 @import '../../styles/mixins/mixins';
-@import '../../styles/vars/vars.scss';
+@import '../../styles/vars/vars';
 
 .favourites {
   flex: 1;
@@ -35,36 +35,12 @@
     color: #75767F;
   }
 
-  &__wrapper {
-    display: flex;
-    flex-direction: column;
-  }
-
-  &__list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 40px 16px;
-    max-width: 288px;
-    margin-bottom: 56px;
-    justify-content: start;
-
-    @include tablet {
-      max-width: 575px;
-    }
-
-    @media (min-width: 978px) {
-      max-width: 896px;
-    }
-
-    @include desktop {
-      max-width: 1136px;
-    }
-  }
-
   &__empty-box {
     width: 100%;
+
     color: $white;
     font-size: 24px;
+
     letter-spacing: -0.01em;
   }
 }

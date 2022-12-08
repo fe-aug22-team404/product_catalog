@@ -1,0 +1,30 @@
+@import '../../../styles/mixins/mixins';
+@import '../../../styles/vars/vars';
+
+.product-items__list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: start;
+
+  gap: 40px 16px;
+
+  max-width: 288px;
+  margin-bottom: 56px;
+
+  @include tablet {
+    max-width: 576px;
+  }
+
+  @media (min-width: 978px) {
+    max-width: 896px;
+  }
+
+  @include desktop {
+    max-width: 1136px;
+  }
+
+  &__wrapper {
+    display: flex;
+    flex-direction: column;
+  }
+}
