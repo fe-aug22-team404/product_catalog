@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import React, { useCallback, useEffect, useState, useContext } from 'react';
 import { BackButton } from '../../components/Back-Button';
-import { Phone } from '../../types/Phone';
+import { Good } from '../../types/Good';
 
 import './Cart.scss';
 import { PrimaryButton } from '../../components/PrimaryButton';
@@ -14,7 +14,7 @@ import { Checkout } from '../../types/Checkout';
 type Props = {};
 
 type Count = {
-  phoneId: string;
+  itemId: string;
   price: number
   count: number;
 }
@@ -23,7 +23,7 @@ export const Cart: React.FC<Props> = () => {
   const { shoppingCart, changeShoppingCart } = useContext(AppContext);
   const navigate = useNavigate();
 
-  const [phones, setPhones] = useState<Phone[]>([]);
+  const [phones, setPhones] = useState<Good[]>([]);
   const [counts, setCounts] = useState<Count[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [reload, setReload] = useState(false);
@@ -38,10 +38,10 @@ export const Cart: React.FC<Props> = () => {
     }
 
     const getCountsArray = phones.reduce((arr: Count[], phone) => {
-      const { phoneId, price } = phone;
+      const { itemId, price } = phone;
 
       const count: Count = {
-        phoneId,
+        itemId,
         price: price,
         count: 1,
       };
@@ -54,15 +54,15 @@ export const Cart: React.FC<Props> = () => {
     setCounts(getCountsArray);
   }, [phones]);
 
-  const addCount = (phoneId: string) => {
+  const addCount = (itemId: string) => {
     setCounts(current => {
-      const finded = current.find(count => count.phoneId === phoneId);
+      const finded = current.find(count => count.itemId === itemId);
 
       if (finded && finded.count < 5) {
         finded.count += 1;
 
         return [
-          ...current.filter(phone => phone.phoneId !== phoneId),
+          ...current.filter(phone => phone.itemId !== itemId),
           finded,
         ];
       }
@@ -71,15 +71,15 @@ export const Cart: React.FC<Props> = () => {
     });
   };
 
-  const removeCount = (phoneId: string) => {
+  const removeCount = (itemId: string) => {
     setCounts(current => {
-      const finded = current.find(count => count.phoneId === phoneId);
+      const finded = current.find(count => count.itemId === itemId);
 
       if (finded && finded.count > 1) {
         finded.count -= 1;
 
         return [
-          ...current.filter(phone => phone.phoneId !== phoneId),
+          ...current.filter(phone => phone.itemId !== itemId),
           finded,
         ];
       }
@@ -166,7 +166,7 @@ export const Cart: React.FC<Props> = () => {
   }, [window.performance.timeOrigin])
 
   useEffect(() => {
-    const newPhones = phones.filter(({ phoneId }) => shoppingCart.includes(phoneId));
+    const newPhones = phones.filter(({ itemId }) => shoppingCart.includes(itemId));
 
     setPhones(newPhones);
   }, [shoppingCart]);
@@ -197,21 +197,21 @@ export const Cart: React.FC<Props> = () => {
           <>
           <div className='grid-desktop-1-17'>
             {phones.map(phone => {
-              const { image, name, price, phoneId, category } = phone; // here needs to destuction image path too!!!
+              const { image, name, price, itemId, category } = phone; // here needs to destuction image path too!!!
 
               const imagePath = require('../../images/' + image);
 
               const count = counts
-                .find(findedCount => findedCount.phoneId === phoneId);
-              const isToDelete = selectedToDelete.includes(phoneId);
+                .find(findedCount => findedCount.itemId === itemId);
+              const isToDelete = selectedToDelete.includes(itemId);
 
-              const linkPath = `/${category}/${phoneId}`;
+              const linkPath = `/${category}/${itemId}`;
 
               return count && (
                 <div className={classNames(
                   'cart__product-cart',
                   'product-cart',
-                )} key={phoneId}>
+                )} key={itemId}>
                   <div
                     className={classNames(
                       'product-cart__delete',
@@ -219,9 +219,9 @@ export const Cart: React.FC<Props> = () => {
                         'product-cart__delete--selected': isToDelete,
                       },
                     )}
-                    onClick={() => handlerDeleteFromCart(phoneId)}
+                    onClick={() => handlerDeleteFromCart(itemId)}
                     onContextMenu={(event) => {
-                      handlerAddToDeleteList(event, phoneId, isToDelete);
+                      handlerAddToDeleteList(event, itemId, isToDelete);
                     }}
                   />
 
@@ -250,7 +250,7 @@ export const Cart: React.FC<Props> = () => {
                         'counter__minus--disable': count.count === 1,
                       }
                     )}
-                    onClick={() => removeCount(phoneId)}
+                    onClick={() => removeCount(itemId)}
                   />
                     <div className="counter__value"> {count.count} </div>
                     <div
@@ -260,7 +260,7 @@ export const Cart: React.FC<Props> = () => {
                           'counter__plus--disable': count.count === 5,
                         },
                       )}
-                      onClick={() => addCount(phoneId)}
+                      onClick={() => addCount(itemId)}
                     />
                   </div>
                   <div className="product-cart__price">

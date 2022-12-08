@@ -5,16 +5,15 @@ import {
   memo,
 } from 'react';
 import cn from 'classnames';
-import { Phone } from '../../types/Phone';
+import { Good } from '../../types/Good';
 
 import './ProductCard.scss';
 import { Link } from 'react-router-dom';
 import { AppContext } from '../AppProvider';
-import { Tablet } from '../../types/Tablet';
 
 type Props = {
   path: string;
-  good: Phone | Tablet;
+  good: Good;
 };
 
 export const ProductCard: FC<Props> = memo(({ good, path }) => {

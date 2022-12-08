@@ -25,12 +25,12 @@ export const AppRoutes: FC = () => {
 
           <Route path="phones">
             <Route index element={
-              <Products />
+              <Products category='phones' title='Mobile phones' />
             } />
             <Route path=":openedPhoneId" element={<ItemCard />} />
           </Route>
 
-          <Route path="/tablets" element={<Tablets />} />
+          <Route path="/tablets" element={<Products category='tablets' title='Tablets' />} />
 
           <Route path="/accessories" element={<Accessories />} />
 
