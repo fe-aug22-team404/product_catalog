@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import './HomePage.scss';
 
-import { getAllTablets, getAllAccessories } from "../../api/api";
-import { getAllPhones } from "../../api/phoneDescription";
+import { getAllTablets } from "../../api/api";
+import { getAllPhones } from "../../api/api";
 
 import { ProductsSlider } from "../ProductsSlider";
 import { Carusel } from "../Carusel";
@@ -13,7 +13,6 @@ export const HomePage: React.FC = () => {
   const [tabletsCount, setTabletsCount] = useState(0);
   const [accessoriesCount, setAccessoriesCount] = useState(0);
   const tablets = async () => getAllTablets();
-  const accessories = async () => getAllAccessories();
 
   const loadPhones = async () => {
     await getAllPhones().then(res => {

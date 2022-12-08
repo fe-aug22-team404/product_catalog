@@ -2,7 +2,7 @@ import {
   FC,
   useMemo,
   useContext,
-  memo
+  memo,
 } from 'react';
 import cn from 'classnames';
 import { Phone } from '../../types/Phone';
@@ -10,16 +10,17 @@ import { Phone } from '../../types/Phone';
 import './ProductCard.scss';
 import { Link } from 'react-router-dom';
 import { AppContext } from '../AppProvider';
-import { PrimaryButton } from '../PrimaryButton';
+import { Tablet } from '../../types/Tablet';
 
 type Props = {
   path: string;
-  phone: Phone;
+  good: Phone | Tablet;
 };
 
-export const ProductCard: FC<Props> = memo(({ phone, path }) => {
+export const ProductCard: FC<Props> = memo(({ good, path }) => {
   const {
-    phoneId,
+    category,
+    itemId,
     name,
     fullPrice,
     price,
@@ -27,26 +28,26 @@ export const ProductCard: FC<Props> = memo(({ phone, path }) => {
     capacity,
     ram,
     image,
-  } = phone;
+  } = good;
   const { favourites, shoppingCart, changeFavourites, changeShoppingCart } = useContext(AppContext);
   const imagePath = require(`../../images/${image}`);
   const linkPath = useMemo(() => {
     return path !== 'phones'
-      ? `/phones/${phoneId}`
-      : `${phoneId}`
+      ? `/phones/${itemId}`
+      : `${itemId}`
   }, [path])
 
-  const isShoppingCartIncludeId = shoppingCart.includes(phoneId);
-  const isFavouritesIncludeId = favourites.includes(phoneId);
+  const isShoppingCartIncludeId = shoppingCart.includes(itemId);
+  const isFavouritesIncludeId = favourites.includes(itemId);
 
   const handleShoppingCarts = () => {
     if (isShoppingCartIncludeId) {
-      const filteredShoppingCart = shoppingCart.filter(id => id !== phoneId);
+      const filteredShoppingCart = shoppingCart.filter(id => id !== itemId);
 
       localStorage.setItem('shoppingCart', filteredShoppingCart.join(','));
       changeShoppingCart(filteredShoppingCart);
     } else {
-      const addedShoppingCart = [...shoppingCart, phoneId];
+      const addedShoppingCart = [...shoppingCart, itemId];
 
       localStorage.setItem('shoppingCart', addedShoppingCart.join(','));
       changeShoppingCart(addedShoppingCart);
@@ -55,12 +56,12 @@ export const ProductCard: FC<Props> = memo(({ phone, path }) => {
 
   const handleFavourites = () => {
     if (isFavouritesIncludeId) {
-      const filteredFavourites = favourites.filter(id => id !== phoneId);
+      const filteredFavourites = favourites.filter(id => id !== itemId);
 
       localStorage.setItem('favourites', filteredFavourites.join(','));
       changeFavourites(filteredFavourites);
     } else {
-      const completeFavourites = [...favourites, phoneId];
+      const completeFavourites = [...favourites, itemId];
 
       localStorage.setItem('favourites', completeFavourites.join(','));
       changeFavourites(completeFavourites);

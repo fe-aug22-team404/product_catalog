@@ -1,6 +1,6 @@
 import { useMemo, FC, useEffect, useState, useContext, useCallback } from 'react';
 import classNames from 'classnames';
-import { getPhoneDescription } from '../../api/phoneDescription';
+import { getPhoneDescription } from '../../api/api';
 import PhoneDescr from '../../types/PhoneDescription';
 import { useLocation, useNavigate, useParams } from 'react-router';
 import { Path } from '../Path';

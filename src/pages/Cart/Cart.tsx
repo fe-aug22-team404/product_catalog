@@ -5,7 +5,7 @@ import { Phone } from '../../types/Phone';
 
 import './Cart.scss';
 import { PrimaryButton } from '../../components/PrimaryButton';
-import { getSelectedPhones } from '../../api/phoneDescription';
+import { getSelectedPhones } from '../../api/api';
 import { Loader } from '../../components/Loader';
 import { AppContext } from '../../components/AppProvider';
 import { Link, useNavigate } from 'react-router-dom';
