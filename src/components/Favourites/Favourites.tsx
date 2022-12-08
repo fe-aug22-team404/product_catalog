@@ -4,11 +4,13 @@ import { getSelectedPhones } from '../../api/phoneDescription';
 import { Phone } from '../../types/Phone';
 import { ProductCard } from '../ProductCard';
 import { Loader } from '../Loader';
-import { AppContext } from '../AppProvider';
+import { AppContext } from '../AppProvider/AppProvider';
+import './Favourites.scss';
 
 export const Favourites: FC = () => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [phones, setPhones] = useState<Phone[]>([]);
+  const [reload, setReload] = useState(false);
   const { favourites } = useContext(AppContext);
   const favouritesItems = favourites.length;
 
@@ -28,13 +30,18 @@ export const Favourites: FC = () => {
 
   useEffect(() => {
     getFavourites();
-  }, []);
+  }, [reload]);
+
+  useEffect(() => {
+    setReload(curr => !curr)
+  },[window.performance.timeOrigin]);
 
   useEffect(() => {
     const newPhones = phones.filter(({ phoneId }) => favourites.includes(phoneId));
 
     setPhones(newPhones);
-  }, [favourites])
+  }, [favourites]);
+
 
 
   return (

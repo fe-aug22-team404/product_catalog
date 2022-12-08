@@ -91,7 +91,7 @@
     justify-content: start;
 
     @include tablet {
-      width: 640px;
+      width: 592px;
     }
 
     @media (min-width: 978px) {
@@ -99,7 +99,7 @@
     }
 
     @include desktop {
-      width: 1200px;
+      width: 1136px;
     }
   }
 

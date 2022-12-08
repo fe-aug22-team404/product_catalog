@@ -1,0 +1,40 @@
+@import '../../../styles/mixins/mixins';
+@import '../../../styles/vars/vars.scss';
+
+.item-properties {
+  &__line{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+  }
+
+  &__name {
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 15px;
+    color: $secondary;
+
+    &--font-size {
+      @include tablet {
+        font-weight: 600;
+        font-size: 14px;
+        line-height: 21px;
+      }
+    }
+  }
+
+  &__value {
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 15px;
+    color: $white;
+
+    &--font-size {
+      @include tablet {
+        font-weight: 600;
+        font-size: 14px;
+        line-height: 21px;
+      }
+    }
+  }
+}

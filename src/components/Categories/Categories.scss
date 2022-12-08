@@ -1,4 +1,5 @@
 @import "../../styles/vars/vars.scss";
+@import '../../styles/mixins/mixins';
 
 .Categories {
   margin: 0 auto;
@@ -14,6 +15,13 @@
   &__list {
     display: flex;
     gap: 16px;
+
+    @include mobile {
+      flex-direction: column;
+    }
+    @include tablet {
+      flex-direction: row;
+    }
   }
 
   &__item {
@@ -40,9 +48,22 @@
   &__link-container {
     position: relative;
     overflow: hidden;
-    height: 368px;
-    width: 368px;
     margin-bottom: 24px;
+
+    @include mobile {
+      width: 288px;
+      height: 288px;
+    }
+
+    @include tablet {
+      width: 288px;
+      height: 288px;
+    }
+
+    @include desktop {
+      height: 368px;
+      width: 368px;
+    }
   }
 
   &__info {

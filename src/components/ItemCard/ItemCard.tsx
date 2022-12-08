@@ -1,17 +1,30 @@
-import { useMemo, FC, useEffect, useState, Fragment, useContext } from 'react';
+import { useMemo, FC, useEffect, useState, useContext, useCallback } from 'react';
 import classNames from 'classnames';
 import { getPhoneDescription } from '../../api/phoneDescription';
-import { PhoneDescr } from '../../utils/types/PhoneDescription';
+import PhoneDescr from '../../types/PhoneDescription';
 import { useLocation, useNavigate, useParams } from 'react-router';
 import { Path } from '../Path';
 import { Carusel } from '../Carusel';
-import { AppContext } from '../AppProvider';
+import { AppContext } from '../AppProvider/AppProvider';
+import { AvailableColors } from './AvailableColors';
+import { AvailableCapacity } from './AvailableCapacity';
+import { ItemPrices } from './ItemPrices';
+import { ImageBar } from './ImageBar';
+import { MainImage } from './MainImage';
+import { ItemProperties } from './ItemProperties';
+import { PhoneProperties } from '../../types/PhoneProperties';
+import './ItemCard.scss';
+import { ItemAbout } from './ItemAbout';
+import { ItemNotFound } from '../ItemNotFound';
+import { Loader } from '../Loader';
 
 export const ItemCard: FC = () => {
   const { openedPhoneId = '' } = useParams();
   const [phoneData, setPhoneData] = useState<PhoneDescr | null>(null);
   const [currentImage, setCurrentImage] = useState(0);
   const [phoneId, setPhoneId] = useState(openedPhoneId);
+  const [isError, setIsError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [path, setPath] = useState('')
   const { favourites, shoppingCart, changeFavourites, changeShoppingCart } = useContext(AppContext);
   const location = useLocation();
@@ -19,6 +32,22 @@ export const ItemCard: FC = () => {
 
   const isShoppingCartIncludeId = shoppingCart.includes(phoneId);
   const isFavouritesIncludeId = favourites.includes(phoneId);
+  const itemProperties: PhoneProperties = {
+    Screen: phoneData?.screen || null,
+    Resolution: phoneData?.resolution || null,
+    Processor: phoneData?.processor || null,
+    RAM: phoneData?.ram || null
+  };
+  const itemTechProperties = {
+    Screen: phoneData?.screen || null,
+    Resolution: phoneData?.resolution || null,
+    Processor: phoneData?.processor || null,
+    RAM: phoneData?.ram || null,
+    'Built in memory': phoneData?.capacity || null,
+    Camera: phoneData?.camera || null,
+    Zoom: phoneData?.zoom || null,
+    Cell: phoneData?.cell || null
+  }
 
   const handleShoppingCarts = () => {
     if (isShoppingCartIncludeId) {
@@ -54,15 +83,17 @@ export const ItemCard: FC = () => {
 
       setPhoneData(phoneDataFromAPI);
     } catch {
-      throw new Error('something wrong')
+      setIsError(true);
     }
+
+    setIsLoading(false);
   };
 
-  const handleImageChange = (index: number) => {
+  const handleImageChange = useCallback((index: number) => {
     setCurrentImage(index);
-  };
+  }, []);
 
-  const handleMouseDown = (event: React.MouseEvent, max: number) => {
+  const handleMouseDown = (event: React.MouseEvent, imageAmount: number) => {
     const currentHalfWidth = document.body.clientWidth < 640
       ? document.body.clientWidth / 2
       : (7 * document.body.clientWidth / 24) + 40;
@@ -70,28 +101,28 @@ export const ItemCard: FC = () => {
 
     if (click < currentHalfWidth) {
       setCurrentImage(curr => {
-        return curr ? curr - 1 : max - 1
+        return curr ? curr - 1 : imageAmount - 1
       })
     }
 
     if (click > currentHalfWidth) {
       setCurrentImage(curr => {
-        return curr === max - 1 ? 0 : curr + 1
+        return curr === imageAmount - 1 ? 0 : curr + 1
       })
     }
   };
 
-  const handleColorChange = (currentColor: string, color: string) => {
+  const handleColorChange = useCallback((currentColor: string, color: string) => {
     setPhoneId(current => (
       current.replace(currentColor, color)
     ));
-  };
+  }, []);
 
-  const handleCapacityChange = (currentCapacity: string, capacity: string) => {
+  const handleCapacityChange = useCallback((currentCapacity: string, capacity: string) => {
     setPhoneId(current => (
       current.replace(currentCapacity.toLowerCase(), capacity.toLowerCase())
     ));
-  }
+  }, []);
 
   useEffect(() => {
     const currentPath = location.pathname;
@@ -104,6 +135,7 @@ export const ItemCard: FC = () => {
   }, [location]);
 
   useEffect(() => {
+    setIsLoading(true);
     loadPhoneDescription();
     navigate(`/phones/${phoneId}`);
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -113,246 +145,126 @@ export const ItemCard: FC = () => {
   }, [phoneId]);
 
   return (
-    <div className='item-card'>
-      {phoneData &&
-        <div className='item-card__phone-card phone-card grid grid-mobile grid-tablet grid-desktop'>
-          <div className='grid-mobile-1-5 grid-tablet-1-13 grid-desktop-1-25'>
-            <Path />
-          </div>
-          <h1 className='phone-card__title grid-mobile-1-5 grid-tablet-1-13 grid-desktop-1-25'>
-            {phoneData.name}
-          </h1>
+    <>
+      {isLoading && !phoneData && <Loader />}
+      {isError
+        ? <ItemNotFound />
+        : (
+          <div className='item-card'>
+            {phoneData &&
+              <div className='item-card__phone-card phone-card grid grid-mobile grid-tablet grid-desktop'>
+                <div className='grid-mobile-1-5 grid-tablet-1-13 grid-desktop-1-25'>
+                  <Path />
+                </div>
 
-          <div
-            className="phone-card__main-image-box grid-mobile-1-5 grid-tablet-2-8 grid-desktop-3-13"
-            onMouseDown={event => handleMouseDown(event, phoneData.images.length)}
-          >
-            <img
-              src={require(`../../images/${phoneData.images[currentImage]}`)}
-              alt={phoneData.name}
-              className="phone-card__main-image"
-            />
-          </div>
+                <h1 className='phone-card__title grid-mobile-1-5 grid-tablet-1-13 grid-desktop-1-25'>
+                  {phoneData.name}
+                </h1>
 
-          <div className="phone-card__other-photo-box grid-mobile-1-5 grid-tablet-1-2 grid-desktop-1-3">
-            {phoneData.images.map((imageLink, i) => {
-              const isSelected = i === currentImage;
+                <MainImage
+                  handleMouseDown={handleMouseDown}
+                  imageAmount={phoneData.images.length}
+                  altName={phoneData.name}
+                  imageLink={phoneData.images[currentImage]}
+                />
 
-              return (
-                <div
-                  key={imageLink}
-                  className={classNames(
-                    'phone-card__single-photo-box',
-                    {'phone-card__single-photo-box--border-white': isSelected,
-                    'phone-card__single-photo-box--border-grey': !isSelected,}
-                  )}
-                  onClick={() => handleImageChange(i)}
-                >
-                  <img
-                    src={require(`../../images/${imageLink}`)}
-                    alt={phoneData.name}
-                    className="phone-card__preview-image"
+                <div className="phone-card__other-photo-box grid-mobile-1-5 grid-tablet-1-2 grid-desktop-1-3">
+                  <ImageBar
+                    images={phoneData.images}
+                    currentImage={currentImage}
+                    handleImageChange={handleImageChange}
+                    altName={phoneData.name}
                   />
                 </div>
-              );
-            })}
-          </div>
 
-          <div className="phone-card__short-info short-info grid-mobile-1-5 grid-tablet-8-13 grid-desktop-14-21">
-            <div className="short-info__phone-id">
-              ID: 802301
-            </div>
-
-            <div className="short-info__colors">
-              <h4 className="short-info__title">
-                Available colors
-              </h4>
-              <div className="short-info__colors-options">
-                {phoneData.colorsAvailable.map(color => {
-                  const isCurrent = color === phoneData.color;
-
-                  return (
-                  <div className={classNames(
-                    'short-info__color-box',
-                    `${color}`,
-                    {'short-info__color-box--border-white': isCurrent,
-                    'short-info__color-box--border-gray': !isCurrent,
-                    }
-                    )}
-                    key={color}
-                    onClick={() => handleColorChange(phoneData.color, color)}
-                  >
+                <div className="phone-card__short-info short-info grid-mobile-1-5 grid-tablet-8-13 grid-desktop-14-21">
+                  <div className="short-info__phone-id">
+                    ID: 802301
                   </div>
-                )})}
-              </div>
-            </div>
 
-            <div className="short-info__capacity">
-              <h4 className="short-info__title">
-                Select capacity
-              </h4>
+                  <div className="short-info__colors available-colors">
+                    <AvailableColors
+                      colorsAvailable={phoneData.colorsAvailable}
+                      currentColor={phoneData.color}
+                      handleColorChange={handleColorChange}
+                    />
+                  </div>
 
-              <div className="short-info__capacity-options">
-                {phoneData.capacityAvailable.map(capacity => {
-                  const isCurrent = capacity === phoneData.capacity;
+                  <div className="short-info__capacity available-capacity">
+                    <AvailableCapacity
+                      capacityAvailable={phoneData.capacityAvailable}
+                      currentCapacity={phoneData.capacity}
+                      handleCapacityChange={handleCapacityChange}
+                    />
+                  </div>
 
-                  return (
-                    <div className={classNames(
-                      {'short-info__capacity-box--current': isCurrent,
-                      'short-info__capacity-box--option': !isCurrent,
-                      }
-                    )}
-                      key={capacity}
-                      onClick={() => handleCapacityChange(phoneData.capacity, capacity)}
+                  <div className="short-info__price-container item-prices">
+                    <ItemPrices
+                      priceDiscount={phoneData.priceDiscount}
+                      priceRegular={phoneData.priceRegular}
+                    />
+                  </div>
+
+                  <div className="short-info__buttons-container">
+                    <button
+                      className={classNames('short-info__add-button', {
+                        'short-info__add-button--is-selected': isShoppingCartIncludeId
+                      })}
+                      onClick={handleShoppingCarts}
                     >
-                      {capacity}
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
+                      {!isShoppingCartIncludeId
+                        ? 'Add to cart'
+                        : 'Added'}
+                    </button>
 
-            <div className="short-info__price-container">
-              <h2 className="short-info__current-price">
-              {`$${phoneData.priceDiscount}`}
-              </h2>
+                    <button
+                      className={classNames('short-info__like-button', {
+                        'short-info__like-button--is-selected': isFavouritesIncludeId
+                      })}
+                      onClick={handleFavourites}
+                    />
+                  </div>
 
-              <h2 className="short-info__full-price">
-                {`$${phoneData.priceRegular}`}
-              </h2>
-            </div>
-
-            <div className="short-info__buttons-container">
-              <button
-                className={classNames('short-info__add-button', {
-                  'short-info__add-button--is-selected': isShoppingCartIncludeId
-                })}
-                onClick={handleShoppingCarts}
-              >
-                {!isShoppingCartIncludeId
-                  ? 'Add to cart'
-                  : 'Added'}
-              </button>
-
-              <button
-                className={classNames('short-info__like-button', {
-                  'short-info__like-button--is-selected': isFavouritesIncludeId
-                })}
-                onClick={handleFavourites}
-              />
-            </div>
-
-            <div className="short-info__properties">
-              <div className="short-info__properties-line">
-                <div className="short-info__properties-name">Screen</div>
-                <div className="short-info__properties-value">{phoneData.screen}</div>
-              </div>
-
-              <div className="short-info__properties-line">
-                <div className="short-info__properties-name">Resolution</div>
-                <div className="short-info__properties-value">{phoneData.resolution}</div>
-              </div>
-
-              <div className="short-info__properties-line">
-                <div className="short-info__properties-name">Processor</div>
-                <div className="short-info__properties-value">{phoneData.processor}</div>
-              </div>
-
-              <div className="short-info__properties-line">
-                <div className="short-info__properties-name">RAM</div>
-                <div className="short-info__properties-value">{phoneData.ram}</div>
-              </div>
-            </div>
-          </div>
-
-          <div className="phone-card__about grid-mobile-1-5 grid-tablet-1-13 grid-desktop-1-13">
-            <h4 className="phone-card__about-title">
-              About
-            </h4>
-
-            {phoneData.description.map(({title, text}) => {
-              return (
-              <Fragment key={title}>
-                <h5 className="phone-card__about-subtitle">
-                  {title}
-                </h5>
-
-                {text.map((paragraph, i) => {
-                  const isLast = text.length - 1 === i;
-
-                  return (
-                    <p
-                      key={paragraph}
-                      className={classNames(
-                        'phone-card__about-text',
-                        {'phone-card__about-text-last': isLast}
-                      )}
-                    >
-                      {paragraph}
-                    </p>
-                  );
-                })}
-              </Fragment>
-              )
-            })}
-          </div>
-
-          <div className="phone-card__technical grid-mobile-1-5 grid-tablet-1-13 grid-desktop-14-25">
-            <h4 className="phone-card__technical-title">
-              Tech specs
-            </h4>
-
-            <div className="short-info__properties">
-              <div className="short-info__properties-line">
-                <div className="short-info__properties-name short-info__properties-name--font-size">Screen</div>
-                <div className="short-info__properties-value short-info__properties-value--font-size">{phoneData.screen}</div>
-              </div>
-
-              <div className="short-info__properties-line">
-                <div className="short-info__properties-name short-info__properties-name--font-size">Resolution</div>
-                <div className="short-info__properties-value short-info__properties-value--font-size">{phoneData.resolution}</div>
-              </div>
-
-              <div className="short-info__properties-line">
-                <div className="short-info__properties-name short-info__properties-name--font-size">Processor</div>
-                <div className="short-info__properties-value short-info__properties-value--font-size">{phoneData.processor}</div>
-              </div>
-
-              <div className="short-info__properties-line">
-                <div className="short-info__properties-name short-info__properties-name--font-size">RAM</div>
-                <div className="short-info__properties-value short-info__properties-value--font-size">{phoneData.ram}</div>
-              </div>
-
-              <div className="short-info__properties-line">
-                <div className="short-info__properties-name short-info__properties-name--font-size">Built in memory</div>
-                <div className="short-info__properties-value short-info__properties-value--font-size">{phoneData.capacity}</div>
-              </div>
-
-              <div className="short-info__properties-line">
-                <div className="short-info__properties-name short-info__properties-name--font-size">Camera</div>
-                <div className="short-info__properties-value short-info__properties-value--font-size">
-                  {`${phoneData.camera} ${phoneData.camera.split('+').length === 3 ? '(Triple)' : '(Double)' }`}
+                  <div className="short-info__properties item-properties">
+                    <ItemProperties
+                      itemProperties={itemProperties}
+                      additionalClasses={[]}
+                    />
+                  </div>
                 </div>
-              </div>
 
-              <div className="short-info__properties-line">
-                <div className="short-info__properties-name short-info__properties-name--font-size">Zoom</div>
-                <div className="short-info__properties-value short-info__properties-value--font-size">{phoneData.zoom}</div>
-              </div>
+                <div className="phone-card__about item-about grid-mobile-1-5 grid-tablet-1-13 grid-desktop-1-13">
+                  <ItemAbout
+                    description={phoneData.description}
+                  />
+                </div>
 
-              <div className="short-info__properties-line">
-                <div className="short-info__properties-name short-info__properties-name--font-size">Cell</div>
-                <div className="short-info__properties-value short-info__properties-value--font-size">{phoneData.cell.join(', ')}</div>
-              </div>
-            </div>
+                <div className="phone-card__technical grid-mobile-1-5 grid-tablet-1-13 grid-desktop-14-25">
+                  <h4 className="phone-card__technical-title">
+                    Tech specs
+                  </h4>
+
+                  <div className="short-info__properties item-properties">
+                    <ItemProperties
+                      itemProperties={itemTechProperties}
+                      additionalClasses={['item-properties__name--font-size', 'item-properties__value--font-size']}
+                    />
+                  </div>
+                </div>
+            </div>}
+
+            {phoneData && (
+              <div className="item-card__carusel">
+                <Carusel
+                  orderType="random"
+                  title="You may also like"
+                  path='itemCard'
+                />
+              </div>)
+            }
           </div>
-      </div>}
-
-      {phoneData && <Carusel
-        orderType="price"
-        title="You may also like"
-        path='itemCard'
-      />}
-    </div>
+        )
+      }
+    </>
   )
 }

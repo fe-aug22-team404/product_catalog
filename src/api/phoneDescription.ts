@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { PhoneDescr } from '../utils/types/PhoneDescription';
+import PhoneDescr from '../types/PhoneDescription';
 import { Phone } from '../types/Phone';
 
 const BASE_URL = 'https://team-404-mate.netlify.app/.netlify/functions/server/phones'

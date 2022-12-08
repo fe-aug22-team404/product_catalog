@@ -7,7 +7,7 @@ import { ProductCard } from '../../components/ProductCard';
 import { Loader } from '../../components/Loader';
 import { Phone } from '../../types/Phone';
 import { SortBy, sortByOptions } from '../../types/SortyBy';
-import './Products.scss'
+import './Products.scss';
 
 const perPageOptions = [16, 12, 8, 4];
 

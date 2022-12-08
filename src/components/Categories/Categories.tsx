@@ -2,6 +2,8 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import './Categories.scss';
 
+import { Phone } from '../../types/Phone';
+
 import Phones from '../../images/Phones.png';
 import Tablets from '../../images/Tablets.png';
 import Accessories from '../../images/Accessories.png';

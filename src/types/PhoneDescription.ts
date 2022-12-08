@@ -1,9 +1,9 @@
-export interface Description {
+export default interface Description {
   title: string,
   text: string[],
 }
 
-export interface PhoneDescr {
+export default interface PhoneDescr {
 	id: string,
 	namespaceId: string,
 	name: string,

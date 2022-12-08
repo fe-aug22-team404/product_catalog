@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import './HomePage.scss';
 
 import { getAllTablets, getAllAccessories } from "../../api/api";
@@ -9,12 +9,21 @@ import { Carusel } from "../Carusel";
 import { Categories } from "../Categories";
 
 export const HomePage: React.FC = () => {
+  const [phonesCount, setPhonesCount] = useState(0);
+  const [tabletsCount, setTabletsCount] = useState(0);
+  const [accessoriesCount, setAccessoriesCount] = useState(0);
   const tablets = async () => getAllTablets();
   const accessories = async () => getAllAccessories();
 
-  const phonesCount = 0;
-  const tabletsCount = tablets.length;
-  const accessoriesCount = accessories.length;
+  const loadPhones = async () => {
+    await getAllPhones().then(res => {
+      setPhonesCount(res.length)
+    })
+  }
+
+  useEffect(() => {
+    loadPhones()
+  }, [])
 
   return (
     <div className="homepage grid grid-mobile grid-tablet grid-desktop">
