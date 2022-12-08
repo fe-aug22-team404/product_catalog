@@ -26,6 +26,8 @@ export const Cart: React.FC<Props> = () => {
   const [phones, setPhones] = useState<Phone[]>([]);
   const [counts, setCounts] = useState<Count[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [reload, setReload] = useState(false);
+
   const [selectedToDelete, setSelectedToDelete] = useState<string[]>([]);
 
   const [checkout, setCheckout] = useState<Checkout>(Checkout.noCheck);
@@ -88,22 +90,20 @@ export const Cart: React.FC<Props> = () => {
 
   const totalItems = counts.reduce((sum, count) => sum + count.count, 0);
 
-  const loadPhones = useCallback(async(isLoad: boolean = false) => {
-    if (isLoad) {
-      setIsLoading(true);
-    }
+  const loadPhones = async () => {
+    setIsLoading(true);
 
     try {
       const phonesData = await getSelectedPhones(shoppingCart.join(','));
 
-      setPhones(phonesData);
       setIsLoading(false);
+      setPhones(phonesData);
     } catch (err) {
       setIsLoading(false);
       throw err;
     }
-  }, []);
-  
+  };
+
   const handlerDeleteMany = () => {
     const newShoppingCart = shoppingCart.filter(product => !selectedToDelete.includes(product));
 
@@ -125,7 +125,7 @@ export const Cart: React.FC<Props> = () => {
       setSelectedToDelete(curr => [
         ...curr,
         phoneId
-      ]);                    
+      ]);
     }
   };
 
@@ -135,6 +135,8 @@ export const Cart: React.FC<Props> = () => {
     localStorage.setItem('shoppingCart', newShoppingCart.join(','));
     changeShoppingCart(newShoppingCart);
   };
+
+  console.log('dlinna -', !phones.length, 'zagruzka - ' , !isLoading)
 
   const handlerPrimaryButton = () => {
     setCheckout(Checkout.loadCheck);
@@ -153,18 +155,26 @@ export const Cart: React.FC<Props> = () => {
   };
 
   useEffect(() => {
-    loadPhones(true);
-  }, []);
+    console.log('1')
+    loadPhones();
+  }, [reload]);
 
   useEffect(() => {
+    console.log('2')
+    setReload(curr => !curr)
+  }, [window.performance.timeOrigin])
+
+  useEffect(() => {
+    console.log('3')
     const newPhones = phones.filter(({ phoneId }) => shoppingCart.includes(phoneId));
 
     setPhones(newPhones);
   }, [shoppingCart]);
 
   useEffect(() => {
+    console.log('4')
     initiateCounts();
-  }, [phones, initiateCounts]);
+  }, [phones]);
 
 
   return (
@@ -191,7 +201,7 @@ export const Cart: React.FC<Props> = () => {
               const imagePath = require('../../images/' + image);
 
               const count = counts
-                .find(findedCount => findedCount.phoneId === phoneId);              
+                .find(findedCount => findedCount.phoneId === phoneId);
               const isToDelete = selectedToDelete.includes(phoneId);
 
               const linkPath = `/${category}/${phoneId}`;
@@ -210,7 +220,7 @@ export const Cart: React.FC<Props> = () => {
                     )}
                     onClick={() => handlerDeleteFromCart(phoneId)}
                     onContextMenu={(event) => {
-                      handlerAddToDeleteList(event, phoneId, isToDelete);                     
+                      handlerAddToDeleteList(event, phoneId, isToDelete);
                     }}
                   />
 
@@ -274,7 +284,7 @@ export const Cart: React.FC<Props> = () => {
             {`Total for ${totalItems} items`}
           </div>
 
-          <div className='bill__line'/>          
+          <div className='bill__line'/>
             <div className='bill__buttons-box'>
               <PrimaryButton
                 title='Checkout'
@@ -294,7 +304,7 @@ export const Cart: React.FC<Props> = () => {
       </>
       )}
 
-        {(phones.length === 0 && !isLoading) && (
+        {(!phones.length && !isLoading) && (
           (
             <div className='cart__empty-box grid-desktop-1-25'>
               No products in the cart

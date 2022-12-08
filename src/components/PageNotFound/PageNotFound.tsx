@@ -1,6 +1,5 @@
 import React from 'react';
-import { Footer } from '../Footer';
-import { Header } from '../Header';
+import './PageNotFound.scss';
 
 export const PageNotFound: React.FC = () => {
   return (
