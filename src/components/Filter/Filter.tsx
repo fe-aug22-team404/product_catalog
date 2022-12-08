@@ -1,6 +1,5 @@
 import classNames from 'classnames';
 import React, { useState } from 'react';
-import { SortBy } from '../../types/SortyBy';
 
 import './Filter.scss'
 
@@ -44,9 +43,12 @@ export const Filter: React.FC<Props> = ({
 
       {isOpen && (
         <ul className='filter__options-list'>
-          {optionsList.map(option => (
+          {optionsList.map((option, i) => (
             <li
-              className='filter__options-item'
+              className={classNames(
+                'filter__options-item',
+                `filter__options-item--${i}`,
+              )}
               onClick={() => {
                 handleFilterChange(option);
                 setIsOpen(curr => !curr);
