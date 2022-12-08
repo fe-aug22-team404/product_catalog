@@ -1,0 +1,56 @@
+@import "../../styles/vars/vars.scss";
+@import '../../styles/mixins/mixins';
+
+.homepage {
+  flex: 1;
+  margin: 0 auto;
+
+  &__title {
+    color: $white;
+    margin: 0 16px 56px;
+
+    @include tablet {
+      margin: 0 24px 56px;
+    }
+
+    @include desktop {
+      margin: 0 0 56px;
+    }
+  }
+
+  &__carusel {
+    margin-left: 16px;
+
+    @include tablet {
+      margin-left: 24px;
+    }
+
+    @include desktop {
+      margin-left: 0;
+    }
+  }
+
+  &__categories {
+    margin: 0 16px;
+
+    @include tablet {
+      margin: 0 24px;
+    }
+
+    @include desktop {
+      margin: 0;
+    }
+  }
+
+  &__slider {
+    margin: 0 16px;
+
+    @include tablet {
+      margin: 0 24px;
+    }
+
+    @include desktop {
+      margin: 0;
+    }
+  }
+}
