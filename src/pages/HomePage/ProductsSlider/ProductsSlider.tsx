@@ -3,8 +3,8 @@ import React, { useEffect, useState } from 'react';
 import './ProductsSlider.scss';
 import { sliderData } from './ProductsSliderData';
 
-import leftArrow from '../../images/arrow-left.svg';
-import rightArrow from '../../images/arrow-right.svg';
+import leftArrow from '../../../images/arrow-left.svg';
+import rightArrow from '../../../images/arrow-right.svg';
 
 export const ProductsSlider: React.FC = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -39,7 +39,7 @@ export const ProductsSlider: React.FC = () => {
   }, [currentSlide]);
 
   return (
-    <section className="productsSlider grid-mobile-1-5 grid-tablet-1-13 grid-desktop-1-25">
+    <section className="productsSlider">
       <div className="productsSlider__wrap">
         <button
           type="button"

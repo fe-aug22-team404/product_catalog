@@ -4,13 +4,13 @@ import {
   HashRouter as Router, Route, Navigate, Routes
 } from 'react-router-dom';
 import { PageNotFound } from './components/PageNotFound';
-import { HomePage } from './components/HomePage';
 import { Products } from './pages/Products/Products';
-import { ItemCard } from './components/ItemCard';
+import { ItemCard } from './pages/ItemCard';
 import { Cart } from './pages/Cart';
 import { Favourites } from './pages/Favourites';
 import { Tablets } from './pages/Tablets';
 import { Accessories } from './pages/Accessories';
+import { HomePage } from './pages/HomePage';
 
 export const AppRoutes: FC = () => {
   return (
