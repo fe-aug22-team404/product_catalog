@@ -6,7 +6,7 @@ import {
   memo,
   useCallback,
 } from 'react';
-import { getSelectedPhones } from '../../api/api';
+import { getSelectedPhones, getSelectedTablets } from '../../api/api';
 import { ProductList } from './ProductList';
 import { Loader } from '../../components/Loader';
 import { Path } from '../../components/Path';
@@ -16,21 +16,25 @@ import './Favourites.scss';
 
 export const Favourites: FC = memo(() => {
   const [isLoaded, setIsLoaded] = useState(false);
-  const [phones, setPhones] = useState<Good[]>([]);
+  const [goods, setGoods] = useState<Good[]>([]);
   const [reload, setReload] = useState(false);
 
-  const { favourites } = useContext(AppContext);
+  const { favouritesPhones, favouritesTablets } = useContext(AppContext);
 
-  const favouritesItems = favourites.length;
+  const favouritesItems = favouritesPhones.length + favouritesTablets.length;
 
   const getFavourites = useCallback(async () => {
     setIsLoaded(true);
 
     try {
-      const phonesFromApi = await getSelectedPhones(favourites.join(','));
+      const [phones, tablets] = await Promise.all([
+        getSelectedPhones(favouritesPhones.join(',')),
+        getSelectedTablets(favouritesTablets.join(','))
+      ]);
+      const goods = [...phones, ...tablets];
 
       setIsLoaded(false);
-      setPhones(phonesFromApi);
+      setGoods(goods);
     } catch (err: any) {
       setIsLoaded(false);
       throw new Error(err);
@@ -46,10 +50,12 @@ export const Favourites: FC = memo(() => {
   },[window.performance.timeOrigin]);
 
   useEffect(() => {
-    const newPhones = phones.filter(({ itemId }) => favourites.includes(itemId));
+    const modifiedGoods = goods.filter(({ itemId }) => (
+      favouritesPhones.includes(itemId) || favouritesTablets.includes(itemId)
+    ));
 
-    setPhones(newPhones);
-  }, [favourites]);
+    setGoods(modifiedGoods);
+  }, [favouritesPhones, favouritesTablets]);
 
   return (
     <div className="favourites">
@@ -72,7 +78,7 @@ export const Favourites: FC = memo(() => {
 
         {isLoaded && <Loader /> }
 
-        {(!isLoaded && favourites.length !== 0) && (
+        {(!isLoaded && favouritesItems !== 0) && (
           <>
             <p className="
                 favourites__product-count
@@ -83,11 +89,11 @@ export const Favourites: FC = memo(() => {
               {`${favouritesItems} items`}
             </p>
 
-            <ProductList goods={phones} />
+            <ProductList goods={goods} />
           </>
         )}
 
-        {(!isLoaded && !favourites.length) && (
+        {(!isLoaded && favouritesItems === 0) && (
           <h3 className='favourites__empty-box grid-desktop-1-25'>
             No products in the favourites
           </h3>

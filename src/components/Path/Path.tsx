@@ -4,6 +4,7 @@ import Home from '../../images/Home.png';
 import Arrow from '../../images/path_stroke.svg'
 import { useLocation } from 'react-router';
 import './Path.scss';
+import { Link } from 'react-router-dom';
 
 export const Path: FC = memo(() => {
   const [paths, setPaths] = useState<string[]>([]);
@@ -17,11 +18,13 @@ export const Path: FC = memo(() => {
 
   return (
     <div className="path">
-      <img
-        className='path__img-home'
-        src={ Home }
-        alt="Home"
-      />
+      <Link to='/home'>
+        <img
+          className='path__img-home'
+          src={ Home }
+          alt="Home"
+        />
+      </Link>
       {paths && paths.map((path, i) => {
         const isLast = i === paths.length - 1;
 
@@ -32,13 +35,15 @@ export const Path: FC = memo(() => {
               src={ Arrow }
               alt="arrow"
             />
-            <span className={classNames(
-              'path__name',
-              {
-                'path__name--color-white': !isLast,
-                'path__name--color-grey': isLast
-              },
-            )}>{path}</span>
+            {isLast
+              ? <span className="path__name path__name--color-grey">{path}</span>
+              : (<Link
+                  to={`/${path}`}
+                  className="path__name path__name--color-white path__name--cursor-pointer"
+                >
+                  {path}
+                </Link>)}
+
           </Fragment>
         )
       })}

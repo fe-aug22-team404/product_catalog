@@ -5,7 +5,7 @@ import { Good } from '../../types/Good';
 
 import './Cart.scss';
 import { PrimaryButton } from '../../components/PrimaryButton';
-import { getSelectedPhones } from '../../api/api';
+import { getSelectedPhones, getSelectedTablets } from '../../api/api';
 import { Loader } from '../../components/Loader';
 import { AppContext } from '../../components/AppProvider';
 import { Link, useNavigate } from 'react-router-dom';
@@ -20,10 +20,15 @@ type Count = {
 }
 
 export const Cart: React.FC<Props> = () => {
-  const { shoppingCart, changeShoppingCart } = useContext(AppContext);
+  const {
+    shoppingPhones,
+    shoppingTablets,
+    changeShoppingPhones,
+    changeShoppingTablets
+  } = useContext(AppContext);
   const navigate = useNavigate();
 
-  const [phones, setPhones] = useState<Good[]>([]);
+  const [goods, setGoods] = useState<Good[]>([]);
   const [counts, setCounts] = useState<Count[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [reload, setReload] = useState(false);
@@ -33,12 +38,12 @@ export const Cart: React.FC<Props> = () => {
   const [checkout, setCheckout] = useState<Checkout>(Checkout.noCheck);
 
   const initiateCounts = useCallback(() => {
-    if (!phones.length) {
+    if (!goods.length) {
       return;
     }
 
-    const getCountsArray = phones.reduce((arr: Count[], phone) => {
-      const { itemId, price } = phone;
+    const getCountsArray = goods.reduce((arr: Count[], good) => {
+      const { itemId, price } = good;
 
       const count: Count = {
         itemId,
@@ -52,7 +57,7 @@ export const Cart: React.FC<Props> = () => {
     }, []);
 
     setCounts(getCountsArray);
-  }, [phones]);
+  }, [goods]);
 
   const addCount = (itemId: string) => {
     setCounts(current => {
@@ -94,13 +99,17 @@ export const Cart: React.FC<Props> = () => {
 
   const totalItems = counts.reduce((sum, count) => sum + count.count, 0);
 
-  const loadPhones = async () => {
+  const loadGoods = async () => {
     setIsLoading(true);
 
     try {
-      const phonesData = await getSelectedPhones(shoppingCart.join(','));
+      const [phones, tablets] = await Promise.all([
+        getSelectedPhones(shoppingPhones.join(',')),
+        getSelectedTablets(shoppingTablets.join(','))
+      ]);
+      const goods = [...phones, ...tablets];
 
-      setPhones(phonesData);
+      setGoods(goods);
       setIsLoading(false);
     } catch (err) {
       setIsLoading(false);
@@ -109,11 +118,14 @@ export const Cart: React.FC<Props> = () => {
   };
 
   const handlerDeleteMany = () => {
-    const newShoppingCart = shoppingCart.filter(product => !selectedToDelete.includes(product));
+    const newShoppingPhones = shoppingPhones.filter(product => !selectedToDelete.includes(product));
+    const newShoppingTablets = shoppingTablets.filter(product => !selectedToDelete.includes(product));
 
     setSelectedToDelete([]);
-    localStorage.setItem('shoppingCart', newShoppingCart.join(','));
-    changeShoppingCart(newShoppingCart);
+    localStorage.setItem('shoppingPhones', newShoppingPhones.join(','));
+    localStorage.setItem('shoppingTablets', newShoppingTablets.join(','));
+    changeShoppingPhones(newShoppingPhones);
+    changeShoppingTablets(newShoppingTablets);
   };
 
   const handlerAddToDeleteList = (
@@ -135,10 +147,13 @@ export const Cart: React.FC<Props> = () => {
   };
 
   const handlerDeleteFromCart = (productId: string) => {
-    const newShoppingCart = shoppingCart.filter(product => product !== productId);
+    const newShoppingPhones = shoppingPhones.filter(product => product !== productId);
+    const newShoppingTablets = shoppingTablets.filter(product => product !== productId);
 
-    localStorage.setItem('shoppingCart', newShoppingCart.join(','));
-    changeShoppingCart(newShoppingCart);
+    localStorage.setItem('shoppingPhones', newShoppingPhones.join(','));
+    localStorage.setItem('shoppingTablets', newShoppingTablets.join(','));
+    changeShoppingPhones(newShoppingPhones);
+    changeShoppingTablets(newShoppingTablets);
   };
 
   const handlerPrimaryButton = () => {
@@ -151,14 +166,15 @@ export const Cart: React.FC<Props> = () => {
 
   const handlerConfirmCheck = () => {
     localStorage.setItem('shoppingCart', '');
-    changeShoppingCart([]);
+    changeShoppingPhones([]);
+    changeShoppingTablets([]);
 
     setCheckout(Checkout.noCheck);
     navigate('/home');
   };
 
   useEffect(() => {
-    loadPhones();
+    loadGoods();
   }, [reload]);
 
   useEffect(() => {
@@ -166,16 +182,18 @@ export const Cart: React.FC<Props> = () => {
   }, [window.performance.timeOrigin])
 
   useEffect(() => {
-    const newPhones = phones.filter(({ itemId }) => shoppingCart.includes(itemId));
+    const newPhones = goods.filter(({ itemId }) => (
+      shoppingPhones.includes(itemId) || shoppingTablets.includes(itemId)
+    ));
 
-    setPhones(newPhones);
-  }, [shoppingCart]);
+    setGoods(newPhones);
+  }, [shoppingPhones, shoppingTablets]);
 
   useEffect(() => {
-    if (phones)  {
+    if (goods)  {
       initiateCounts();
     }
-  }, [phones]);
+  }, [goods]);
 
 
   return (
@@ -193,11 +211,11 @@ export const Cart: React.FC<Props> = () => {
         grid-desktop"
       >
         {isLoading && <Loader />}
-        {(phones.length > 0 && !isLoading && checkout !== Checkout.endCheck) && (
+        {(goods.length > 0 && !isLoading && checkout !== Checkout.endCheck) && (
           <>
           <div className='grid-desktop-1-17'>
-            {phones.map(phone => {
-              const { image, name, price, itemId, category } = phone; // here needs to destuction image path too!!!
+            {goods.map(good => {
+              const { image, name, price, itemId, category } = good; // here needs to destuction image path too!!!
 
               const imagePath = require('../../images/' + image);
 
@@ -305,7 +323,7 @@ export const Cart: React.FC<Props> = () => {
       </>
       )}
 
-        {(!phones.length && !isLoading) && (
+        {(!goods.length && !isLoading) && (
           (
             <div className='cart__empty-box grid-desktop-1-25'>
               No products in the cart

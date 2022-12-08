@@ -53,6 +53,11 @@
     height: 100%;
     object-fit: contain;
     object-position: center;
+    cursor: pointer;
+
+    &--cursor-classic {
+      cursor: auto;
+    }
   }
 
   &__title {

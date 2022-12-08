@@ -8,9 +8,10 @@ import { Products } from './pages/Products/Products';
 import { ItemCard } from './pages/ItemCard';
 import { Cart } from './pages/Cart';
 import { Favourites } from './pages/Favourites';
-import { Tablets } from './pages/Tablets';
 import { Accessories } from './pages/Accessories';
 import { HomePage } from './pages/HomePage';
+import { DescriptionNotFound } from './components/DescriptionNotFound';
+import { ItemNotFound } from './components/ItemNotFound';
 
 export const AppRoutes: FC = () => {
   return (
@@ -30,7 +31,12 @@ export const AppRoutes: FC = () => {
             <Route path=":openedPhoneId" element={<ItemCard />} />
           </Route>
 
-          <Route path="/tablets" element={<Products category='tablets' title='Tablets' />} />
+          <Route path="tablets">
+            <Route index element={
+              <Products category='tablets' title='Tablets' />
+            } />
+            <Route path=":openedTabletId" element={<DescriptionNotFound />} />
+          </Route>
 
           <Route path="/accessories" element={<Accessories />} />
 
