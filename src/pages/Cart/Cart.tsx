@@ -23,6 +23,7 @@ export const Cart: React.FC<Props> = () => {
   const [counts, setCounts] = useState<Count[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [reload, setReload] = useState(false);
+
   const [selectedToDelete, setSelectedToDelete] = useState<string[]>([]);
 
   const initiateCounts = useCallback(() => {
