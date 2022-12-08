@@ -64,10 +64,6 @@
     color: $white;
   }
 
-  &__bill {
-    border: 1px solid #3B3E4A;
-  }
-
   &__empty-box {
     width: 100%;
     color: $white;
@@ -141,6 +137,8 @@
   }
 
   &__title {
+    color: $white;
+
     @include mobile {
       width: 128px;
     }
@@ -269,11 +267,34 @@
   justify-content: center;
 
   color: $white;
+  
+  border: 1px solid $elements;  
+  
+  @include mobile {
+    margin-bottom: 40px;
+  }
+
+  @include tablet {
+    margin-bottom: 60px;
+  }
+
+  @include desktop {
+    margin-bottom: 80px;
+  }
+
+  &--operation {
+    position: relative;
+    border: 1px solid;
+
+    animation: bill-success 1s linear 0s infinite;
+  }
 
   &__total-price {
     font-weight: 800;
     font-size: 32px;
     line-height: 41px;
+
+    text-align: center;
   }
 
   &__items {
@@ -319,5 +340,84 @@
     &:hover {
       background-color: $surface-2;
     }
+  }
+}
+
+@keyframes bill-success {
+  0%{
+    border-image: linear-gradient(
+      0deg,
+    rgba(39,174,96,1) 0%,
+    rgba(144,91,255,1) 100%) 1;
+  
+  }
+  10%{
+    border-image: linear-gradient(
+      36deg,
+    rgba(39,174,96,1) 0%,
+    rgba(144,91,255,1) 100%) 1;
+  
+  }
+  20%{
+    border-image: linear-gradient(
+      72deg,
+    rgba(39,174,96,1) 0%,
+    rgba(144,91,255,1) 100%) 1;
+  
+  }
+  30%{
+    border-image: linear-gradient(
+      108deg,
+    rgba(39,174,96,1) 0%,
+    rgba(144,91,255,1) 100%) 1;
+  
+  }
+  40%{
+    border-image: linear-gradient(
+      144deg,
+    rgba(39,174,96,1) 0%,
+    rgba(144,91,255,1) 100%) 1;
+  
+  }
+  50%{
+    border-image: linear-gradient(
+      180deg,
+    rgba(39,174,96,1) 0%,
+    rgba(144,91,255,1) 100%) 1;
+  
+  }
+  60%{
+    border-image: linear-gradient(
+      216deg,
+    rgba(39,174,96,1) 0%,
+    rgba(144,91,255,1) 100%) 1;
+  
+  }
+  70%{
+    border-image: linear-gradient(
+      252deg,
+    rgba(39,174,96,1) 0%,
+    rgba(144,91,255,1) 100%) 1;
+  
+  }
+  80%{
+    border-image: linear-gradient(
+      288deg,
+    rgba(39,174,96,1) 0%,
+    rgba(144,91,255,1) 100%) 1;
+  
+  }
+  90%{
+    border-image: linear-gradient(
+      324deg,
+    rgba(39,174,96,1) 0%,
+    rgba(144,91,255,1) 100%) 1;
+  
+  }
+  100%{
+    border-image: linear-gradient(
+      360deg,
+    $green 0%,
+    $accent 100%) 1;
   }
 }
