@@ -33,6 +33,10 @@ export const Cart: React.FC<Props> = () => {
   const [checkout, setCheckout] = useState<Checkout>(Checkout.noCheck);
 
   const initiateCounts = useCallback(() => {
+    if (!phones.length) {
+      return;
+    }
+
     const getCountsArray = phones.reduce((arr: Count[], phone) => {
       const { phoneId, price } = phone;
 
@@ -96,8 +100,8 @@ export const Cart: React.FC<Props> = () => {
     try {
       const phonesData = await getSelectedPhones(shoppingCart.join(','));
 
-      setIsLoading(false);
       setPhones(phonesData);
+      setIsLoading(false);
     } catch (err) {
       setIsLoading(false);
       throw err;
@@ -137,8 +141,6 @@ export const Cart: React.FC<Props> = () => {
     changeShoppingCart(newShoppingCart);
   };
 
-  console.log('dlinna -', !phones.length, 'zagruzka - ' , !isLoading)
-
   const handlerPrimaryButton = () => {
     setCheckout(Checkout.loadCheck);
 
@@ -156,25 +158,23 @@ export const Cart: React.FC<Props> = () => {
   };
 
   useEffect(() => {
-    console.log('1')
     loadPhones();
   }, [reload]);
 
   useEffect(() => {
-    console.log('2')
     setReload(curr => !curr)
   }, [window.performance.timeOrigin])
 
   useEffect(() => {
-    console.log('3')
     const newPhones = phones.filter(({ phoneId }) => shoppingCart.includes(phoneId));
 
     setPhones(newPhones);
   }, [shoppingCart]);
 
   useEffect(() => {
-    console.log('4')
-    initiateCounts();
+    if (phones)  {
+      initiateCounts();
+    }
   }, [phones]);
 
 
