@@ -17,8 +17,7 @@ import { AvailableCapacity } from './AvailableCapacity';
 import { AvailableColors } from './AvailableColors';
 import { Carusel } from '../../components/Carusel';
 import { AppContext } from '../../components/AppProvider';
-
-
+import Slider from 'react-touch-drag-slider';
 
 export const ItemCard: FC = () => {
   const { openedPhoneId = '' } = useParams();
@@ -28,12 +27,16 @@ export const ItemCard: FC = () => {
   const [isError, setIsError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [path, setPath] = useState('')
-  const { favourites, shoppingCart, changeFavourites, changeShoppingCart } = useContext(AppContext);
+  const {
+    favouritesPhones,
+    shoppingPhones,
+    changeFavouritesPhones,
+    changeShoppingPhones} = useContext(AppContext);
   const location = useLocation();
   const navigate = useNavigate();
 
-  const isShoppingCartIncludeId = shoppingCart.includes(phoneId);
-  const isFavouritesIncludeId = favourites.includes(phoneId);
+  const isShoppingCartIncludeId = shoppingPhones.includes(phoneId);
+  const isFavouritesIncludeId = favouritesPhones.includes(phoneId);
   const itemProperties: PhoneProperties = {
     Screen: phoneData?.screen || null,
     Resolution: phoneData?.resolution || null,
@@ -53,29 +56,29 @@ export const ItemCard: FC = () => {
 
   const handleShoppingCarts = () => {
     if (isShoppingCartIncludeId) {
-      const filteredShoppingCart = shoppingCart.filter(id => id !== phoneId);
+      const filteredShoppingCart = shoppingPhones.filter(id => id !== phoneId);
 
-      localStorage.setItem('shoppingCart', filteredShoppingCart.join(','));
-      changeShoppingCart(filteredShoppingCart);
+      localStorage.setItem('shoppingPhones', filteredShoppingCart.join(','));
+      changeShoppingPhones(filteredShoppingCart);
     } else {
-      const addedShoppingCart = [...shoppingCart, phoneId];
+      const addedShoppingCart = [...shoppingPhones, phoneId];
 
-      localStorage.setItem('shoppingCart', addedShoppingCart.join(','));
-      changeShoppingCart(addedShoppingCart);
+      localStorage.setItem('shoppingPhones', addedShoppingCart.join(','));
+      changeShoppingPhones(addedShoppingCart);
     }
   }
 
   const handleFavourites = () => {
     if (isFavouritesIncludeId) {
-      const filteredFavourites = favourites.filter(id => id !== phoneId);
+      const filteredFavourites = favouritesPhones.filter(id => id !== phoneId);
 
-      localStorage.setItem('favourites', filteredFavourites.join(','));
-      changeFavourites(filteredFavourites);
+      localStorage.setItem('favouritesPhones', filteredFavourites.join(','));
+      changeFavouritesPhones(filteredFavourites);
     } else {
-      const completeFavourites = [...favourites, phoneId];
+      const completeFavourites = [...favouritesPhones, phoneId];
 
-      localStorage.setItem('favourites', completeFavourites.join(','));
-      changeFavourites(completeFavourites);
+      localStorage.setItem('favouritesPhones', completeFavourites.join(','));
+      changeFavouritesPhones(completeFavourites);
     }
   };
 

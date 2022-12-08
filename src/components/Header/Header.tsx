@@ -10,17 +10,22 @@ import Like from '../../images/like.svg';
 import Burger from '../../images/Burger.svg';
 import Cross from '../../images/Cross.svg';
 import { AppContext } from '../AppProvider/AppProvider';
+import classNames from 'classnames';
 
 export const Header :React.FC = () => {
-  const { favourites, shoppingCart } = useContext(AppContext)
+  const {
+    favouritesPhones,
+    favouritesTablets,
+    shoppingPhones,
+    shoppingTablets, } = useContext(AppContext)
   const [isOpen, setIsOpen] = useState(false);
 
   const removeMenu = () => {
     setIsOpen((curr: boolean) => false);
   };
 
-  const favouritesItems = favourites.length;
-  const shoppingCartItems = shoppingCart.length;
+  const favouritesItems = favouritesPhones.length + favouritesTablets.length;
+  const shoppingCartItems = shoppingPhones.length + shoppingTablets.length;
 
   return (
     <>
@@ -47,25 +52,49 @@ export const Header :React.FC = () => {
           <nav className="header__nav">
             <ul className="header__nav-list">
               <li className="header__nav-item">
-                <NavLink to="/" className="header__nav-link">
+                <NavLink
+                  to="/"
+                  className={({ isActive }) => classNames(
+                    'header__nav-link',
+                    { 'header__nav-link--active': isActive },
+                  )}
+                >
                   home
                 </NavLink>
               </li>
 
               <li className="header__nav-item">
-                <NavLink to="/phones" className="header__nav-link">
+                <NavLink
+                  to="phones"
+                  className={({ isActive }) => classNames(
+                    'header__nav-link',
+                    { 'header__nav-link--active': isActive },
+                  )}
+                >
                   phones
                 </NavLink>
               </li>
 
               <li className="header__nav-item">
-                <NavLink to="/tablets" className="header__nav-link">
+                <NavLink
+                  to="tablets"
+                  className={({ isActive }) => classNames(
+                    'header__nav-link',
+                    { 'header__nav-link--active': isActive },
+                  )}
+                >
                   tablets
                 </NavLink>
               </li>
 
               <li className="header__nav-item">
-                <NavLink to="/accessories" className="header__nav-link">
+                <NavLink
+                  to="accessories"
+                  className={({ isActive }) => classNames(
+                    'header__nav-link',
+                    { 'header__nav-link--active': isActive },
+                  )}
+                >
                   accessory
                 </NavLink>
               </li>
@@ -74,7 +103,10 @@ export const Header :React.FC = () => {
         </section>
 
         <section className="header__right">
-          <NavLink to="/favourites" className="header__link">
+          <NavLink
+            to="favourites"
+            className="header__link"
+          >
             <div className="header__link-wrap">
               <img src={Like} className="header__link-img" alt="btn-like" />
               {favouritesItems > 0 && (
@@ -83,7 +115,7 @@ export const Header :React.FC = () => {
             </div>
           </NavLink>
 
-          <NavLink to="/cart" className="header__link">
+          <NavLink to="cart" className="header__link">
             <div className="header__link-wrap">
               <img src={Cart} className="header__link-img" alt="link-img" />
               {shoppingCartItems > 0 && (
@@ -106,7 +138,7 @@ export const Header :React.FC = () => {
             >
               <img className="menu__logo" src={Logo} alt="logo" />
             </Link>
-            <Link to="/">
+            <div className='menu__toggle'>
               <div
                 className="menu__link-cross"
                 onClick={() => {
@@ -117,7 +149,7 @@ export const Header :React.FC = () => {
                   <img className="menu__link-img" src={Cross} alt="burger" />
                 </div>
               </div>
-            </Link>
+            </div>
           </section>
 
           <nav className="menu__nav">
@@ -125,7 +157,10 @@ export const Header :React.FC = () => {
               <li className="menu__nav-item">
                 <NavLink
                   to="/"
-                  className="menu__nav-link"
+                  className={({ isActive }) => classNames(
+                    'menu__nav-link',
+                    { 'menu__nav-link--active': isActive },
+                  )}
                   onClick={() => {
                     removeMenu();
                   }}
@@ -136,8 +171,11 @@ export const Header :React.FC = () => {
 
               <li className="menu__nav-item">
                 <NavLink
-                  to="/phones"
-                  className="menu__nav-link"
+                  to="phones"
+                  className={({ isActive }) => classNames(
+                    'menu__nav-link',
+                    { 'menu__nav-link--active': isActive },
+                  )}
                   onClick={() => {
                     removeMenu();
                   }}
@@ -148,8 +186,11 @@ export const Header :React.FC = () => {
 
               <li className="menu__nav-item">
                 <NavLink
-                  to="/tablets"
-                  className="menu__nav-link"
+                  to="tablets"
+                  className={({ isActive }) => classNames(
+                    'menu__nav-link',
+                    { 'menu__nav-link--active': isActive },
+                  )}
                   onClick={() => {
                     removeMenu();
                   }}
@@ -160,13 +201,16 @@ export const Header :React.FC = () => {
 
               <li className="menu__nav-item">
                 <NavLink
-                  to="/accessory"
-                  className="menu__nav-link"
+                  to="accessories"
+                  className={({ isActive }) => classNames(
+                    'menu__nav-link',
+                    { 'menu__nav-link--active': isActive },
+                  )}
                   onClick={() => {
                     removeMenu();
                   }}
                 >
-                  accessory
+                  accessories
                 </NavLink>
               </li>
             </ul>
@@ -174,7 +218,7 @@ export const Header :React.FC = () => {
 
           <section className="menu__bottom">
             <NavLink
-              to="/favourites"
+              to="favourites"
               className="menu__link"
               onClick={() => {
                 removeMenu();
@@ -189,7 +233,7 @@ export const Header :React.FC = () => {
             </NavLink>
 
             <NavLink
-              to="/cart"
+              to="cart"
               className="menu__link"
               onClick={() => {
                 removeMenu();

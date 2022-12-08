@@ -8,6 +8,7 @@ import { Loader } from '../../components/Loader';
 import { Good } from '../../types/Good';
 import { SortBy, sortByOptions } from '../../types/SortyBy';
 import './Products.scss';
+import { useLocation } from 'react-router';
 
 const perPageOptions = [16, 12, 8, 4];
 
@@ -22,7 +23,8 @@ export const Products: React.FC<Props> = ({ category, title }) => {
   const [sortBy, setSortBy] = useState<SortBy>(SortBy.Newest);
   const [perPage, setPerPage] = useState(16);
   const [currentPage, setCurrentPage] = useState(1);
-  const [isLoaded, setIsLoaded] = useState(false)
+  const [isLoaded, setIsLoaded] = useState(false);
+  const { pathname } = useLocation();
 
   const loadGoods = async () => {
     setIsLoaded(true);
@@ -107,6 +109,13 @@ export const Products: React.FC<Props> = ({ category, title }) => {
 
     getVisibleGoods();
   }, [goods, sortBy, perPage, currentPage]);
+
+  useEffect(() => {
+    loadGoods();
+    setSortBy(SortBy.Newest);
+    setCurrentPage(1);
+    setPerPage(16);
+  }, [pathname]);
 
   return (
     <div className="phones">

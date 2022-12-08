@@ -5,56 +5,95 @@ type Props = {
 }
 
 type Context = {
-  favourites: string[],
-  shoppingCart: string[],
-  changeFavourites: (value: string[]) => void,
-  changeShoppingCart: (value: string[]) => void
+  favouritesPhones: string[],
+  favouritesTablets: string[],
+  shoppingPhones: string[],
+  shoppingTablets: string[],
+  changeFavouritesPhones: (value: string[]) => void,
+  changeFavouritesTablets: (value: string[]) => void,
+  changeShoppingPhones: (value: string[]) => void,
+  changeShoppingTablets: (value: string[]) => void
 }
 
 export const AppContext = createContext<Context>({
-  favourites: [],
-  shoppingCart: [],
-  changeFavourites: () => {},
-  changeShoppingCart: () => {}
+  favouritesPhones: [],
+  favouritesTablets: [],
+  shoppingPhones: [],
+  shoppingTablets: [],
+  changeFavouritesPhones: () => {},
+  changeFavouritesTablets: () => {},
+  changeShoppingPhones: () => {},
+  changeShoppingTablets: () => {}
 })
 
 export const AppProvider: FC<Props> = ({ children }) => {
-  const [favourites, setFavourites] = useState<string[]>([]);
-  const [shoppingCart, setShoppingCart] = useState<string[]>([]);
+  const [favouritesPhones, setFavouritesPhones] = useState<string[]>([]);
+  const [favouritesTablets, setFavouritesTablets] = useState<string[]>([]);
+  const [shoppingPhones, setShoppingPhones] = useState<string[]>([]);
+  const [shoppingTablets, setShoppingTablets] = useState<string[]>([]);
 
-  const changeFavourites = (newFavourites: string[]) => {
-    setFavourites(newFavourites);
+  const changeFavouritesPhones = (newFavourites: string[]) => {
+    setFavouritesPhones(newFavourites);
   }
 
-  const changeShoppingCart = (newShoppingCart: string[]) => {
-    setShoppingCart(newShoppingCart);
+  const changeFavouritesTablets = (newFavourites: string[]) => {
+    setFavouritesTablets(newFavourites);
+  }
+
+  const changeShoppingPhones = (newShoppingCart: string[]) => {
+    setShoppingPhones(newShoppingCart);
+  }
+  const changeShoppingTablets = (newShoppingCart: string[]) => {
+    setShoppingTablets(newShoppingCart);
   }
 
   useEffect(() => {
-    const favouriteFromStorage = localStorage.getItem('favourites');
-    const favouritesData = favouriteFromStorage
-      ? favouriteFromStorage.split(',')
+    const favouritePhonesFromStorage = localStorage.getItem('favouritesPhones');
+    const favouritesPhonesData = favouritePhonesFromStorage
+      ? favouritePhonesFromStorage.split(',')
       : [];
 
-    const shoppingCartFromStorage = localStorage.getItem('shoppingCart');
-    const shoppingCartData = shoppingCartFromStorage
-      ? shoppingCartFromStorage.split(',')
+    const favouriteTabletsFromStorage = localStorage.getItem('favouritesTablets');
+    const favouritesTabletsData = favouriteTabletsFromStorage
+      ? favouriteTabletsFromStorage.split(',')
       : [];
 
-    if (favouritesData) {
-      setFavourites(favouritesData);
+    const shoppingPhonesFromStorage = localStorage.getItem('shoppingPhones');
+    const shoppingPhonesData = shoppingPhonesFromStorage
+      ? shoppingPhonesFromStorage.split(',')
+      : [];
+
+    const shoppingTabletsFromStorage = localStorage.getItem('shoppingTablets');
+    const shoppingTabletsData = shoppingTabletsFromStorage
+      ? shoppingTabletsFromStorage.split(',')
+      : [];
+
+    if (favouritesPhonesData) {
+      setFavouritesPhones(favouritesPhonesData);
     }
 
-    if (shoppingCartData) {
-      setShoppingCart(shoppingCartData);
+    if (favouritesTabletsData) {
+      setFavouritesTablets(favouritesTabletsData);
+    }
+
+    if (shoppingPhonesData) {
+      setShoppingPhones(shoppingPhonesData);
+    }
+
+    if (shoppingTabletsData) {
+      setShoppingTablets(shoppingTabletsData);
     }
   }, [])
 
   const contextValue = {
-    favourites,
-    shoppingCart,
-    changeFavourites,
-    changeShoppingCart
+    favouritesPhones,
+    favouritesTablets,
+    shoppingPhones,
+    shoppingTablets,
+    changeFavouritesPhones,
+    changeFavouritesTablets,
+    changeShoppingPhones,
+    changeShoppingTablets
   }
 
   return (
