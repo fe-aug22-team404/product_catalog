@@ -17,7 +17,6 @@ import { AvailableCapacity } from './AvailableCapacity';
 import { AvailableColors } from './AvailableColors';
 import { Carusel } from '../../components/Carusel';
 import { AppContext } from '../../components/AppProvider';
-import Slider from 'react-touch-drag-slider';
 
 export const ItemCard: FC = () => {
   const { openedPhoneId = '' } = useParams();
