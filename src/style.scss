@@ -31,9 +31,9 @@ div {
   padding: 0;
   margin: 0;
 }
-@import './components/PageNotFound/PageNotFount.scss';
+
+a {
+  text-decoration: none;
+}
+
 @import './styles/grids-templates/grid-templates.scss';
-@import './components/Path/path.scss';
-@import './components/ItemCard/ItemCard.scss';
-@import './pages/Products/Products.scss';
-@import './components/Favourites/Favourites';

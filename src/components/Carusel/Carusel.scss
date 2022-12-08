@@ -8,11 +8,16 @@
   overflow: hidden;
 
   &__title {
-    font-weight: 700;
-    font-size: 32px;
-    line-height: 41px;
+    font-weight: 800;
+    font-size: 22px;
+    line-height: 31px;
     color: $white;
     margin-bottom: 24px;
+
+    @include tablet {
+      font-size: 32px;
+      line-height: 41px;
+    }
   }
 
   &__btns {
@@ -27,13 +32,20 @@
     border: 1px solid $elements;
     transition: background-color 0.3s;
 
+    cursor: pointer;
+
     &:hover {
       border-color: $icons;
       background-color: $icons;
     }
 
-    &__btn--off {
-      border-color: $elements;
+    &--off {
+      &:hover {
+        background-color: $surface-2;
+        border: 1px solid $elements;
+
+        cursor: default;
+      }
     }
   }
 
@@ -44,7 +56,16 @@
   &__top {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: baseline;
+    margin-right: 16px;
+
+    @include tablet {
+      margin-right: 24px;
+    }
+
+    @include tablet {
+      margin-right: 32px;
+    }
   }
 
   &__list {
