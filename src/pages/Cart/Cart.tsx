@@ -107,6 +107,7 @@ export const Cart: React.FC<Props> = () => {
   const handlerDeleteMany = () => {
     const newShoppingCart = shoppingCart.filter(product => !selectedToDelete.includes(product));
 
+    setSelectedToDelete([]);
     localStorage.setItem('shoppingCart', newShoppingCart.join(','));
     changeShoppingCart(newShoppingCart);
   };
