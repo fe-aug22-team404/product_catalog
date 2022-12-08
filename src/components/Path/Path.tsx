@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import Home from '../../images/Home.png';
 import Arrow from '../../images/path_stroke.svg'
 import { useLocation } from 'react-router';
-import './Path.scss';
+import './path.scss';
 
 export const Path: FC = memo(() => {
   const [paths, setPaths] = useState<string[]>([]);
