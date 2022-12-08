@@ -1,13 +1,13 @@
 import { FC } from 'react';
 import { ProductCard } from '../../../components/ProductCard';
-import { Phone } from '../../../types/Phone';
+import { Good } from '../../../types/Good';
 import './ProductList.scss';
 
 type Props = {
-  phones: Phone[];
+  goods: Good[];
 };
 
-export const ProductList: FC<Props> = ({ phones }) => {
+export const ProductList: FC<Props> = ({ goods }) => {
   return (
     <div className="
       product-items__wrapper
@@ -16,13 +16,13 @@ export const ProductList: FC<Props> = ({ phones }) => {
       grid-desktop-1-25"
     >
       <ul className="product-items__list">
-        {phones.map(phone => (
+        {goods.map(good => (
           <li
             className='favorites__product-item'
-            key={phone.id}
+            key={good.id}
           >
             <ProductCard
-              good={phone}
+              good={good}
               path='favourites'
             />
           </li>

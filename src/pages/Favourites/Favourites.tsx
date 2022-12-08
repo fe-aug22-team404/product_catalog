@@ -11,12 +11,12 @@ import { ProductList } from './ProductList';
 import { Loader } from '../../components/Loader';
 import { Path } from '../../components/Path';
 import { AppContext } from '../../components/AppProvider';
-import { Phone } from '../../types/Phone';
+import { Good } from '../../types/Good';
 import './Favourites.scss';
 
 export const Favourites: FC = memo(() => {
   const [isLoaded, setIsLoaded] = useState(false);
-  const [phones, setPhones] = useState<Phone[]>([]);
+  const [phones, setPhones] = useState<Good[]>([]);
   const [reload, setReload] = useState(false);
 
   const { favourites } = useContext(AppContext);
@@ -46,7 +46,7 @@ export const Favourites: FC = memo(() => {
   },[window.performance.timeOrigin]);
 
   useEffect(() => {
-    const newPhones = phones.filter(({ phoneId }) => favourites.includes(phoneId));
+    const newPhones = phones.filter(({ itemId }) => favourites.includes(itemId));
 
     setPhones(newPhones);
   }, [favourites]);
@@ -83,7 +83,7 @@ export const Favourites: FC = memo(() => {
               {`${favouritesItems} items`}
             </p>
 
-            <ProductList phones={phones} />
+            <ProductList goods={phones} />
           </>
         )}
 

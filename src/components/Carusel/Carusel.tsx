@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import React, { useEffect, useMemo, useState } from 'react';
-import { Phone } from '../../types/Phone';
+import { Good } from '../../types/Good';
 import { ProductCard } from '../ProductCard';
 import './Carusel.scss';
 import leftArrow from '../../images/arrow-left.svg';
@@ -19,7 +19,7 @@ export const Carusel: React.FC<Props> = ({ orderType, title, path }) => {
   const [position, setPosition] = useState(1);
   const [translateX, setTranslateX] = useState(0);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [phones, setPhones] = useState<Phone[] | null>(null)
+  const [phones, setPhones] = useState<Good[] | null>(null)
 
   const carouselSlides = useMemo(() => phones ? phones.length : 0, [phones]);
   const { width } = useWindowDimensions();

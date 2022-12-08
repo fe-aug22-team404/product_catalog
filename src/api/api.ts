@@ -1,7 +1,6 @@
 import axios from 'axios';
 import PhoneDescr from '../types/PhoneDescription';
-import { Phone } from '../types/Phone';
-import { Tablet } from '../types/Tablet';
+import { Good } from '../types/Good';
 
 const BASE_URL = 'https://team-404-mate.netlify.app/.netlify/functions/server/phones';
 const BASE_URL_TABLETS = 'https://team-404-mate.netlify.app/.netlify/functions/server/tablets';
@@ -12,22 +11,22 @@ export const getPhoneDescription = async (id :string) => {
 };
 
 export const getAllPhones = async() => {
-  return await axios.get<Phone[]>(BASE_URL)
+  return await axios.get<Good[]>(BASE_URL)
       .then((response) => response.data);
 };
 
 export const getSelectedPhones = async(query: string) => {
-  return await axios.get<Phone[]>(BASE_URL+`?query=${query}`)
+  return await axios.get<Good[]>(BASE_URL+`?query=${query}`)
     .then((response) => response.data);
 };
 
 export const getArrangedPhones = async(orderType: string) => {
-  return await axios.get<Phone[]>(BASE_URL+`?orderType=${orderType}`)
+  return await axios.get<Good[]>(BASE_URL+`?orderType=${orderType}`)
     .then((response) => response.data);
 };
 
 export const getAllTablets = async() => {
-  return await axios.get<Tablet[]>(BASE_URL_TABLETS)
+  return await axios.get<Good[]>(BASE_URL_TABLETS)
     .then((response) => response.data);
 };
 
