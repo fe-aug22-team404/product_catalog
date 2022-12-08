@@ -91,7 +91,6 @@
 
       display: flex;
       flex-direction: column;
-      align-items: left;
 
       list-style: none;
 
@@ -102,6 +101,8 @@
 
       background-color: $bc-color;
       box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.05);
+
+      animation: filter_in .3s ease-out 0s 1 forwards;
     }
 
     &-item {
@@ -113,11 +114,44 @@
 
       color: $secondary;
 
+      opacity: 0;
+
       transition: background-color .3s;
 
       &:hover {
         background: $surface-2;
       }
+
+      animation-name: filter_item_in;
+      animation-timing-function: ease;
+      animation-duration: .3s;
+      animation-fill-mode: forwards;
+
+      @for $delay from 1 to 10 {
+        &--#{$delay} {
+          animation-delay: $delay * 0.1s;
+        }
+      }
     }
+  }
+}
+
+@keyframes filter_in {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes filter_item_in {
+  0% {
+    display: block;
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
   }
 }

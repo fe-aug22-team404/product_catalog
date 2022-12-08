@@ -65,7 +65,7 @@ export const Header :React.FC = () => {
               </li>
 
               <li className="header__nav-item">
-                <NavLink to="/accessory" className="header__nav-link">
+                <NavLink to="/accessories" className="header__nav-link">
                   accessory
                 </NavLink>
               </li>

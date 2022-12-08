@@ -1,10 +1,11 @@
-import { FC, Fragment, useEffect, useState } from 'react'
+import { FC, Fragment, memo, useEffect, useState } from 'react'
 import classNames from 'classnames';
 import Home from '../../images/Home.png';
 import Arrow from '../../images/path_stroke.svg'
 import { useLocation } from 'react-router';
+import './Path.scss';
 
-export const Path: FC = () => {
+export const Path: FC = memo(() => {
   const [paths, setPaths] = useState<string[]>([]);
   const location = useLocation();
 
@@ -43,4 +44,4 @@ export const Path: FC = () => {
       })}
     </div>
   )
-}
+});

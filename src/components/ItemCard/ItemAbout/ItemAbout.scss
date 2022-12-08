@@ -1,0 +1,45 @@
+@import '../../../styles/mixins/mixins';
+@import '../../../styles/vars/vars.scss';
+
+.item-about {
+  &__title {
+    color: $white;
+    display: block;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 26px;
+    padding-bottom: 16px;
+    margin-bottom: 32px;
+    border-bottom: 1px solid $secondary;
+
+    @include tablet {
+      font-size: 22px;
+      line-height: 32px;
+    }
+  }
+
+  &__subtitle {
+    color: $white;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 20px;
+    margin-bottom: 16px;
+
+    @include tablet {
+      font-size: 20px;
+      line-height: 26px;
+    }
+  }
+
+  &__text {
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 21px;
+    color: #89939A;
+    margin-bottom: 24px;
+
+    &--position-last {
+      margin-bottom: 32px;
+    }
+  }
+}

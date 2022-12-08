@@ -1,6 +1,7 @@
 @import '../../styles/vars/vars.scss';
 
 .primary-button {
+  user-select: none;
   width: 100%;
   height: 40px;
 
