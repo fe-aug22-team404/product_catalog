@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React, { useEffect, useMemo, useState } from 'react';
+import { FC, useEffect, useMemo, useState, useRef, useCallback } from 'react';
 import { Good } from '../../types/Good';
 import { ProductCard } from '../ProductCard';
 import './Carusel.scss';
@@ -8,6 +8,7 @@ import rightArrow from '../../images/arrow-right.svg';
 import useWindowDimensions from '../../utils/customHooks/useWindowDimensions';
 import { getArrangedPhones } from '../../api/api';
 import { Loader } from '../Loader';
+import { Swiper, SwiperSlide, SwiperRef } from 'swiper/react';
 
 type Props = {
   title: string;
@@ -15,50 +16,19 @@ type Props = {
   path: string;
 };
 
-export const Carusel: React.FC<Props> = ({ orderType, title, path }) => {
-  const [position, setPosition] = useState(1);
-  const [translateX, setTranslateX] = useState(0);
+export const Carusel: FC<Props> = ({ orderType, title, path }) => {
+  const [position, setPosition] = useState(0);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [phones, setPhones] = useState<Good[] | null>(null)
+  const [phones, setPhones] = useState<Good[] | null>(null);
+	const swiperRef = useRef<SwiperRef>(null);
 
   const carouselSlides = useMemo(() => phones ? phones.length : 0, [phones]);
   const { width } = useWindowDimensions();
-  const frameSize = useMemo(() => {
-    switch (true) {
-      case (width >= 320 && width < 640):
-        return 304;
-
-      case (width >= 640 && width < 978):
-        return 588;
-
-      case (width >= 978 && width < 1200):
-        return 882;
-
-      case (width >= 1200):
-        return 1152;
-
-      default:
-        return 304;
-    }
-  }, [width, phones]);
-
   const step = useMemo(() => {
-    switch (true) {
-      case (width >= 320 && width < 640):
-        return 1;
-
-      case (width >= 640 && width < 978):
-        return 2;
-
-      case (width >= 978 && width < 1200):
-        return 3;
-
-      case (width >= 1200):
-        return 4;
-
-      default:
-        return 1;
-    }
+    const start = 300;
+    
+    return width === 320 ? 1 : Math.ceil(width / start);
+    
   }, [width, phones]);
 
   const getPhones = async () => {
@@ -84,46 +54,44 @@ export const Carusel: React.FC<Props> = ({ orderType, title, path }) => {
   };
 
   const lastSlidePosition = useMemo(() => Math.ceil(carouselSlides / step), [width, phones]);
-  const isStart = position === 1;
+  const isStart = position === 0;
   const isEnd = lastSlidePosition === position;
 
-  const moveRight = () => {
-    if ((position + 1) <= lastSlidePosition) {
-      setPosition(position + 1);
-      setTranslateX(curr => curr - frameSize)
-    }
-  };
+  const handlePrev = useCallback(() => {
+    if (!swiperRef.current) return;
+    swiperRef.current.swiper.slidePrev();
+  }, []);
 
-  const moveLeft = () => {
-    if ((position - 1) !== 0) {
-      setPosition(position - 1);
-      setTranslateX(curr => curr + frameSize)
-    }
-  };
+  const handleNext = useCallback(() => {
+    if (!swiperRef.current) return;
+    swiperRef.current.swiper.slideNext();
+  }, []);
 
   useEffect(() => {
-    setPosition(1);
-    setTranslateX(0);
+    setPosition(0);
   }, [width, phones])
+
+  console.log(position)
+  console.log(carouselSlides)
+  console.log(step)
 
   useEffect(() => {
     getPhones();
   }, [])
-
 
   return (
     <section className="Carusel grid-mobile-1-5 grid-tablet-1-13 grid-desktop-1-25">
       <div className="Carusel__top">
         <h2 className="Carusel__title">{title}</h2>
 
-        {!isLoaded && <div className="Carusel__btns">
+        <div className="Carusel__btns">
           <button
             className={classNames('Carusel__btn', {
                 'Carusel__btn--off': isStart
               }
             )}
             type="button"
-            onClick={moveLeft}
+            onClick={handlePrev}
             disabled={isStart}
           >
             <img
@@ -140,7 +108,7 @@ export const Carusel: React.FC<Props> = ({ orderType, title, path }) => {
               }
             )}
             type="button"
-            onClick={moveRight}
+            onClick={handleNext}
             disabled={isEnd}
           >
             <img
@@ -151,26 +119,38 @@ export const Carusel: React.FC<Props> = ({ orderType, title, path }) => {
               alt="btn"
             />
           </button>
-        </div>}
+        </div>
       </div>
 
       {isLoaded
         ? <Loader />
         : (<div className="Carusel__wrap grid-mobile-1-5 grid-tablet-1-13 grid-desktop-1-25">
+              
             <ul
               className="Carusel__list"
-              style={{
-                transform: `translateX(${translateX}px)`,
-                transition: '0.8s',
-              }}
             >
-              {phones && phones.map(phone => (
-                <ProductCard
-                  key={phone.name}
-                  path={path}
-                  good={phone}
-                />
-              ))}
+              <Swiper
+                  initialSlide={position}
+                  spaceBetween={294}
+                  slidesPerView={step}
+                  scrollbar={{ draggable: true }}
+                  onSlideChange={(swiper) => setPosition(swiper.activeIndex)}
+                  onSwiper={(swiper) => setPosition(swiper.activeIndex)}
+                  ref={swiperRef}
+                >
+                  
+                  {phones?.map((phone) => {
+                    return (<SwiperSlide
+                      key={phone.name}
+                    >
+                      <ProductCard
+                        key={phone.name}
+                        path={path}
+                        good={phone}
+                      />
+                    </SwiperSlide>)
+                  })}
+                </Swiper>
             </ul>
           </div>)
       }

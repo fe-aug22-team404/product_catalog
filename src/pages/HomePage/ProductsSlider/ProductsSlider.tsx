@@ -1,14 +1,17 @@
 import classNames from 'classnames';
-import React, { useEffect, useState } from 'react';
+import React, { useMemo, useEffect, useState } from 'react';
 import './ProductsSlider.scss';
 import { sliderData } from './ProductsSliderData';
 
 import leftArrow from '../../../images/arrow-left.svg';
 import rightArrow from '../../../images/arrow-right.svg';
+import useWindowDimensions from '../../../utils/customHooks/useWindowDimensions';
 
 export const ProductsSlider: React.FC = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const sliderLength = 3;
+  const { width } = useWindowDimensions();
+  const isWide = useMemo(() => width > 640, [width])
 
   const autoScroll = true;
   let slideInterval: NodeJS.Timer;
@@ -41,20 +44,20 @@ export const ProductsSlider: React.FC = () => {
   return (
     <section className="productsSlider">
       <div className="productsSlider__wrap">
-        <button
+        {isWide && <button
           type="button"
           className="productsSlider__btn"
           onClick={prevSlide}
         >
           <img src={leftArrow} alt="btn" />
-        </button>
+        </button>}
 
         <div className="productsSlider__container">
           {sliderData.map((slide, index: number) => {
             return (
               <img
                 key={slide.id}
-                src={slide.image}
+                src={isWide ? slide.image : slide.imageMobile}
                 alt="slide"
                 className={classNames(
                   'productsSlider__img',
@@ -65,13 +68,13 @@ export const ProductsSlider: React.FC = () => {
           })}
         </div>
 
-        <button
+        {isWide && <button
           type="button"
           className="productsSlider__btn"
           onClick={nextSlide}
         >
           <img src={rightArrow} alt="btn" />
-        </button>
+        </button>}
       </div>
 
       <div className="productsSlider__indicators">

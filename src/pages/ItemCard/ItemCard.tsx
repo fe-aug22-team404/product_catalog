@@ -10,13 +10,14 @@ import { Loader } from '../../components/Loader';
 import { ItemNotFound } from '../../components/ItemNotFound';
 import { ItemAbout } from './ItemAbout';
 import { ItemProperties } from './ItemProperties';
-import { MainImage } from './MainImage';
 import { ImageBar } from './ImageBar';
 import { ItemPrices } from './ItemPrices';
 import { AvailableCapacity } from './AvailableCapacity';
 import { AvailableColors } from './AvailableColors';
 import { Carusel } from '../../components/Carusel';
 import { AppContext } from '../../components/AppProvider';
+import 'swiper/css';
+import { ItemSwiper } from './ItemSwiper';
 
 export const ItemCard: FC = () => {
   const { openedPhoneId = '' } = useParams();
@@ -97,25 +98,6 @@ export const ItemCard: FC = () => {
     setCurrentImage(index);
   }, []);
 
-  const handleMouseDown = (event: React.MouseEvent, imageAmount: number) => {
-    const currentHalfWidth = document.body.clientWidth < 640
-      ? document.body.clientWidth / 2
-      : (7 * document.body.clientWidth / 24) + 40;
-    const click = event.clientX;
-
-    if (click < currentHalfWidth) {
-      setCurrentImage(curr => {
-        return curr ? curr - 1 : imageAmount - 1
-      })
-    }
-
-    if (click > currentHalfWidth) {
-      setCurrentImage(curr => {
-        return curr === imageAmount - 1 ? 0 : curr + 1
-      })
-    }
-  };
-
   const handleColorChange = useCallback((currentColor: string, color: string) => {
     setPhoneId(current => (
       current.replace(currentColor, color)
@@ -146,7 +128,7 @@ export const ItemCard: FC = () => {
 
     const currentPath = location.pathname;
     setPath(currentPath);
-  }, [phoneId]);
+  }, [phoneId, currentImage]);
 
   return (
     <>
@@ -164,13 +146,14 @@ export const ItemCard: FC = () => {
                 <h1 className='phone-card__title grid-mobile-1-5 grid-tablet-1-13 grid-desktop-1-25'>
                   {phoneData.name}
                 </h1>
-
-                <MainImage
-                  handleMouseDown={handleMouseDown}
-                  imageAmount={phoneData.images.length}
-                  altName={phoneData.name}
-                  imageLink={phoneData.images[currentImage]}
-                />
+                
+                <div className="phone-card__main-image-box grid-mobile-1-5 grid-tablet-2-8 grid-desktop-3-13">
+                  <ItemSwiper
+                    currentImage={currentImage}
+                    handleImageChange={handleImageChange}
+                    phoneData={phoneData}
+                  />
+                </div>
 
                 <div className="phone-card__other-photo-box grid-mobile-1-5 grid-tablet-1-2 grid-desktop-1-3">
                   <ImageBar

@@ -1,4 +1,5 @@
 @import "../../../styles/vars/vars.scss";
+@import "../../../styles/mixins/mixins";
 
 .productsSlider {
   display: flex;
@@ -13,11 +14,16 @@
   }
 
   &__btn {
-    height: 400px;
+    height: 30vw;
     width: 32px;
     background-color: $surface-2;
     border: 1px solid $surface-2;
     transition: border-color 0.3s;
+
+    @include desktop {
+      height: 400px;
+    }
+
 
     &:hover {
       border-color: $icons;
@@ -30,9 +36,17 @@
   &__container {
     position: relative;
     flex: 1;
-    height: 400px;
+    height: 320px;
     overflow: hidden;
     border: 1px solid $icons;
+
+    @include tablet {
+      height: 30vw;
+    }
+
+    @include desktop {
+      height: 400px;
+    }
   }
 
   &__img {
