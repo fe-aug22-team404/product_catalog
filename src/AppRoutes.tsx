@@ -11,7 +11,6 @@ import { Favourites } from './pages/Favourites';
 import { Accessories } from './pages/Accessories';
 import { HomePage } from './pages/HomePage';
 import { DescriptionNotFound } from './components/DescriptionNotFound';
-import { ItemNotFound } from './components/ItemNotFound';
 
 export const AppRoutes: FC = () => {
   return (

@@ -282,7 +282,7 @@ export const Cart: React.FC<Props> = () => {
                     />
                   </div>
                   <div className="product-cart__price">
-                    ${price}
+                    ${price * count.count}
                   </div>
                 </div>
               );

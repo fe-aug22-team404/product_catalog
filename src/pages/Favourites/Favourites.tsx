@@ -94,7 +94,11 @@ export const Favourites: FC = memo(() => {
         )}
 
         {(!isLoaded && favouritesItems === 0) && (
-          <h3 className='favourites__empty-box grid-desktop-1-25'>
+          <h3 className='favourites__empty-box
+            grid-mobile-1-5
+            grid-tablet-1-13
+            grid-desktop-1-25'
+          >
             No products in the favourites
           </h3>
         )}
