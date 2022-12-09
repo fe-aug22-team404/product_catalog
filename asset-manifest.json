@@ -1,7 +1,8 @@
 {
   "files": {
-    "main.css": "/product_catalog/static/css/main.bafc63fb.css",
-    "main.js": "/product_catalog/static/js/main.6a1ffc65.js",
+    "main.css": "/product_catalog/static/css/main.def43c26.css",
+    "main.js": "/product_catalog/static/js/main.ffe8a8cc.js",
+    "static/media/baner4.png": "/product_catalog/static/media/baner4.0b13c572cdba3b43cf4f.png",
     "static/media/00.png": "/product_catalog/static/media/00.779473600e9aff690982.png",
     "static/media/Banner3.png": "/product_catalog/static/media/Banner3.5eb70bb0f0ed193c9d59.png",
     "static/media/01.png": "/product_catalog/static/media/01.1ebdf5c2ace91b4792b0.png",
@@ -69,6 +70,7 @@
     "static/media/dell-streak-7.1.png": "/product_catalog/static/media/dell-streak-7.1.e8afe97236606e18854a.png",
     "static/media/Accessories.png": "/product_catalog/static/media/Accessories.ceac5a16c668432a34a0.png",
     "static/media/motorola-xoom.0.png": "/product_catalog/static/media/motorola-xoom.0.40f5210bcba72ff8489e.png",
+    "static/media/baner4.jpg": "/product_catalog/static/media/baner4.b6ded63965e507e7f094.jpg",
     "static/media/dell-streak-7.4.png": "/product_catalog/static/media/dell-streak-7.4.fc349ed0c0afff3fac33.png",
     "static/media/droid-pro-by-motorola.1.png": "/product_catalog/static/media/droid-pro-by-motorola.1.6d46713bb8c4515b7eee.png",
     "static/media/motorola-charm-with-motoblur.2.png": "/product_catalog/static/media/motorola-charm-with-motoblur.2.5b753414a2eac1af6979.png",
@@ -79,6 +81,7 @@
     "static/media/dell-streak-7.0.png": "/product_catalog/static/media/dell-streak-7.0.24ea013025417fd36c44.png",
     "static/media/dell-venue.0.png": "/product_catalog/static/media/dell-venue.0.cb040da0d64ef5a91edd.png",
     "static/media/samsung-galaxy-tab.3.png": "/product_catalog/static/media/samsung-galaxy-tab.3.0574253aa6ca06f59b43.png",
+    "static/media/baner3.jpg": "/product_catalog/static/media/baner3.e97dd5081d5771cdb582.jpg",
     "static/media/t-mobile-mytouch-4g.3.png": "/product_catalog/static/media/t-mobile-mytouch-4g.3.5810097a26ff78e408bb.png",
     "static/media/motorola-defy-with-motoblur.1.png": "/product_catalog/static/media/motorola-defy-with-motoblur.1.b4c5a6e19328d3356746.png",
     "static/media/motorola-atrix-4g.2.png": "/product_catalog/static/media/motorola-atrix-4g.2.eb3f6d50111e43930b30.png",
@@ -141,6 +144,7 @@
     "static/media/Mont-Black.woff2": "/product_catalog/static/media/Mont-Black.2e299ff4d72dac880c22.woff2",
     "static/media/sanyo-zio.1.png": "/product_catalog/static/media/sanyo-zio.1.1ab255e86d486243468a.png",
     "static/media/samsung-galaxy-tab.5.png": "/product_catalog/static/media/samsung-galaxy-tab.5.dc3f3485a7d9e1f84988.png",
+    "static/media/baner6.jpg": "/product_catalog/static/media/baner6.c2fcbe143e5ebaea1b74.jpg",
     "static/media/samsung-transform.2.png": "/product_catalog/static/media/samsung-transform.2.82d2df27c92e2276243b.png",
     "static/media/dell-venue.5.png": "/product_catalog/static/media/dell-venue.5.0eb14015ea54b2cdffbd.png",
     "static/media/samsung-transform.1.png": "/product_catalog/static/media/samsung-transform.1.19984aaa02a0cffab621.png",
@@ -177,11 +181,11 @@
     "index.html": "/product_catalog/index.html",
     "static/media/minus-active.svg": "/product_catalog/static/media/minus-active.4e9adf5975a692a52270.svg",
     "static/media/minus-no-active.svg": "/product_catalog/static/media/minus-no-active.3cc2197f71c0b7dfc0d0.svg",
-    "main.bafc63fb.css.map": "/product_catalog/static/css/main.bafc63fb.css.map",
-    "main.6a1ffc65.js.map": "/product_catalog/static/js/main.6a1ffc65.js.map"
+    "main.def43c26.css.map": "/product_catalog/static/css/main.def43c26.css.map",
+    "main.ffe8a8cc.js.map": "/product_catalog/static/js/main.ffe8a8cc.js.map"
   },
   "entrypoints": [
-    "static/css/main.bafc63fb.css",
-    "static/js/main.6a1ffc65.js"
+    "static/css/main.def43c26.css",
+    "static/js/main.ffe8a8cc.js"
   ]
 }
