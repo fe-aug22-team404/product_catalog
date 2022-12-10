@@ -9,6 +9,7 @@ import { Good } from '../../types/Good';
 import { SortBy, sortByOptions } from '../../types/SortyBy';
 import './Products.scss';
 import { useLocation } from 'react-router';
+import useWindowDimensions from '../../utils/customHooks/useWindowDimensions';
 
 const perPageOptions = [16, 12, 8, 4];
 
@@ -25,6 +26,7 @@ export const Products: React.FC<Props> = ({ category, title }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [isLoaded, setIsLoaded] = useState(false);
   const { pathname } = useLocation();
+  const { width } = useWindowDimensions();
 
   const loadGoods = async () => {
     setIsLoaded(true);
@@ -100,7 +102,7 @@ export const Products: React.FC<Props> = ({ category, title }) => {
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
 
-    if (perPage !== 4) {
+    if (perPage !== 4 || width < 1200) {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
