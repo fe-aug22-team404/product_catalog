@@ -3,25 +3,23 @@
 
 .product-items__list {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: start;
+    flex-wrap: wrap;
+    width: 288px;
+    row-gap: 40px;
+    column-gap: 16px;
+    margin-bottom: 24px;
 
-  gap: 40px 16px;
+    @include tablet {
+      width: 572px;
+    }
 
-  max-width: 288px;
-  margin-bottom: 56px;
+    @media (min-width: 978px) {
+      width: 866px;
+    }
 
-  @include tablet {
-    max-width: 576px;
-  }
-
-  @media (min-width: 978px) {
-    max-width: 896px;
-  }
-
-  @include desktop {
-    max-width: 1136px;
-  }
+    @include desktop {
+      width: 1136px;
+    }
 
   &__wrapper {
     display: flex;

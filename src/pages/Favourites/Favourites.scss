@@ -28,6 +28,12 @@
     color: #F1F2F9;
   }
 
+  &__items-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
   &__product-count {
     grid-row: 2/3;
 

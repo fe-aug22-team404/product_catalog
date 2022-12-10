@@ -78,20 +78,27 @@ export const Favourites: FC = memo(() => {
 
         {isLoaded && <Loader /> }
 
-        {(!isLoaded && favouritesItems !== 0) && (
-          <>
-            <p className="
+
+          {(!isLoaded && favouritesItems !== 0) && (
+            <>
+              <p className="
                 favourites__product-count
                 grid-mobile-1-5
                 grid-tablet-1-7
                 grid-desktop-1-25"
-            >
-              {`${favouritesItems} items`}
-            </p>
+              >
+                {`${favouritesItems} items`}
+              </p>
 
-            <ProductList goods={goods} />
-          </>
-        )}
+              <div className="favourites__items-wrapper
+                grid-mobile-1-5
+                grid-tablet-1-13
+                grid-desktop-1-25"
+              >
+                <ProductList goods={goods} />
+              </div>
+            </>
+          )}
 
         {(!isLoaded && favouritesItems === 0) && (
           <h3 className='favourites__empty-box
