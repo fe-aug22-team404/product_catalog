@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/product_catalog/static/css/main.263dae67.css",
-    "main.js": "/product_catalog/static/js/main.1f7e11ae.js",
+    "main.css": "/product_catalog/static/css/main.bba62350.css",
+    "main.js": "/product_catalog/static/js/main.15f9aad3.js",
     "static/media/baner4.png": "/product_catalog/static/media/baner4.0b13c572cdba3b43cf4f.png",
     "static/media/00.png": "/product_catalog/static/media/00.779473600e9aff690982.png",
     "static/media/Banner3.png": "/product_catalog/static/media/Banner3.5eb70bb0f0ed193c9d59.png",
@@ -54,6 +54,8 @@
     "static/media/droid-2-global-by-motorola.2.png": "/product_catalog/static/media/droid-2-global-by-motorola.2.5f64fc756633340273d7.png",
     "static/media/samsung-transform.3.png": "/product_catalog/static/media/samsung-transform.3.61100d0913ae6aefc22c.png",
     "static/media/samsung-galaxy-tab.0.png": "/product_catalog/static/media/samsung-galaxy-tab.0.3d6e78a17899ed6c1967.png",
+    "static/media/Serhii.jpg": "/product_catalog/static/media/Serhii.0fb671389a721a554584.jpg",
+    "static/media/Arsen.jpg": "/product_catalog/static/media/Arsen.da8952980abf441e7796.jpg",
     "static/media/motorola-defy-with-motoblur.0.png": "/product_catalog/static/media/motorola-defy-with-motoblur.0.ed4bfeeea9500a8ead49.png",
     "static/media/samsung-gem.0.png": "/product_catalog/static/media/samsung-gem.0.ee121bcd2bd13759161d.png",
     "static/media/samsung-mesmerize-a-galaxy-s-phone.0.png": "/product_catalog/static/media/samsung-mesmerize-a-galaxy-s-phone.0.6ad6c03022da5157bd44.png",
@@ -121,7 +123,9 @@
     "static/media/nexus-s.1.png": "/product_catalog/static/media/nexus-s.1.bc1aef6ce7cdaa6a5c17.png",
     "static/media/samsung-galaxy-tab.2.png": "/product_catalog/static/media/samsung-galaxy-tab.2.9b63c10c6256343312e1.png",
     "static/media/motorola-xoom-with-wi-fi.4.png": "/product_catalog/static/media/motorola-xoom-with-wi-fi.4.26f2f991b4c4bccccb23.png",
+    "static/media/Volodymyr.jpg": "/product_catalog/static/media/Volodymyr.8aedd737ccc41bb2d003.jpg",
     "static/media/t-mobile-g2.2.png": "/product_catalog/static/media/t-mobile-g2.2.8b87cd9b74a5e1c48537.png",
+    "static/media/Andrii.jpg": "/product_catalog/static/media/Andrii.29fd2302764aa3bc49e2.jpg",
     "static/media/motorola-xoom-with-wi-fi.5.png": "/product_catalog/static/media/motorola-xoom-with-wi-fi.5.00fcbb72b444f7c74b07.png",
     "static/media/dell-venue.3.png": "/product_catalog/static/media/dell-venue.3.515b0d7d1f32abc4aa8e.png",
     "static/media/Mont-BlackItalic.woff2": "/product_catalog/static/media/Mont-BlackItalic.26d2032ef49512d7bcc6.woff2",
@@ -140,6 +144,7 @@
     "static/media/Mont-Bold.woff2": "/product_catalog/static/media/Mont-Bold.8b7a4e0626328dd44205.woff2",
     "static/media/Mont-ExtraLight.woff2": "/product_catalog/static/media/Mont-ExtraLight.a6dd2b46738cbd085a5a.woff2",
     "static/media/Mont-Thin.woff2": "/product_catalog/static/media/Mont-Thin.fd50e23452a4f62e1e58.woff2",
+    "static/media/Dmytro.jpg": "/product_catalog/static/media/Dmytro.6dde78b24fe7e78bb3fd.jpg",
     "static/media/lg-axis.1.png": "/product_catalog/static/media/lg-axis.1.51e884784e8bff2c63ce.png",
     "static/media/Mont-Black.woff2": "/product_catalog/static/media/Mont-Black.2e299ff4d72dac880c22.woff2",
     "static/media/sanyo-zio.1.png": "/product_catalog/static/media/sanyo-zio.1.1ab255e86d486243468a.png",
@@ -181,11 +186,11 @@
     "index.html": "/product_catalog/index.html",
     "static/media/minus-active.svg": "/product_catalog/static/media/minus-active.4e9adf5975a692a52270.svg",
     "static/media/minus-no-active.svg": "/product_catalog/static/media/minus-no-active.3cc2197f71c0b7dfc0d0.svg",
-    "main.263dae67.css.map": "/product_catalog/static/css/main.263dae67.css.map",
-    "main.1f7e11ae.js.map": "/product_catalog/static/js/main.1f7e11ae.js.map"
+    "main.bba62350.css.map": "/product_catalog/static/css/main.bba62350.css.map",
+    "main.15f9aad3.js.map": "/product_catalog/static/js/main.15f9aad3.js.map"
   },
   "entrypoints": [
-    "static/css/main.263dae67.css",
-    "static/js/main.1f7e11ae.js"
+    "static/css/main.bba62350.css",
+    "static/js/main.15f9aad3.js"
   ]
 }
