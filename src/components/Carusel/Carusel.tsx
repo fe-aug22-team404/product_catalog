@@ -71,10 +71,6 @@ export const Carusel: FC<Props> = ({ orderType, title, path }) => {
     setPosition(0);
   }, [width, phones])
 
-  console.log(position)
-  console.log(carouselSlides)
-  console.log(step)
-
   useEffect(() => {
     getPhones();
   }, [])

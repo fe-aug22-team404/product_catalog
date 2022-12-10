@@ -197,23 +197,44 @@ export const Cart: React.FC<Props> = () => {
 
 
   return (
-    <div className='container'>
-      <section className='cart'>
+    <div className='
+      container
+      grid
+      grid-mobile
+      grid-tablet
+      grid-desktop'
+    >
+      <section className="
+        cart
+        grid-mobile-1-5
+        grid-tablet-1-13
+        grid-desktop-1-25"
+      >
       <BackButton />
 
-      <h1 className='cart__title'>
+      <h1 className='
+        cart__title
+        grid-mobile-1-5
+        grid-tablet-1-13
+        grid-desktop-1-25'
+      >
         Cart
       </h1>
 
       <div className="
         cart__container
+        grid-mobile-1-5
+        grid-tablet-1-13
+        grid-desktop-1-25
         grid
+        grid-mobile
+        grid-tablet
         grid-desktop"
       >
         {isLoading && <Loader />}
         {(goods.length > 0 && !isLoading && checkout !== Checkout.endCheck) && (
           <>
-          <div className='grid-desktop-1-17'>
+          <div className='grid-mobile-1-5 grid-tablet-2-12 grid-desktop-1-17'>
             {goods.map(good => {
               const { image, name, price, itemId, category } = good; // here needs to destuction image path too!!!
 
@@ -290,7 +311,7 @@ export const Cart: React.FC<Props> = () => {
         </div>
 
         <div className={classNames(
-          'cart__bill grid-desktop-17-25 bill',
+          'cart__bill grid-mobile-1-5 grid-tablet-4-10 grid-desktop-17-25 bill',
           {
             'bill--operation': checkout === Checkout.loadCheck,
           }
@@ -325,7 +346,9 @@ export const Cart: React.FC<Props> = () => {
 
         {(!goods.length && !isLoading) && (
           (
-            <div className='cart__empty-box grid-desktop-1-25'>
+            <div className='cart__empty-box grid-mobile-1-5
+            grid-tablet-1-13
+            grid-desktop-1-25'>
               No products in the cart
             </div>
           )
@@ -333,8 +356,11 @@ export const Cart: React.FC<Props> = () => {
       </div>
 
       {checkout === Checkout.endCheck && (
-        <div className='grid grid-desktop'>
-          <div className="cart__bill bill grid-desktop-8-17">
+        <div className='grid grid-mobile grid-tablet grid-desktop'>
+          <div className="
+            cart__bill bill grid-mobile-1-5
+            grid-tablet-4-10
+            grid-desktop-8-17">
             <div className="bill__total-price">
               The order is successful
             </div>

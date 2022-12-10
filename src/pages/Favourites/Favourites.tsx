@@ -70,8 +70,8 @@ export const Favourites: FC = memo(() => {
         <h1 className="
           favourites__title
           grid-mobile-1-5
-          grid-tablet-1-7
-          grid-desktop-1-7"
+          grid-tablet-1-13
+          grid-desktop-1-25"
         >
           Favourites
         </h1>
@@ -82,9 +82,9 @@ export const Favourites: FC = memo(() => {
           <>
             <p className="
                 favourites__product-count
-                grid-mobile-1-3
-                grid-tablet-1-3
-                grid-desktop-1-3"
+                grid-mobile-1-5
+                grid-tablet-1-7
+                grid-desktop-1-25"
             >
               {`${favouritesItems} items`}
             </p>

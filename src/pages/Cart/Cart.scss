@@ -3,21 +3,22 @@
 
 .container {
   display: flex;
-  justify-content: center;
-
   flex: 1;
+
+  @include desktop {
+    margin: 0 auto;
+  }
 }
 
 .cart {
   padding: 0 16px;
 
   &__container {
-    width: 100%;
+    justify-self: center;
 
     @include mobile {
       display: flex;
       flex-direction: column;
-
       align-items: center;
       justify-content: center;
 
@@ -27,14 +28,11 @@
     @include tablet {
       display: flex;
       flex-direction: column;
-
       align-items: center;
       justify-content: flex-start;
     }
 
     @include desktop {
-      display: grid;
-
       align-items: flex-start;
     }
   }

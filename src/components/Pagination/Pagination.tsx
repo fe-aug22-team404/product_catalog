@@ -30,7 +30,7 @@ export const Pagination: React.FC<Props> = ({
     return Math.ceil(total / perPage);
   }, [total, perPage]);
 
-  const getDefaultPoints = useCallback(() => {
+  const getDefaultPoints = () => {
     if (currentPage < 1) {
       handlePageChange(1);
     } else if (currentPage > lastPage) {
@@ -46,16 +46,26 @@ export const Pagination: React.FC<Props> = ({
     }
 
     return [currentPage, currentPage + 3];
-  }, [currentPage, lastPage]);
+  };
 
   const [start, setStart] = useState(1);
   const [end, setEnd] = useState(4);
 
   useEffect(() => {
     const result = getDefaultPoints();
+    if (currentPage === end || end > lastPage) {
+      setStart(result[0]);
+      setEnd(result[1]);
+    }
+
+  }, [currentPage]);
+
+  useEffect(() => {
+    const result = getDefaultPoints();
+
     setStart(result[0]);
     setEnd(result[1]);
-  }, []);
+  }, [perPage]);
 
   const pages = useMemo(() => {
     return getNumbers(1, lastPage)
@@ -63,7 +73,7 @@ export const Pagination: React.FC<Props> = ({
 
   const visiblePages = useMemo(() => {
     return pages.slice(start - 1, end);
-  }, [pages, start, end]);
+  }, [pages, start, end, currentPage, perPage]);
 
   const goToPrevious = useCallback(() => {
     if (currentPage === 1) {
@@ -78,9 +88,9 @@ export const Pagination: React.FC<Props> = ({
     }
   }, [currentPage, start]);
 
-  const setClickedPage = useCallback((clickedPage: number) => {
+  const setClickedPage = (clickedPage: number) => {
     handlePageChange(clickedPage);
-  }, []);
+  };
 
   const goToNext = useCallback(() => {
     if (currentPage === lastPage) {

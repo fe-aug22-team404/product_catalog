@@ -19,13 +19,13 @@ export const Footer: React.FC = () => {
           </div>
           <nav className="footer__nav">
             <a href="https://github.com/fe-aug22-team404/product_catalog" target="blanc" className="footer__nav-link">
-              Github
+              Github FE
             </a>
-            <a href="https://github.com/fe-aug22-team404/product_catalog/graphs/contributors" className="footer__nav-link" target="blanc">
-              Contacts
-            </a>
-            <a href="*" className="footer__nav-link" target="blanc">
-              Rights
+            <Link to='contributors' className="footer__nav-link">
+              Contributors
+            </Link>
+            <a href="https://github.com/fe-aug22-team404/product_catalog_api" className="footer__nav-link" target="blanc">
+              Github BE
             </a>
           </nav>
 

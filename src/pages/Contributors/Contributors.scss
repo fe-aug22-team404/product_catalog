@@ -1,0 +1,29 @@
+@import '../../styles/mixins/mixins';
+
+.contributors {
+	flex: 1;
+	padding: 0 16px;
+	margin: 0 auto 40px;
+
+	@include desktop {
+		margin: 0 auto 32px;
+	}
+
+	&__title {
+    margin: 0 0 24px;
+    padding: 0;
+
+    font-weight: 800;
+    font-size: 32px;
+    line-height: 41px;
+
+    color: #F1F2F9;
+  }
+
+	&__info {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 20px;
+		justify-content: center;
+	}
+}

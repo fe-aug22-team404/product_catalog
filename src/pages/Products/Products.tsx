@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import { getAllPhones, getAllTablets } from '../../api/api';
 import { Filter } from '../../components/Filter';
 import { Pagination } from '../../components/Pagination';
@@ -90,115 +90,111 @@ export const Products: React.FC<Props> = ({ category, title }) => {
   const handleQuantityChange = (quantity: string) => {
     setPerPage(+quantity);
     setCurrentPage(1);
-  }
+  };
 
   const handleTypeSortChange = (type: string) => {
     setSortBy(type as SortBy);
     setCurrentPage(1);
-  }
+  };
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
-    window.scrollBy({ top: -100000, behavior: 'smooth' });
-  }
+
+    if (perPage !== 4) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
 
   useEffect(() => {
     if (goods.length === 0) {
       loadGoods();
+      setPerPage(16);
     }
 
     getVisibleGoods();
   }, [goods, sortBy, perPage, currentPage]);
 
   useEffect(() => {
-    loadGoods();
+    setGoods([]);
     setSortBy(SortBy.Newest);
     setCurrentPage(1);
-    setPerPage(16);
   }, [pathname]);
 
   return (
     <div className="phones">
-      <div>
-        <Path />
+      <Path />
 
-        <div className="phones-page">
-          <section className='phones-page__products products grid grid-mobile grid-tablet grid-desktop'>
-            <h1 className='products__title grid-mobile-1-5 grid-tablet-1-13 grid-desktop-1-10'>
-              {title}
-            </h1>
+      <section className='phones-page__products products grid grid-mobile grid-tablet grid-desktop'>
+        <h1 className='products__title grid-mobile-1-5 grid-tablet-1-13 grid-desktop-1-10'>
+          {title}
+        </h1>
 
-            {isLoaded
-              ? <Loader />
-              : (
-                <>
-                  <div className='products__length grid-mobile-1-5 grid-tablet-1-13 grid-desktop-1-3'>
-                    {`${goods.length} models`}
+        {isLoaded
+          ? <Loader />
+          : (
+            <>
+              <div className='products__length grid-mobile-1-5 grid-tablet-1-13 grid-desktop-1-3'>
+                {`${goods.length} models`}
+              </div>
+
+              {goods.length !== 0 && <div className='products__filters grid-mobile-1-4 grid-tablet-1-6 grid-desktop-1-8'>
+                <div className="products__filter products__filter--left">
+                  <Filter
+                    title='Sort by'
+                    optionsList={sortByOptions}
+                    selectedFilter={sortBy}
+                    handleFilterChange={handleTypeSortChange}
+                  />
+                </div>
+
+                <div className="products__filter products__filter--right">
+                  <Filter
+                    title='Items per page'
+                    optionsList={perPageOptions}
+                    selectedFilter={perPage}
+                    handleFilterChange={handleQuantityChange}
+                  />
+                </div>
+              </div>}
+
+              <div className="
+                products__cards-wrapper
+                grid-mobile-1-5
+                grid-tablet-1-13
+                grid-desktop-1-25"
+              >
+                <div className="products__container">
+                  {visibleGoods.map((good) => {
+                    return (
+                      <div className="products__product-container"
+                        key={good.itemId}
+                      >
+                        <ProductCard
+                          good={good}
+                          path='phones'
+                        />
+                      </div>
+                      )
+                    })}
                   </div>
 
-                  {goods.length !== 0 && <div className='products__filters grid-mobile-1-5 grid-tablet-1-8 grid-desktop-1-9'>
-                    <div className="products__filter products__filter--left">
-                      <Filter
-                        title='Sort by'
-                        optionsList={sortByOptions}
-                        selectedFilter={sortBy}
-                        handleFilterChange={handleTypeSortChange}
-                      />
-                    </div>
-
-                    <div className="products__filter products__filter--right">
-                      <Filter
-                        title='Items per page'
-                        optionsList={perPageOptions}
-                        selectedFilter={perPage}
-                        handleFilterChange={handleQuantityChange}
-                      />
-                    </div>
-                  </div>}
-
-                  <div className="
-                    products__cards-wrapper
+                {goods.length !== 0 && <div className='
+                    products__pagination-container
                     grid-mobile-1-5
                     grid-tablet-1-13
-                    grid-desktop-1-25"
+                    grid-desktop-1-25'
                   >
-                    <div className="products__container">
-                      {visibleGoods.map((good) => {
-
-                        return (
-                          <div className={
-                            `products__product-container`
-                          }
-                            key={good.itemId}
-                          >
-                          <ProductCard
-                            good={good}
-                            path='phones'
-                          />
-                        </div>
-                        )
-                      })}
-                    </div>
-
-                    {goods.length !== 0 && <div className='
-                      products__pagination-container
-                      grid-mobile-1-5
-                      grid-tablet-1-13
-                      grid-desktop-1-25'
-                    >
-                      <Pagination
-                        total={goods.length}
-                        perPage={perPage}
-                        currentPage={currentPage}
-                        handlePageChange={handlePageChange}
-                      />
-                    </div>}
-                  </div>
-                </>
-              )}
-          </section>
-        </div>
-      </div>
+                  <Pagination
+                    total={goods.length}
+                    perPage={perPage}
+                    currentPage={currentPage}
+                    handlePageChange={handlePageChange}
+                  />
+                </div>}
+              </div>
+            </>
+          )}
+      </section>
     </div>
   );
 };

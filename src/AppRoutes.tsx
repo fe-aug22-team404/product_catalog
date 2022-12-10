@@ -11,6 +11,7 @@ import { Favourites } from './pages/Favourites';
 import { Accessories } from './pages/Accessories';
 import { HomePage } from './pages/HomePage';
 import { DescriptionNotFound } from './components/DescriptionNotFound';
+import { Contributors } from './pages/Contributors';
 
 export const AppRoutes: FC = () => {
   return (
@@ -47,6 +48,8 @@ export const AppRoutes: FC = () => {
           </Route>
 
           <Route path="/cart" element={<Cart />} />
+
+          <Route path="/contributors" element={<Contributors />} />
 
           <Route
             path="*"
