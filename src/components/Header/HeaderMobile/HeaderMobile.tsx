@@ -28,6 +28,8 @@ export const HeaderMobile: FC = memo(() => {
 	const body = useMemo(() => document.querySelector('body') as HTMLElement, []);
 
 	const handleBurgerButton = useCallback(() => setIsOpen(current => !current), []);
+	const handleBurgerClose = useCallback(() => setIsOpen(false), []);
+
 
 
 	useEffect(() => {
@@ -38,6 +40,9 @@ export const HeaderMobile: FC = memo(() => {
 		if (!isOpen) {
 			body.style.overflow = 'auto';
 		}
+
+		document.body.style.height = window.innerHeight + "px";
+		console.log(window.innerHeight + "px")
 	}, [isOpen])
 
 	return (
@@ -51,7 +56,7 @@ export const HeaderMobile: FC = memo(() => {
 				<Link
 					to="/home"
 					className="burger__top-link"
-					onClick={handleBurgerButton}
+					onClick={handleBurgerClose}
 				>
 					<img src={Logo} alt="Nice gadgets" className="burger__top-img" />
 				</Link>
