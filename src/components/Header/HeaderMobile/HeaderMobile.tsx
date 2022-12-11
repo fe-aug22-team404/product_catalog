@@ -40,9 +40,6 @@ export const HeaderMobile: FC = memo(() => {
 		if (!isOpen) {
 			body.style.overflow = 'auto';
 		}
-
-		document.body.style.height = window.innerHeight + "px";
-		console.log(window.innerHeight + "px")
 	}, [isOpen])
 
 	return (

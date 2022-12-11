@@ -3,6 +3,8 @@
 
 .burger {
 	&__wrapper {
+		position: sticky;
+		bottom: 10px;
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
@@ -135,7 +137,7 @@
 
 	&__bottom {
 		display: flex;
-		height: 64px;
+		height: 128px;
 		border-top: 1px solid $secondary;
 	}
 
@@ -149,7 +151,7 @@
 		&::after {
       position: absolute;
       content: "";
-      height: 16px;
+      height: 16px;	
       width: 16px;
       background-image: url('../../../images/Favourites.svg');
 			background-position: center;
