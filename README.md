@@ -7,7 +7,7 @@ Design according to - [FIGMA](https://www.figma.com/file/BUusqCIMAWALqfBahnyIiH/
 - Tablet > 640px
 - Mobile > 320px
 
-FE stack - HTML, CSS, Sass(SCSS), JS / TS, BEM, React (Router dom, ), Swiper
+FE stack - HTML, CSS, Sass(SCSS), JS / TS, BEM, React (Router dom, ), Swiper, Framer-motion
 
 BE stack - Node, Express, Sequelize
 
