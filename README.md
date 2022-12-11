@@ -15,17 +15,18 @@ BE repo [team-404](https://github.com/fe-aug22-team404/product_catalog_api)
 
 Soft stack - Git, ClickUp
 
-1.  Header with burger (by Arsen Shpak & Dmytro Romanenko)
+1.  Header with burger (by by Volodymyr Nosachenko & Arsen Shpak & Dmytro Romanenko)
 1.  Home page (by Volodymyr Nosachenko & Dmytro Romanenko)
 1.  Swiper component (by Volodymyr Nosachenko & Dmytro Romanenko)
 1.  Carusel component (by Volodymyr Nosachenko)
 1.  ItemCard page (by Volodymyr Nosachenko)
 1.  Product card (by Serhii Romaniuk)
-1.  Footer (by Arsen Shpak)
+1.  Footer (by Volodymyr Nosachenko & Arsen Shpak)
 1.  Pagination and filter components (by Andrii Hladkevych)
 1.  Product page (by Andrii Hladkevych & Serhii Romaniuk & Volodymyr Nosachenko)
 1.  Favourites page (by Serhii Romaniuk & Volodymyr Nosachenko)
 1.  Cart page (by Andrii Hladkevych);
+1.  Contributors page (by Volodymyr Nosachenko)
 1.  AppContext with localStorage (by Serhii Romaniuk & Volodymyr Nosachenko)
 
 API by Volodymyr Nosachenko
