@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/product_catalog/static/css/main.bba62350.css",
-    "main.js": "/product_catalog/static/js/main.2b631444.js",
+    "main.css": "/product_catalog/static/css/main.83a23010.css",
+    "main.js": "/product_catalog/static/js/main.c0dfb335.js",
     "static/media/baner4.png": "/product_catalog/static/media/baner4.0b13c572cdba3b43cf4f.png",
     "static/media/00.png": "/product_catalog/static/media/00.779473600e9aff690982.png",
     "static/media/Banner3.png": "/product_catalog/static/media/Banner3.5eb70bb0f0ed193c9d59.png",
@@ -168,13 +168,16 @@
     "static/media/samsung-galaxy-tab.4.png": "/product_catalog/static/media/samsung-galaxy-tab.4.ac8508afbaf6e2b1651d.png",
     "static/media/dell-streak-7.2.png": "/product_catalog/static/media/dell-streak-7.2.ad68edd2f2a6d7ceba4d.png",
     "static/media/NiceGadgets.svg": "/product_catalog/static/media/NiceGadgets.82a696843192dee084a0.svg",
-    "static/media/cart.svg": "/product_catalog/static/media/cart.5cf4607710e9e2939ef47bfd8e3acfe6.svg",
+    "static/media/cart.svg": "/product_catalog/static/media/cart.5cf4607710e9e2939ef4.svg",
     "static/media/favorites.svg": "/product_catalog/static/media/favorites.68e007358b0836eb5041.svg",
-    "static/media/like.svg": "/product_catalog/static/media/like.c54eb249262237e9e0eceaa78a7b9dbf.svg",
+    "static/media/like.svg": "/product_catalog/static/media/like.c54eb249262237e9e0ec.svg",
+    "static/media/Favourites.svg": "/product_catalog/static/media/Favourites.964a225a5c719fd41164.svg",
     "static/media/gray-cross.svg": "/product_catalog/static/media/gray-cross.4b4873710cd2eb018200.svg",
-    "static/media/Cross.svg": "/product_catalog/static/media/Cross.dd8eb9c891efb31d686fdfc7e93e1e91.svg",
-    "static/media/Burger.svg": "/product_catalog/static/media/Burger.61d45fc6d13895c1739f3662e52d4f10.svg",
+    "static/media/Cross.svg": "/product_catalog/static/media/Cross.dd8eb9c891efb31d686f.svg",
+    "static/media/opened.svg": "/product_catalog/static/media/opened.911c2c686f56c2943d2c.svg",
+    "static/media/Burger.svg": "/product_catalog/static/media/Burger.61d45fc6d13895c1739f.svg",
     "static/media/Plus-no-active.svg": "/product_catalog/static/media/Plus-no-active.596dc268e494c1f07f8a.svg",
+    "static/media/Menu.svg": "/product_catalog/static/media/Menu.ccd1a9542b5bc584f2a1.svg",
     "static/media/plus-active.svg": "/product_catalog/static/media/plus-active.e61dd8195ab89346c3d4.svg",
     "static/media/right-pagination-arrow.svg": "/product_catalog/static/media/right-pagination-arrow.350f08013d837486a3de.svg",
     "static/media/Vector.svg": "/product_catalog/static/media/Vector.45b0dbb55258fbadf4b20583898b288e.svg",
@@ -184,13 +187,14 @@
     "static/media/path_stroke.svg": "/product_catalog/static/media/path_stroke.1d10effe9039863c0035dcd7e768409d.svg",
     "static/media/arrow-left.svg": "/product_catalog/static/media/arrow-left.af5e9db10586f47265a2d848e2be83af.svg",
     "index.html": "/product_catalog/index.html",
+    "static/media/Phone catalog (V2) Original Dark (Copy).zip": "/product_catalog/static/media/Phone catalog (V2) Original Dark (Copy).dd0e4eef7a7eea723c79.zip",
     "static/media/minus-active.svg": "/product_catalog/static/media/minus-active.4e9adf5975a692a52270.svg",
     "static/media/minus-no-active.svg": "/product_catalog/static/media/minus-no-active.3cc2197f71c0b7dfc0d0.svg",
-    "main.bba62350.css.map": "/product_catalog/static/css/main.bba62350.css.map",
-    "main.2b631444.js.map": "/product_catalog/static/js/main.2b631444.js.map"
+    "main.83a23010.css.map": "/product_catalog/static/css/main.83a23010.css.map",
+    "main.c0dfb335.js.map": "/product_catalog/static/js/main.c0dfb335.js.map"
   },
   "entrypoints": [
-    "static/css/main.bba62350.css",
-    "static/js/main.2b631444.js"
+    "static/css/main.83a23010.css",
+    "static/js/main.c0dfb335.js"
   ]
 }
