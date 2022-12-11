@@ -3,10 +3,10 @@
 .contributors {
 	flex: 1;
 	padding: 0 16px;
-	margin: 0 auto 40px;
+	margin: 0 auto 64px;
 
 	@include desktop {
-		margin: 0 auto 32px;
+		margin: 0 auto 80px;
 	}
 
 	&__title {

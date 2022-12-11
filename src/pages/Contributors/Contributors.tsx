@@ -1,10 +1,14 @@
-import { FC } from 'react';
+import { FC, memo, useEffect } from 'react';
 import { Path } from '../../components/Path';
 import './Contributors.scss';
 import { contributorsData } from './Contributors.data';
 import { Person } from './Person';
 
-export const Contributors: FC = () => {
+export const Contributors: FC = memo(() => {
+  useEffect(() => {
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  }, [])
+
 	return (
 		<div className="contributors">
       <Path />
@@ -36,4 +40,4 @@ export const Contributors: FC = () => {
 			</div>
 		</div>
 	)
-}
+});

@@ -82,7 +82,15 @@
     }
 
     @include desktop {
-      width: calc(100vw - 64px);
+      width: 1200px;
+    }
+  }
+
+  &__card {
+    margin-right: 16px;
+
+    &:last-child {
+      margin-right: 0;
     }
   }
 }

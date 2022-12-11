@@ -19,15 +19,15 @@ type Props = {
 export const Carusel: FC<Props> = ({ orderType, title, path }) => {
   const [position, setPosition] = useState(0);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [isEnd, setIsEnd] = useState(false);
   const [phones, setPhones] = useState<Good[] | null>(null);
 	const swiperRef = useRef<SwiperRef>(null);
-
-  const carouselSlides = useMemo(() => phones ? phones.length : 0, [phones]);
   const { width } = useWindowDimensions();
   const step = useMemo(() => {
-    const start = 300;
+    const start = 310;
+    const usedWidth = width < 1200 ? width : 1200;
     
-    return width === 320 ? 1 : Math.ceil(width / start);
+    return Math.round(usedWidth / start * 10) / 10;
     
   }, [width, phones]);
 
@@ -35,7 +35,7 @@ export const Carusel: FC<Props> = ({ orderType, title, path }) => {
     setIsLoaded(true);
 
     try {
-      const phonesFromApi = await getArrangedPhones(orderType);
+      const phonesFromApi = await (await getArrangedPhones(orderType)).slice(0, 10);
 
       if (orderType === 'price') {
         phonesFromApi.sort((phoneA, phoneB) => {
@@ -53,13 +53,12 @@ export const Carusel: FC<Props> = ({ orderType, title, path }) => {
     }
   };
 
-  const lastSlidePosition = useMemo(() => Math.ceil(carouselSlides / step), [width, phones]);
   const isStart = position === 0;
-  const isEnd = lastSlidePosition === position;
 
   const handlePrev = useCallback(() => {
     if (!swiperRef.current) return;
     swiperRef.current.swiper.slidePrev();
+    setIsEnd(false);
   }, []);
 
   const handleNext = useCallback(() => {
@@ -121,17 +120,22 @@ export const Carusel: FC<Props> = ({ orderType, title, path }) => {
       {isLoaded
         ? <Loader />
         : (<div className="Carusel__wrap grid-mobile-1-5 grid-tablet-1-13 grid-desktop-1-25">
-              
             <ul
               className="Carusel__list"
             >
               <Swiper
                   initialSlide={position}
-                  spaceBetween={294}
+                  spaceBetween={16}
                   slidesPerView={step}
                   scrollbar={{ draggable: true }}
-                  onSlideChange={(swiper) => setPosition(swiper.activeIndex)}
-                  onSwiper={(swiper) => setPosition(swiper.activeIndex)}
+                  onSlideChange={(swiper) => {
+                    setPosition(swiper.activeIndex);
+                    setIsEnd(false);
+                  }}
+                  onSwiper={(swiper) => {
+                    setPosition(swiper.activeIndex);
+                  }}
+                  onReachEnd={() => setIsEnd(true)}
                   ref={swiperRef}
                 >
                   
@@ -139,11 +143,13 @@ export const Carusel: FC<Props> = ({ orderType, title, path }) => {
                     return (<SwiperSlide
                       key={phone.name}
                     >
-                      <ProductCard
-                        key={phone.name}
-                        path={path}
-                        good={phone}
-                      />
+                      <div className="carusel__card">
+                        <ProductCard
+                          key={phone.name}
+                          path={path}
+                          good={phone}
+                        />
+                      </div>
                     </SwiperSlide>)
                   })}
                 </Swiper>

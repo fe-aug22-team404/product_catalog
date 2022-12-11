@@ -18,7 +18,11 @@ export const Footer: React.FC = () => {
             </Link>
           </div>
           <nav className="footer__nav">
-            <a href="https://github.com/fe-aug22-team404/product_catalog" target="blanc" className="footer__nav-link">
+            <a
+              href="https://github.com/fe-aug22-team404/product_catalog"
+              target="blanc"
+              className="footer__nav-link"
+            >
               Github FE
             </a>
             <Link to='contributors' className="footer__nav-link">

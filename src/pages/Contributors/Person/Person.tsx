@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, memo } from 'react';
 import { Contributor } from '../../../types/Contributor';
 import './Person.scss';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -6,12 +6,11 @@ import { faLinkedin } from '@fortawesome/free-brands-svg-icons/faLinkedin';
 import { faGithub } from '@fortawesome/free-brands-svg-icons/faGithub';
 import { faEnvelope } from '@fortawesome/free-regular-svg-icons/faEnvelope';
 
-
 type Props = {
 	person: Contributor,
 }
 
-export const Person: FC<Props> = ({ person }) => {
+export const Person: FC<Props> = memo(({ person }) => {
 	const {
 		name,
 		photo,
@@ -21,8 +20,6 @@ export const Person: FC<Props> = ({ person }) => {
 	} = person;
 	return (
 		<>
-
-
 			<div className='person'>
 				<div className="person__photo-box">
 					<img src={photo} alt="creator" className="person__photo" />
@@ -62,6 +59,5 @@ export const Person: FC<Props> = ({ person }) => {
 				</div>
 			</div>
 		</>
-
 	)
-}
+});

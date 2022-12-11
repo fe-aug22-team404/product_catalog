@@ -71,29 +71,33 @@
       }
 
       &::after {
-        position: absolute;
-        content: "";
-        height: 4px;
-        width: 100%;
-        background-color: $white;
-        left: 0;
-        bottom: 0;
-        opacity: 0;
+        @include mobile {
+          position: absolute;
+          content: "";
+          height: 2px;
+          width: 100%;
+          background-color: $white;
+          left: 0;
+          bottom: 0;
+          opacity: 0;
 
-        transition: opacity 0.3s;
+          transition: opacity 0.3s;
+        }
       }
 
       &::before {
-        position: absolute;
-        content: "";
-        height: 4px;
-        width: 100%;
-        background-color: $white;
-        left: 0;
-        top: -32px;
-        opacity: 0;
-
-        transition: opacity 0.3s;
+        @include tablet {
+          position: absolute;
+          content: "";
+          height: 2px;
+          width: 100%;
+          background-color: $white;
+          left: 0;
+          top: -32px;
+          opacity: 0;
+  
+          transition: opacity 0.3s;
+        }
       }
 
       &:hover::after {
